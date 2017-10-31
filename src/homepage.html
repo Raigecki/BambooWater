@@ -4,6 +4,7 @@
       <meta charset="UTF-8">
       <title>Homepage</title>
 
+      <!-- Font Awesome Styles -->
       <style>       
           @font-face {
             font-family: 'FontAwesome';
@@ -24,12 +25,54 @@
             content: "\f015";
           }
         </style>
+
+        <!-- Element Styles -->
+        <style>
+
+          body {
+            text-align: center;
+            margin: 5% 5% 0 5%;
+          }
+
+          progress {
+            height: 5rem;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #EEEEEE;
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+            
+          }
+          
+          #waterProgressbar::-webkit-progress-value {
+            background: blue;
+          }
+          
+          #waterProgressbar::-moz-progress-bar {
+            background: blue;
+          }
+
+          #progressbarDiv > label {
+            display: block;
+            text-align: left;
+            font-size: 2rem;
+          }
+
+         </style>
     </head>
 
     <body>
-      <h2>Bamboo Water</h2>
+
+      <img src="images/icon.jpg">
+
+      <!-- Progress Bars -->
+      <div id="progressbarDiv">
+        <label for="fiberProgressbar">Fiber</label>
+        <progress id="fiberProgressbar" value="22" max="100"></progress>
+        <label for="waterProgressbar">Water</label>
+        <progress id="waterProgressbar" value="40" max="100"></progress>     
+      </div>
       <div class="tabs">
       </div>
-      <a class="fa fa-home"></a>
     </body>
 </html>
