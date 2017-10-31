@@ -14,7 +14,7 @@
     
           .fa {
             font: normal normal normal 14px/1 FontAwesome;
-            font-size: inherit;
+            font-size: xx-large;
             text-rendering: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -24,6 +24,81 @@
           .fa-home:before {
             content: "\f015";
           }
+
+          .fa-search:before {
+            content: "\f002";
+          }
+
+          .fa-history:before {
+            content: "\f1da";
+          }
+
+          .fa-question-circle-o:before {
+            content: "\f29c";
+          }
+
+          .fa-gear:before {
+            content: "\f013";
+          }
+
+          .tabs a {
+            text-decoration: none;
+            color: black;
+          }
+
+          h2 {
+            text-align: center;
+          }
+
+          #addButton {
+            background-color: green;
+            color: white;
+            border-radius: 75%;
+            border-color: green;
+            border-width: 0;
+            position: absolute;
+            top: 50%;
+            right: 0;
+          }
+
+          .tabs {
+            background-color: gray;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+          }
+
+          .groupSeparator {
+            display: flex;
+            flex-basis: 100%;
+            align-items: center;
+            color: rgba(0, 0, 0, 0.35);
+            margin: 8px 0px;
+          }
+
+          .groupSeparator::before,
+          .groupSeparator::after {
+            content: "";
+            flex-grow: 1;
+            background: rgba(0, 0, 0, 0.35);
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+          }
+
+          .measurementAndTime {
+            float: right;
+          }
+
+          ul li {
+            overflow: hidden;
+          }
+
         </style>
 
         <!-- Element Styles -->
@@ -41,7 +116,6 @@
             background-color: #EEEEEE;
             border-radius: 2px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-            
           }
           
           #waterProgressbar::-webkit-progress-value {
@@ -58,6 +132,11 @@
             font-size: 2rem;
           }
 
+          #todayslogDiv {
+            text-align: left;
+            font-size: 2rem;
+          }
+
          </style>
     </head>
 
@@ -65,14 +144,29 @@
 
       <img src="images/icon.jpg">
 
-      <!-- Progress Bars -->
+      <div class="groupSeparator">Daily Progress</div>      
       <div id="progressbarDiv">
         <label for="fiberProgressbar">Fiber</label>
         <progress id="fiberProgressbar" value="22" max="100"></progress>
         <label for="waterProgressbar">Water</label>
         <progress id="waterProgressbar" value="40" max="100"></progress>     
       </div>
-      <div class="tabs">
+
+      <div class="groupSeparator">Today's Log</div>
+      <div id="todayslogDiv">
+        <ul>
+          <li><img src="" width="" height=""><span class="typeAndCup">Food/water <br> cup measurement</span><span class="measurementAndTime">g/L measurement <br>Time</span></li>
+        </ul>
       </div>
+
+      <div class="tabs">
+          <a class="fa fa-home" href="homepage.html"></a>
+          <a class="fa fa-search" href=""></a>
+          <a class="fa fa-history" href=""></a>
+          <a class="fa fa-question-circle-o" href=""></a>
+          <a class="fa fa-gear" href=""></a>
+      </div>
+
+      <button id="addButton">&#43</button>
     </body>
 </html>
