@@ -105,14 +105,14 @@
         function generateData() {
           var searchTable = [];
 
-          for (var i = 0; i < 3; i++) {
+          for (var i = 0; i < 1; i++) {
             var logCell = {};
             var item = i.toString();
-            var name = 'Item' + i.toString();
-            var amount = i + 3;
+            var name = 'Apple';
+            var amount = '4.4g';
             logCell['item'] = item;
-			logCell['name'] = name;
-		    logCell['amount'] = amount;
+			      logCell['name'] = name;
+		        logCell['amount'] = amount;
 
             searchTable.push(logCell);
           }
@@ -136,16 +136,16 @@
           var backLogTable = JSON.parse(localStorage.getItem('searchTable'));
           console.log(backLogTable);
 
-          for (var i = 0; i < backLogTable.length; i++) {
+          for (var i = 0; i < 1; i++) {
 
             var tr = document.createElement('tr');
             var tdIcon = document.createElement('td');
             var tdName = document.createElement('td');
             var tdAmount = document.createElement('td');
 
-            tdIcon.innerHTML = backLogTable[i]['item'];
-            tdName.innerHTML = backLogTable[i]['name'];
-            tdAmount.innerHTML = backLogTable[i]['amount'];
+            tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
+            tdName.innerHTML = 'Apple';
+            tdAmount.innerHTML = '4.4g';
 
             tr.appendChild(tdIcon);
             tr.appendChild(tdName);
