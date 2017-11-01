@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Homepage</title>
+
+      <!-- Font Awesome Styles -->
+      <style>       
+          @font-face {
+            font-family: 'FontAwesome';
+            src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+            src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+          }
+    
+          .fa {
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: xx-large;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: inline-block;
+          }
+    
+          .fa-home:before {
+            content: "\f015";
+          }
+
+          .fa-search:before {
+            content: "\f002";
+          }
+
+          .fa-history:before {
+            content: "\f1da";
+          }
+
+          .fa-question-circle-o:before {
+            content: "\f29c";
+          }
+
+          .fa-gear:before {
+            content: "\f013";
+          }
+        </style>
+
+        <!-- Element Styles -->
+        <style>
+
+          body {
+            text-align: center;
+            margin: 5% 5% 0 5%;
+          }
+
+          img {
+            width: 80%;
+            height: 80%;
+            margin-left: 7%;
+          }
+
+          .groupSeparator {
+            display: flex;
+            flex-basis: 100%;
+            align-items: center;
+            color: rgba(0, 0, 0, 0.35);
+            margin: 1rem 0 2rem 0;
+            font-size: 3rem;
+          }
+
+          .groupSeparator::before,
+          .groupSeparator::after {
+            content: "";
+            flex-grow: 1;
+            background: rgba(0, 0, 0, 0.35);
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+          }
+
+          progress {
+            height: 7rem;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #EEEEEE;
+            background: green;
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+            margin-bottom: 2rem;
+          }
+          
+          #waterProgressbar::-webkit-progress-value {
+            background: blue;
+          }
+          
+          #waterProgressbar::-moz-progress-bar {
+            background: blue;
+          }
+
+          #progressbarDiv > label {
+            display: block;
+            text-align: left;
+            font-size: 3rem;
+          }
+
+          .tabs a {
+            text-decoration: none;
+            color: black;
+          }
+
+          h2 {
+            text-align: center;
+          }
+
+          #addButton {
+            background-color: green;
+            color: white;
+            border-radius: 75%;
+            border-color: green;
+            border-width: 0;
+            position: absolute;
+            top: 50%;
+            right: 0;
+          }
+
+          .tabs {
+            background-color: gray;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+          }
+
+          .measurementAndTime {
+            float: right;
+          }
+
+          ul li {
+            overflow: hidden;
+          }
+
+          table {
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 2rem;
+            width: 100%;
+          }
+
+          td {
+            border: 1px #dddddd;
+            text-align: left;
+            padding: 1rem;
+          }
+          tr:nth-child(odd) {
+            background-color: #dddddd;
+          }
+
+          
+         </style>
+    </head>
+
+    <body>
+
+      <img src="images/icon.jpg">
+
+      <div class="groupSeparator">Daily Progress</div>      
+      <div id="progressbarDiv">
+        <label for="fiberProgressbar">Fiber</label>
+        <progress id="fiberProgressbar" value="22" max="100"></progress>
+        <label for="waterProgressbar">Water</label>
+        <progress id="waterProgressbar" value="40" max="100"></progress>     
+      </div>
+
+      <div class="groupSeparator">Today's Log</div>
+        <!-- <ul>
+          <li><img src="" width="" height=""><span class="typeAndCup">Food/water <br> cup measurement</span><span class="measurementAndTime">g/L measurement <br>Time</span></li>
+        </ul> -->
+      <table id="logTable"></table>
+
+      <div class="tabs">
+          <a class="fa fa-home" href="homepage.html"></a>
+          <a class="fa fa-search" href="search.html"></a>
+          <a class="fa fa-history" href="../skeleton/history.html"></a>
+          <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
+          <a class="fa fa-gear" href="../skeleton/profile.html"></a>
+      </div>
+
+      <button id="addButton">&#43</button>
+    </body>
+
+    <script>
+        // Check browser support
+        if (typeof(Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+     
+        //function to generating mock data
+        function generateData() {
+          var logTable = [];
+
+          for (var i = 0; i < 3; i++) {
+            var logCell = {};
+            var name = 'Item ' + i.toString();
+            var amountCups = i + 3;
+            var amountGrams = i + 4.2;
+
+            var date = new Date();
+            var hours = date.getHours();
+            var ampm = 'AM';
+            if (hours > 12) {
+              hours -= 12;
+              ampm = 'PM';
+            }
+            var time = hours + ':' + date.getMinutes() + ' ' + ampm;
+            
+            logCell['name'] = name;
+			      logCell['amountCups'] = amountCups;
+            logCell['amountGrams'] = amountGrams;
+			      logCell['date'] = time;
+
+            logTable.push(logCell);
+          }
+          localStorage.setItem('logTable', JSON.stringify(logTable));
+        }
+
+        function debug() {
+
+          var logTable = JSON.parse(localStorage.getItem('logTable'));
+          console.log('logTable = ' + logTable);
+          console.log('logTable[0] = ' + logTable[0]);
+          console.log(logTable[0]['name']);
+          console.log(logTable[0]['amount']);
+          console.log(logTable[0]['date']);
+        }
+
+        if (localStorage.getItem('logTable') == undefined) generateData();
+        //generateData();
+        setTable();
+        //debug();
+
+      
+        //function to create tr and td according to the stored information
+        function setTable() {
+          
+          var frontLogTable = document.getElementById('logTable');
+          var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+          console.log(backLogTable);
+
+          for (var i = 0; i < backLogTable.length; i++) {
+
+            var tr = document.createElement('tr');
+            var tdIcon = document.createElement('td');
+            var tdName = document.createElement('td');
+            var tdDate = document.createElement('td');
+
+            var cups = '';
+            if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
+            else cups = 'Cup';
+
+            //Needs to be changed
+            tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
+            tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
+            tdDate.innerHTML = backLogTable[i]['amountGrams'] + 'g' + '<br>' + backLogTable[i]['date'];
+
+            tr.appendChild(tdIcon);
+            tr.appendChild(tdName);
+            tr.appendChild(tdDate);
+
+            frontLogTable.appendChild(tr);
+          }
+
+        }
+        
+        </script>
+</html>
