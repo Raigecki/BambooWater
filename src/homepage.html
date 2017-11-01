@@ -101,7 +101,7 @@
             font-size: 3rem;
           }
 
-          #todayslogDiv {
+          #todayslogSection {
             text-align: left;
             font-size: 2rem;
           }
@@ -176,15 +176,14 @@
       </div>
 
       <div class="groupSeparator">Today's Log</div>
-      <div id="todayslogDiv">
+      <section id="todayslogSection">
         <!-- <ul>
           <li><img src="" width="" height=""><span class="typeAndCup">Food/water <br> cup measurement</span><span class="measurementAndTime">g/L measurement <br>Time</span></li>
         </ul> -->
         <table id="logTable">
-          <tr data-index=""><td>hihihi</td><td>hihihi</td><td>hihihi</td></tr>
-          <tr data-index=""><td>hihihi</td><td>hihihi</td><td>hihihi</td></tr>          
+          <tr data-index=""><td></td><td>hihihi<br>byebyebye</td><td>hihihi<br>hihihi</td></tr>
         </table>
-      </div>
+      </section>
 
       <div class="tabs">
           <a class="fa fa-home" href="homepage.html"></a>
@@ -207,11 +206,13 @@
 
           for (var i = 0; i < 3; i++) {
             var logCell = {};
-            var name = 'Item' + i.toString();
-            var amount = i + 3;
+            var name = 'Item ' + i.toString();
+            var amountCups = i + 3;
+            var amountGrams = i + 4.2;
             var date = Date.now();
             logCell['name'] = name;
-			      logCell['amount'] = amount;
+			      logCell['amountCups'] = amountCups;
+            logCell['amountGrams'] = amountGrams;
 			      logCell['date'] = date;
 
             logTable.push(logCell);
@@ -248,9 +249,13 @@
             var tdName = document.createElement('td');
             var tdDate = document.createElement('td');
 
+            var cups = '';
+            if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
+            else cups = 'Cup';
+
             tdIcon.innerHTML = backLogTable[i]['name'];
-            tdName.innerHTML = backLogTable[i]['amount'];
-            tdDate.innerHTML = backLogTable[i]['date'];
+            tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
+            tdDate.innerHTML = backLogTable[i]['amountGrams'] + 'g' + '<br>' + backLogTable[i]['date'];
 
             tr.appendChild(tdIcon);
             tr.appendChild(tdName);
