@@ -155,7 +155,7 @@
             text-align: left;
             padding: 1rem;
           }
-          tr:nth-child(even) {
+          tr:nth-child(odd) {
             background-color: #dddddd;
           }
 
@@ -181,7 +181,6 @@
           <li><img src="" width="" height=""><span class="typeAndCup">Food/water <br> cup measurement</span><span class="measurementAndTime">g/L measurement <br>Time</span></li>
         </ul> -->
         <table id="logTable">
-          <tr data-index=""><td></td><td>hihihi<br>byebyebye</td><td>hihihi<br>hihihi</td></tr>
         </table>
       </section>
 
@@ -209,11 +208,20 @@
             var name = 'Item ' + i.toString();
             var amountCups = i + 3;
             var amountGrams = i + 4.2;
-            var date = Date.now();
+
+            var date = new Date();
+            var hours = date.getHours();
+            var ampm = 'AM';
+            if (hours > 12) {
+              hours -= 12;
+              ampm = 'PM';
+            }
+            var time = hours + ':' + date.getMinutes() + ' ' + ampm;
+            
             logCell['name'] = name;
 			      logCell['amountCups'] = amountCups;
             logCell['amountGrams'] = amountGrams;
-			      logCell['date'] = date;
+			      logCell['date'] = time;
 
             logTable.push(logCell);
           }
@@ -231,6 +239,7 @@
         }
 
         if (localStorage.getItem('logTable') == undefined) generateData();
+        //generateData();
         setTable();
         //debug();
 
@@ -253,7 +262,8 @@
             if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
             else cups = 'Cup';
 
-            tdIcon.innerHTML = backLogTable[i]['name'];
+            //Needs to be changed
+            tdIcon.innerHTML = '<img src=\"iconassets/apple-1.svg\">';
             tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
             tdDate.innerHTML = backLogTable[i]['amountGrams'] + 'g' + '<br>' + backLogTable[i]['date'];
 
