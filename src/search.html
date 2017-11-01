@@ -69,15 +69,25 @@
               height: 2rem;
           }
 
+          #searchLabel #searchInput {
+              width: 85%;
+          }
+
+          #searchTable {
+              margin-left: auto;
+              margin-right: auto;
+              height: 8rem;
+              width: 100%;
+          }
+
         </style>
     </head>
 
     <body>
-      <label id="searchLabel" for="searchBar"><input name="searchInput" id="searchInput" type="search" placeholder="Search"><button id="searchButton" type="submit" class="fa fa-search"></button></label>
+      <label id="searchLabel" for="searchBar"><input name="searchInput" id="searchInput" type="search" placeholder="Search..."><button id="searchButton" type="submit" class="fa fa-search"></button></label>
 
-      <ul>
-        <li><img src="" width="" height=""><span class="typeAndCup">Food/water <br> cup measurement</span><span class="measurementAndTime">g/L measurement <br>Time</span></li>
-      </ul>
+      <table id="searchTable">        
+      </table>
       <div class="tabs">
           <a class="fa fa-home" href="homepage.html"></a>
           <a class="fa fa-search" href="../skeleton/search.html"></a>
@@ -85,6 +95,70 @@
           <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
           <a class="fa fa-gear" href="../skeleton/profile.html"></a>
       </div>
-
+      <h3 id="result"></h3>
     </body>
+    <script>
+        // Check browser support
+        if (typeof(Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+     
+        //function to generating mock data
+        function generateData() {
+          var searchTable = [];
+
+          for (var i = 0; i < 3; i++) {
+            var logCell = {};
+            var item = i.toString();
+            var name = 'Item' + i.toString();
+            var amount = i + 3;
+            logCell['item'] = item;
+			logCell['name'] = name;
+		    logCell['amount'] = amount;
+
+            searchTable.push(logCell);
+          }
+          localStorage.setItem('searchTable', JSON.stringify(searchTable));
+        }
+
+        function debug() {
+
+          var searchTable = JSON.parse(localStorage.getItem('searchTable'));
+          console.log('searchTable = ' + searchTable);
+          console.log('searchTable[0] = ' + searchTable[0]);
+          console.log(searchTable[0]['item']);
+          console.log(searchTable[0]['name']);
+          console.log(searchTable[0]['amount']);
+        }
+
+        //function to create tr and td according to the stored information
+        function setTable() {
+          
+          var frontLogTable = document.getElementById('searchTable');
+          var backLogTable = JSON.parse(localStorage.getItem('searchTable'));
+          console.log(backLogTable);
+
+          for (var i = 0; i < backLogTable.length; i++) {
+
+            var tr = document.createElement('tr');
+            var tdIcon = document.createElement('td');
+            var tdName = document.createElement('td');
+            var tdAmount = document.createElement('td');
+
+            tdIcon.innerHTML = backLogTable[i]['item'];
+            tdName.innerHTML = backLogTable[i]['name'];
+            tdAmount.innerHTML = backLogTable[i]['amount'];
+
+            tr.appendChild(tdIcon);
+            tr.appendChild(tdName);
+            tr.appendChild(tdAmount);
+
+            frontLogTable.appendChild(tr);
+
+          }
+        }
+
+        if (localStorage.getItem('searchTable') == undefined) generateData();
+        setTable();
+        debug();
+        
+        </script>
 </html>
