@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      /* The Modal*/
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 1rem;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      /* Modal Content */
+
+      .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border-radius: 10px;
+        border: 1px solid #888;
+        width: 80%;
+        height: 70%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.5s;
+        animation-name: animatetop;
+        animation-duration: 0.5s
+      }
+      /* Add Animation */
+
+      @-webkit-keyframes animatetop {
+        from {
+          top: -300px;
+          opacity: 0
+        }
+        to {
+          top: 0;
+          opacity: 1
+        }
+      }
+
+      @keyframes animatetop {
+        from {
+          top: -300px;
+          opacity: 0
+        }
+        to {
+          top: 0;
+          opacity: 1
+        }
+      }
+      /* The Close Button */
+
+      .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+
+      .modal-header {
+        border-radius: 10px 10px 0px 0px;
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        text-align: center;
+        color: white;
+      }
+
+
+      .modal-body {
+        padding: 2px 16px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- The Modal -->
+    <div id="addModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Add Food/Water</h2>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="formfield" action="inc/Controller/OperatorController.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+
+            <div>
+                <input type="radio" class="radio" value="1" name="fooby[1][]" />Food</label>
+              <label>
+                <input type="radio" class="radio" value="1" name="fooby[1][]" />Water</label>
+            </div>
+
+            <div class="form-group">
+              <label></label>Name<span class="label label-danger"> *required</span>
+              <input class="form-control" placeholder="Name" name="name" id="name">
+            </div>
+
+            <div class="form-group">
+              <label></label>Amount<span class="label label-danger"> *required</span>
+              <input type="text" placeholder="Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></input>
+            </div>
+            <div class="form-group">
+              <label>Unit</label><span class="label label-danger">*required</span>
+              <select>
+                <option value="Grams">Grams</option>
+                <option value="Liters">Liters</option>
+
+              </select>
+            </div>
+          </form>
+          <input type="button" name="btn" value="Submit" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-default" />
+        </div>
+
+        <div class="modal-footer">
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+
+      var modal = document.getElementById('addModal');
+      var btn = document.getElementById("addButton");
+      var span = document.getElementsByClassName("close")[0];
+
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+
+    </script>
+
+  </body>
+
+</html>
