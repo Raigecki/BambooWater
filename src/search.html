@@ -98,8 +98,20 @@
     </head>
 
     <body>
-      <label id="searchLabel" for="searchBar"><input name="searchInput" id="searchInput" type="search" placeholder="Search..."><button id="searchButton" type="submit" class="fa fa-search"></button></label>
-
+      <form action="/action_page.php" method="get">
+        <label id="searchLabel" for="searchInput">
+          <input list="foodList" name="searchInput" id="searchInput" type="search" placeholder="Search...">
+          <button id="searchButton" type="submit" class="fa fa-search"></button>
+        </label>
+        <datalist id="foodList">
+          <option value="Internet Explorer">
+          <option value="Firefox">
+          <option value="Chrome">
+          <option value="Opera">
+          <option value="Safari">
+        </datalist>
+      </form>
+      
       <table id="searchTable">        
       </table>
       <div class="tabs">
