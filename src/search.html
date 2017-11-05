@@ -1,203 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title>Homepage</title>
 
-      <style>       
-          @font-face {
-            font-family: 'FontAwesome';
-            src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
-            src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
-          }
-    
-          .fa {
-            font: normal normal normal 14px/1 FontAwesome;
-            font-size: 1.5rem;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            display: inline-block;
-          }
-    
-          .fa-home:before {
-            content: "\f015";
-          }
+<head>
+  <meta charset="UTF-8">
+  <title>Search</title>
 
-          .fa-search:before {
-            content: "\f002";
-          }
+  <style>
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+      src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    }
 
-          .fa-history:before {
-            content: "\f1da";
-          }
+    .fa {
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: 1.5rem;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+    }
 
-          .fa-question-circle-o:before {
-            content: "\f29c";
-          }
+    .fa-home:before {
+      content: "\f015";
+    }
 
-          .fa-gear:before {
-            content: "\f013";
-          }
+    .fa-search:before {
+      content: "\f002";
+    }
 
-          .fa-search:before {
-            content: "\f002";
-          }
+    .fa-history:before {
+      content: "\f1da";
+    }
 
-          .tabs a {
-            text-decoration: none;
-            color: black;
-            font-size: 5rem;
-            margin: 1% 1% 1% 1%;
-          }
+    .fa-question-circle-o:before {
+      content: "\f29c";
+    }
 
-          .tabs {
-            background-color: gray;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-          }
+    .fa-gear:before {
+      content: "\f013";
+    }
 
-          body {
-              text-align: center;
-              margin: 5% 5% 0 5%;
-          }
+    .fa-search:before {
+      content: "\f002";
+    }
 
-          #searchLabel * {
-              vertical-align: top;
-              font-size: 5rem;
-          }
+    .tabs a {
+      text-decoration: none;
+      color: black;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
 
-          #searchLabel #searchInput {
-              width: 85%;
-              border: 1px solid;
-          }
+    .tabs {
+      background-color: gray;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
 
-          table {
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 2rem;
-            width: 100%;
-            margin-top: 2rem;
-          }
+    body {
+      text-align: center;
+      margin: 5% 5% 0 5%;
+    }
 
-          td {
-            border: 1px #dddddd;
-            text-align: left;
-            padding: 1rem;
-          }
-          tr:nth-child(odd) {
-            background-color: #dddddd;
-          }
+    #searchLabel * {
+      vertical-align: top;
+      font-size: 5rem;
+      height: 8rem;
+    }
 
-        </style>
-    </head>
+    #searchInput {
+      width: 85%;
+      float: left;
+      border: 0.5rem solid #5cb85c;
+      padding: 5px;
+      border-radius: 0.5rem;
+      outline: none;
+      color: #9DBFAF;
+    }
 
-    <body>
-      <form action="/action_page.php" method="get">
-        <label id="searchLabel" for="searchInput">
-          <input list="foodList" name="searchInput" id="searchInput" type="search" placeholder="Search...">
-          <button id="searchButton" type="submit" class="fa fa-search"></button>
-        </label>
-        <datalist id="foodList">
-          <option value="Internet Explorer">
-          <option value="Firefox">
-          <option value="Chrome">
-          <option value="Opera">
-          <option value="Safari">
-        </datalist>
-      </form>
-      <input type="file" name="foodFile" id="foodFile">
-      <table id="searchTable">        
-      </table>
-      <div class="tabs">
-          <a class="fa fa-home" href="homepage.html"></a>
-          <a class="fa fa-search" href="search.html"></a>
-          <a class="fa fa-history" href="../skeleton/history.html"></a>
-          <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
-          <a class="fa fa-gear" href="../skeleton/profile.html"></a>
-      </div>
+    #searchButton {
+      border: 0.5rem solid #5cb85c;
+      width: 15%;
+      background: #5cb85c;
+      text-align: center;
+      color: #fff;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
 
-      <h3 id="result"></h3>
-    </body>
-    <script>
-        // Check browser support
-        if (typeof(Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-     
-        //function to generating mock data
-        function generateData() {
-          var searchTable = [];
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 2rem;
+      width: 100%;
+      margin-top: 2rem;
+    }
 
-          for (var i = 0; i < 1; i++) {
-            var logCell = {};
-            var item = i.toString();
-            var name = 'Apple';
-            var amount = '4.4g';
-            logCell['item'] = item;
-			      logCell['name'] = name;
-		        logCell['amount'] = amount;
+    td {
+      border: 1px #dddddd;
+      text-align: left;
+      padding: 1rem;
+    }
 
-            searchTable.push(logCell);
-          }
-          localStorage.setItem('searchTable', JSON.stringify(searchTable));
+    tr:nth-child(odd) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="/action_page.php" method="get">
+    <label id="searchLabel" for="searchInput">
+      <input list="foodList" name="searchInput" id="searchInput" type="search" placeholder="Search...">
+      <button id="searchButton" type="submit" class="fa fa-search"></button>
+    </label>
+    <datalist id="foodList"></datalist>
+  </form>
+  <table id="searchTable">
+  </table>
+
+  <iframe id="foodFile" src="./foodData.txt" onload="setAutofill()" style="display: none;"></iframe>
+
+  <div class="tabs">
+    <a class="fa fa-home" href="homepage.html"></a>
+    <a class="fa fa-search" href="search.html"></a>
+    <a class="fa fa-history" href="../skeleton/history.html"></a>
+    <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
+    <a class="fa fa-gear" href="../skeleton/profile.html"></a>
+  </div>
+  <h3 id="result"></h3>
+</body>
+<script>
+  // Check browser support
+  if (typeof (Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+
+  //function to generating mock data
+  function generateData() {
+    var searchTable = [];
+
+    for (var i = 0; i < 1; i++) {
+      var logCell = {};
+      var item = i.toString();
+      var name = 'Apple';
+      var amount = '4.4g';
+      logCell['item'] = item;
+      logCell['name'] = name;
+      logCell['amount'] = amount;
+
+      searchTable.push(logCell);
+    }
+    localStorage.setItem('searchTable', JSON.stringify(searchTable));
+  }
+
+  function debug() {
+
+    var searchTable = JSON.parse(localStorage.getItem('searchTable'));
+    console.log('searchTable = ' + searchTable);
+    console.log('searchTable[0] = ' + searchTable[0]);
+    console.log(searchTable[0]['item']);
+    console.log(searchTable[0]['name']);
+    console.log(searchTable[0]['amount']);
+  }
+
+
+  //function to set autofill
+  function setAutofill() {
+
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", './foodData.txt', false);
+    rawFile.onreadystatechange = function () {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          var allText = rawFile.responseText;
+          alert(allText);
         }
+      }
+    }
+    rawFile.send(null);
+  }
 
-        function debug() {
+  //function to create tr and td according to the stored information
+  function setTable() {
 
-          var searchTable = JSON.parse(localStorage.getItem('searchTable'));
-          console.log('searchTable = ' + searchTable);
-          console.log('searchTable[0] = ' + searchTable[0]);
-          console.log(searchTable[0]['item']);
-          console.log(searchTable[0]['name']);
-          console.log(searchTable[0]['amount']);
-        }
+    var frontLogTable = document.getElementById('searchTable');
+    var backLogTable = JSON.parse(localStorage.getItem('searchTable'));
+    //console.log(backLogTable);
 
-        var foodFile = document.getElementById('foodFile');
-        //function to set autofill
-        function setAutofill() {
+    for (var i = 0; i < 1; i++) {
 
-            foodList = document.getElementById('foodList');
+      var tr = document.createElement('tr');
+      var tdIcon = document.createElement('td');
+      var tdName = document.createElement('td');
+      var tdAmount = document.createElement('td');
 
-            var foodInfoItem = {
-              //insert file parser here
-            }
-            foodInfoList.push(foodInfoItem);
-        }
+      tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
+      tdName.innerHTML = 'Apple';
+      tdAmount.innerHTML = '4.4g';
 
-        //function to create tr and td according to the stored information
-        function setTable() {
-          
-          var frontLogTable = document.getElementById('searchTable');
-          var backLogTable = JSON.parse(localStorage.getItem('searchTable'));
-          console.log(backLogTable);
+      tr.appendChild(tdIcon);
+      tr.appendChild(tdName);
+      tr.appendChild(tdAmount);
 
-          for (var i = 0; i < 1; i++) {
+      frontLogTable.appendChild(tr);
 
-            var tr = document.createElement('tr');
-            var tdIcon = document.createElement('td');
-            var tdName = document.createElement('td');
-            var tdAmount = document.createElement('td');
+    }
+  }
 
-            tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
-            tdName.innerHTML = 'Apple';
-            tdAmount.innerHTML = '4.4g';
+  if (localStorage.getItem('searchTable') == undefined) generateData();
+  setTable();
+  //debug();
+  setAutofill();
 
-            tr.appendChild(tdIcon);
-            tr.appendChild(tdName);
-            tr.appendChild(tdAmount);
+</script>
 
-            frontLogTable.appendChild(tr);
-
-          }
-        }
-
-        if (localStorage.getItem('searchTable') == undefined) generateData();
-        setTable();
-        debug();
-        
-        </script>
 </html>
