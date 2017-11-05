@@ -111,7 +111,7 @@
           <option value="Safari">
         </datalist>
       </form>
-      
+      <input type="file" name="foodFile" id="foodFile">
       <table id="searchTable">        
       </table>
       <div class="tabs">
@@ -121,6 +121,7 @@
           <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
           <a class="fa fa-gear" href="../skeleton/profile.html"></a>
       </div>
+
       <h3 id="result"></h3>
     </body>
     <script>
@@ -153,6 +154,18 @@
           console.log(searchTable[0]['item']);
           console.log(searchTable[0]['name']);
           console.log(searchTable[0]['amount']);
+        }
+
+        var foodFile = document.getElementById('foodFile');
+        //function to set autofill
+        function setAutofill() {
+
+            foodList = document.getElementById('foodList');
+
+            var foodInfoItem = {
+              //insert file parser here
+            }
+            foodInfoList.push(foodInfoItem);
         }
 
         //function to create tr and td according to the stored information
