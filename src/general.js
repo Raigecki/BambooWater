@@ -18,9 +18,9 @@ function generateData() {
       var time = hours + ':' + date.getMinutes() + ' ' + ampm;
       
       logCell['name'] = name;
-            logCell['amountCups'] = amountCups;
+      logCell['amountCups'] = amountCups;
       logCell['amountGrams'] = amountGrams;
-            logCell['date'] = time;
+      logCell['date'] = time;
 
       logTable.push(logCell);
     }

@@ -77,32 +77,6 @@
       color: #999;
     }
 
-    .btn {
-      display: block;
-      padding: 6px 12px;
-      font-size: 4rem;
-      font-weight: normal;
-      line-height: 7rem;
-      height: 7rem;
-      width: 100%;
-      text-align: center;
-      white-space: nowrap;
-      -ms-touch-action: manipulation;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      background-image: none;
-      border: 1px solid transparent;
-      border-radius: 8px;
-    }
-
-    .btn-success {
-      color: #fff;
-      background-color: #5cb85c;
-      border-color: #4cae4c;
-    }
   </style>
 
   <!-- Element Styles -->
@@ -241,6 +215,7 @@
       top: 0;
       width: 100%;
       height: 100%;
+      line-height: 100%;
       overflow: auto;
       background-color: rgb(0, 0, 0);
       background-color: rgba(0, 0, 0, 0.4);
@@ -249,11 +224,12 @@
     .modal-content {
       position: relative;
       background-color: #fefefe;
-      margin: 15% 10% 15% 10%;
       border-radius: 10px;
       border: 1px solid #888;
       width: 80%;
-      height: 80%;
+      height: 50%;
+      margin: 10%;
+      vertical-align: middle;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       -webkit-animation-name: animatetop;
       -webkit-animation-duration: 0.5s;
@@ -278,11 +254,10 @@
     }
 
     #selectMeasurement {
-      height: 7rem;
+      height: 6rem;
     }
 
     /* Add Animation */
-
     @-webkit-keyframes animatetop {
       from {
         top: -300px;
@@ -305,8 +280,18 @@
       }
     }
 
-    /* The Close Button */
+    /* The Radio buttons*/
+    #formField > label {
 
+      font-size: 3rem;
+    }
+
+    #formField > label > input {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    /* The Close Button */
     .close {
       color: white;
       float: right;
@@ -324,6 +309,19 @@
     .confirmButton {
       position: absolute;
       bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 5% 5% 5%;
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+      height: 7rem;
+      width: 90%;
+      padding: 6px 12px;
+      font-size: 4rem;
+      text-align: center;
+      border: 1px solid transparent;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -342,7 +340,7 @@
     </div>
 
     <div class="groupSeparator">Today's Log</div>
-    <table id="logTable"></table>
+    <table id="logTable" data-row="0"></table>
   </div>
   <div class="tabs">
     <a class="fa fa-home" href="homepage.html"></a>
@@ -360,32 +358,34 @@
 
   <!-- The Modal -->
   <div id="addModal" class="modal">
-
-    <!-- Modal content -->
     <div class="modal-content">
+
       <div class="modal-header">
         <span>Add Food/Water</span>
         <span class="close">&times;</span>
       </div>
+
       <div class="modal-body">
-        <form role="form" id="formfield" action="inc/Controller/OperatorController.php" method="post" enctype="multipart/form-data"
+        <form role="form" id="formField" method="post" enctype="multipart/form-data"
           onsubmit="return validateForm();">
 
-            <input type="radio" class="radio" value="1" name="fooby[1][]" />Food</label>
-            <label>
-              <input type="radio" class="radio" value="1" name="fooby[1][]" />Water</label>
+          <select class="form-control" id="selectType">
+              <option value="food">Food</option>
+              <option value="water">Water</option>
+            </select>
 
-            <input class="form-control" placeholder="Name" name="name" id="name">
+            <input class="form-control" placeholder="Name" name="name" id="foodName">
 
-            <input type="text" class="form-control" placeholder="Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></input>
+            <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></input>
 
             <select class="form-control" id="selectMeasurement">
               <option value="Grams">Grams</option>
               <option value="Liters">Liters</option>
+              <option value="Cups">Cups</option>
             </select>
 
           <input type="button" name="submitButton" value="Add" id="confirmButton" data-toggle="modal" data-target="#confirm-submit"
-          class="btn btn-success confirmButton">
+          class="confirmButton">
         </form>
 
       </div> <!-- modal body div -->
@@ -417,6 +417,86 @@
   setTable();
   //debug();
 
+  function getFormattedTime() {
+    var date = new Date();
+    var hours = date.getHours();
+    var ampm = 'AM';
+    if (hours > 12) {
+      hours -= 12;
+      ampm = 'PM';
+    }
+    var time = hours + ':' + date.getMinutes() + ' ' + ampm;
+    return time;
+  } 
+
+  function addRecord(type, name, amount, measurement) {
+
+    var logCell = {};
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var index = frontLogTable['data-row'];
+
+    // Updating localstorage table
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['amountCups'] = amount + ' cups';
+      logCell['amountGrams'] = 'Unknown g';
+    }
+    else if (type == 'water') {
+      logCell['name'] = 'Water';
+      logCell['amountLiters'] = amount + ' L';
+    }
+    logCell['date'] = getFormattedTime();
+    console.log(getFormattedTime());
+    //backLogTable.push(logCell);
+    //localStorage.setItem('logTable', JSON.stringify(logTable));
+
+
+    console.log('type = ' + type );
+    console.log('name = ' + name);
+    console.log('amount = ' + amount)
+    console.log('measurement = ' + measurement);
+
+
+    // Updating front end table
+    var tr = document.createElement('tr');
+    var tdIcon = document.createElement('td');
+    var tdName = document.createElement('td');
+    var tdDate = document.createElement('td');
+
+    if (type =='water') {
+
+      tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
+      tdName.innerHTML = logCell['name'] + '<br>'
+      tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
+    }
+    else if (type == 'food') { 
+
+      var cups = '';
+      if (amount > 1 && measurement == 'Cups') cups = 'Cups';
+      else if (amount < 1 && measurement == 'Cups') cups = 'Cup';
+
+      tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
+      tdName.innerHTML = logCell['name'] + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
+    }
+  
+    tr.appendChild(tdIcon);
+    tr.appendChild(tdName);
+    tr.appendChild(tdDate);
+    tr.id = 'row' + index; 
+    frontLogTable.appendChild(tr);
+    index++;
+    
+  }
+
+  function modifyRecord() {
+
+  }
+
+  function deleteRecord() {
+
+  }
 
   //function to create tr and td according to the stored information
   function setTable() {
@@ -428,6 +508,7 @@
     for (var i = 0; i < backLogTable.length; i++) {
 
       var tr = document.createElement('tr');
+      tr.id = 'row' + i;
       var tdIcon = document.createElement('td');
       var tdName = document.createElement('td');
       var tdDate = document.createElement('td');
@@ -447,35 +528,50 @@
 
       frontLogTable.appendChild(tr);
     }
+    frontLogTable['data-row'] = backLogTable.length;
 
   }
 </script>
 <script>
   var modal = document.getElementById('addModal');
-  var addButton = document.getElementById("addButton");
-  var span = document.getElementsByClassName("close")[0];
-  var confirm = document.getElementById("confirmButton");
+  var addButton = document.getElementById('addButton');
+  var span = document.getElementsByClassName('close')[0];
+  var confirm = document.getElementById('confirmButton');
 
   // When the user clicks the button, open the modal
   addButton.onclick = function () {
-    modal.style.display = "block";
+    modal.style.display = 'block';
   }
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
-    modal.style.display = "none";
+    modal.style.display = 'none';
   }
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
     if (event.target == modal) {
-      modal.style.display = "none";
+      modal.style.display = 'none';
     }
   }
 
   //When the user clicks the add/delete button
   confirm.onclick = function (event) {
-    modal.style.display = "none";
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
+
+    addRecord(type, name, amount, measurement);
+
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+
+    modal.style.display = 'none';
   }
 </script>
 
