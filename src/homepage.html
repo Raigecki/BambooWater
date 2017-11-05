@@ -49,14 +49,11 @@
       display: block;
       width: 100%;
       height: 5rem;
-      padding: 1rem 2rem;
-      font-size: 4rem;
-      line-height: 1.42857143;
-      color: #555;
+      font-size: 3.5rem;
+      color: rgb(80, 77, 77);
       background-color: #fff;
-      background-image: none;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: 5px solid #ccc;
+      border-radius: 10px;
       -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
       -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
@@ -81,25 +78,24 @@
     }
 
     .btn {
-      display: inline-block;
+      display: block;
       padding: 6px 12px;
-      margin-bottom: 0;
-      font-size: 14px;
+      font-size: 4rem;
       font-weight: normal;
-      line-height: 1.42857143;
+      line-height: 7rem;
+      height: 7rem;
+      width: 100%;
       text-align: center;
       white-space: nowrap;
-      vertical-align: middle;
       -ms-touch-action: manipulation;
       touch-action: manipulation;
-      cursor: pointer;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
       background-image: none;
       border: 1px solid transparent;
-      border-radius: 4px;
+      border-radius: 8px;
     }
 
     .btn-success {
@@ -241,7 +237,6 @@
       display: none;
       position: fixed;
       z-index: 1;
-      padding-top: 100px;
       left: 0;
       top: 0;
       width: 100%;
@@ -251,22 +246,39 @@
       background-color: rgba(0, 0, 0, 0.4);
     }
 
-    /* Modal Content */
-
     .modal-content {
       position: relative;
       background-color: #fefefe;
-      margin: auto;
-      padding: 0;
+      margin: 15% 10% 15% 10%;
       border-radius: 10px;
       border: 1px solid #888;
       width: 80%;
-      height: 70%;
+      height: 80%;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       -webkit-animation-name: animatetop;
       -webkit-animation-duration: 0.5s;
       animation-name: animatetop;
       animation-duration: 0.5s
+    }
+
+    .modal-header {
+      border-radius: 10px 10px 0px 0px;
+      padding: 4px;
+      background-color: #5cb85c;
+      text-align: center;
+      color: white;
+      height: 7rem;
+      font-size: 4rem;
+      padding: 1rem 1rem 1rem 2rem;
+    }
+
+    .modal-body {
+      padding: 4%;
+      text-align: center;
+    }
+
+    #selectMeasurement {
+      height: 7rem;
     }
 
     /* Add Animation */
@@ -298,7 +310,7 @@
     .close {
       color: white;
       float: right;
-      font-size: 28px;
+      font-size: 6rem;
       font-weight: bold;
     }
 
@@ -307,27 +319,6 @@
       color: #000;
       text-decoration: none;
       cursor: pointer;
-    }
-
-    .modal-header {
-      border-radius: 10px 10px 0px 0px;
-      padding: 2px 16px;
-      background-color: #5cb85c;
-      text-align: center;
-      color: white;
-    }
-
-    .modal-body {
-      padding: 2px 16px;
-      text-align: center;
-    }
-
-    input {
-      width: 100%;
-      height: 5rem;
-      font-size: 4rem;
-      border: 1px solid;
-      text-align: left;
     }
 
     .confirmButton {
@@ -373,41 +364,31 @@
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
+        <span>Add Food/Water</span>
         <span class="close">&times;</span>
-        <h2>Add Food/Water</h2>
       </div>
       <div class="modal-body">
         <form role="form" id="formfield" action="inc/Controller/OperatorController.php" method="post" enctype="multipart/form-data"
           onsubmit="return validateForm();">
 
-          <div>
             <input type="radio" class="radio" value="1" name="fooby[1][]" />Food</label>
             <label>
               <input type="radio" class="radio" value="1" name="fooby[1][]" />Water</label>
-          </div>
 
-          <div class="form-group">
-            <span class="label label-danger"> *required</span>
             <input class="form-control" placeholder="Name" name="name" id="name">
-          </div>
 
-          <div class="form-group">
-            <label></label>Amount
-            <span class="label label-danger"> *required</span>
             <input type="text" class="form-control" placeholder="Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></input>
-          </div>
-          <div class="form-group">
-            <label>Unit</label>
-            <span class="label label-danger">*required</span>
-            <select class="form-control">
+
+            <select class="form-control" id="selectMeasurement">
               <option value="Grams">Grams</option>
               <option value="Liters">Liters</option>
             </select>
-          </div>
+
+          <input type="button" name="submitButton" value="Add" id="confirmButton" data-toggle="modal" data-target="#confirm-submit"
+          class="btn btn-success confirmButton">
         </form>
-        <input type="button" name="submitButton" value="Add" id="submitButton" data-toggle="modal" data-target="#confirm-submit"
-          class="btn-success confirmButton">
-      </div>
+
+      </div> <!-- modal body div -->
 
       <div class="modal-footer">
       </div>
@@ -473,6 +454,7 @@
   var modal = document.getElementById('addModal');
   var addButton = document.getElementById("addButton");
   var span = document.getElementsByClassName("close")[0];
+  var confirm = document.getElementById("confirmButton");
 
   // When the user clicks the button, open the modal
   addButton.onclick = function () {
@@ -489,6 +471,11 @@
     if (event.target == modal) {
       modal.style.display = "none";
     }
+  }
+
+  //When the user clicks the add/delete button
+  confirm.onclick = function (event) {
+    modal.style.display = "none";
   }
 </script>
 
