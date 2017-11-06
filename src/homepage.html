@@ -282,12 +282,12 @@
 
     /* The Radio buttons*/
 
-    #formField>label {
+    #formField > label {
 
       font-size: 3rem;
     }
 
-    #formField>label>input {
+    #formField > label > input {
       width: 3rem;
       height: 3rem;
     }
@@ -336,9 +336,9 @@
     <div class="groupSeparator">Daily Progress</div>
     <div id="ProgressbarDiv">
       <label for="fiberProgressbar">Fiber</label>
-      <progress id="fiberProgressbar" value="0" max="100"></progress>
+      <progress id="fiberProgressbar" value="0.0" max="30"></progress>
       <label for="waterProgressbar">Water</label>
-      <progress id="waterProgressbar" value="0" max="100"></progress>
+      <progress id="waterProgressbar" value="0.0" max="4"></progress>
     </div>
 
     <div class="groupSeparator">Today's Log</div>
@@ -404,11 +404,12 @@
   // Check browser support
   if (typeof (Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
   if (localStorage.getItem('logTable') == undefined) generateData();
-  if (localStorage.getItem('fiberProgressbar') == undefined) localStorage.setItem('fiberProgressbar', 0.00);
-  if (localStorage.getItem('waterProgressbar') == undefined) localStorage.setItem('waterProgressbar', 0.00);
+  if (localStorage.getItem('fiberProgressbar') == undefined) localStorage.setItem('fiberProgressbar', 0.0);
+  if (localStorage.getItem('waterProgressbar') == undefined) localStorage.setItem('waterProgressbar', 0.0);
 
   //generateData();
   setProgressBar();
+  resetProgressBar();
   setTable();
   //debug();
 
@@ -431,23 +432,35 @@
     var frontFiberProgressbar = document.getElementById('fiberProgressbar');
     var frontWaterProgressbar = document.getElementById('waterProgressbar');
 
-    console.log(type);
-    console.log(amount);
+    console.log('type' + type);
+    console.log('amount' + amount);
+    amount = parseFloat(amount);
 
-    backFiberProgressbar += amount;
-    backWaterProgressbar += amount;
+    var waterAmt = parseFloat(backWaterProgressbar);
+    var fiberAmt = parseFloat(backFiberProgressbar);
+
+    console.log('water: ' + waterAmt);
+    console.log('fiber: ' + fiberAmt);
 
     if (type == 'fiber') {
-
-        frontFiberProgressbar.value = ((backFiberProgressbar / 30) * 100)
+        var newValue = fiberAmt + amount;
+        backFiberProgressbar = newValue;
+        frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
         localStorage.setItem('fiberProgressbar', backFiberProgressbar);
     }
 
     else if (type == 'water') {
-
-        frontWaterProgressbar.value = ((backWaterProgressbar / 4) * 100);
+        var newValue = waterAmt + amount;
+        backWaterProgressbar = newValue;
+        frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
         localStorage.setItem('waterProgressbar', backWaterProgressbar);
     }
+
+    console.log('back fiber: ' + (backFiberProgressbar));
+    console.log('back water: ' + (backWaterProgressbar));
+
+    console.log('fiber front: ' + frontFiberProgressbar.value);
+    console.log('water front: ' + frontWaterProgressbar.value);
   }
 
   function addRecord(type, name, amount, measurement) {
@@ -547,16 +560,24 @@
 
   function setProgressBar() {
 
-    var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
-    var backWaterProgressbar = localStorage.getItem('waterProgressbar');
+    var backFiberProgressbar = parseFloat(localStorage.getItem('fiberProgressbar'));
+    var backWaterProgressbar = parseFloat(localStorage.getItem('waterProgressbar'));
     var frontFiberProgressbar = document.getElementById('fiberProgressbar');
     var frontWaterProgressbar = document.getElementById('waterProgressbar');
 
-    console.log(backFiberProgressbar);
-    console.log(backWaterProgressbar);
+    frontFiberProgressbar.value = backFiberProgressbar;
+    frontWaterProgressbar.value = backWaterProgressbar;
+  }
 
-    frontFiberProgressbar.value = (backFiberProgressbar / 30) * 100;
-    frontWaterProgressbar.value = (backWaterProgressbar / 4) * 100;
+  function resetProgressBar() {
+
+    var backFiberProgressbar = localStorage.setItem('fiberProgressbar', 0);
+    var backWaterProgressbar = localStorage.setItem('waterProgressbar', 0);
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    frontFiberProgressbar.value = 0;
+    frontWaterProgressbar.value = 0;
   }
 
 </script>
