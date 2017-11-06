@@ -76,7 +76,6 @@
     .form-control:-ms-input-placeholder {
       color: #999;
     }
-
   </style>
 
   <!-- Element Styles -->
@@ -135,7 +134,7 @@
       background: blue;
     }
 
-    #progressbarDiv>label {
+    #ProgressbarDiv>label {
       display: block;
       text-align: left;
       font-size: 3rem;
@@ -258,6 +257,7 @@
     }
 
     /* Add Animation */
+
     @-webkit-keyframes animatetop {
       from {
         top: -300px;
@@ -281,17 +281,19 @@
     }
 
     /* The Radio buttons*/
-    #formField > label {
+
+    #formField>label {
 
       font-size: 3rem;
     }
 
-    #formField > label > input {
+    #formField>label>input {
       width: 3rem;
       height: 3rem;
     }
 
     /* The Close Button */
+
     .close {
       color: white;
       float: right;
@@ -332,11 +334,11 @@
 
   <div class="main">
     <div class="groupSeparator">Daily Progress</div>
-    <div id="progressbarDiv">
+    <div id="ProgressbarDiv">
       <label for="fiberProgressbar">Fiber</label>
-      <progress id="fiberProgressbar" value="22" max="100"></progress>
+      <progress id="fiberProgressbar" value="0" max="100"></progress>
       <label for="waterProgressbar">Water</label>
-      <progress id="waterProgressbar" value="40" max="100"></progress>
+      <progress id="waterProgressbar" value="0" max="100"></progress>
     </div>
 
     <div class="groupSeparator">Today's Log</div>
@@ -366,29 +368,29 @@
       </div>
 
       <div class="modal-body">
-        <form role="form" id="formField" method="post" enctype="multipart/form-data"
-          onsubmit="return validateForm();">
+        <form role="form" id="formField" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
 
           <select class="form-control" id="selectType">
-              <option value="food">Food</option>
-              <option value="water">Water</option>
-            </select>
+            <option value="food">Food</option>
+            <option value="water">Water</option>
+          </select>
 
-            <input class="form-control" placeholder="Name" name="name" id="foodName">
+          <input class="form-control" placeholder="Name" name="name" id="foodName">
 
-            <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></input>
+          <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'></input>
 
-            <select class="form-control" id="selectMeasurement">
-              <option value="Grams">Grams</option>
-              <option value="Liters">Liters</option>
-              <option value="Cups">Cups</option>
-            </select>
+          <select class="form-control" id="selectMeasurement">
+            <option value="Grams">Grams</option>
+            <option value="Liters">Liters</option>
+            <option value="Cups">Cups</option>
+          </select>
 
           <input type="button" name="submitButton" value="Add" id="confirmButton" data-toggle="modal" data-target="#confirm-submit"
-          class="confirmButton">
+            class="confirmButton">
         </form>
 
-      </div> <!-- modal body div -->
+      </div>
+      <!-- modal body div -->
 
       <div class="modal-footer">
       </div>
@@ -401,19 +403,12 @@
 <script>
   // Check browser support
   if (typeof (Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-
-  function debug() {
-
-    var logTable = JSON.parse(localStorage.getItem('logTable'));
-    console.log('logTable = ' + logTable);
-    console.log('logTable[0] = ' + logTable[0]);
-    console.log(logTable[0]['name']);
-    console.log(logTable[0]['amount']);
-    console.log(logTable[0]['date']);
-  }
-
   if (localStorage.getItem('logTable') == undefined) generateData();
+  if (localStorage.getItem('fiberProgressbar') == undefined) localStorage.setItem('fiberProgressbar', 0.00);
+  if (localStorage.getItem('waterProgressbar') == undefined) localStorage.setItem('waterProgressbar', 0.00);
+
   //generateData();
+  setProgressBar();
   setTable();
   //debug();
 
@@ -427,7 +422,33 @@
     }
     var time = hours + ':' + date.getMinutes() + ' ' + ampm;
     return time;
-  } 
+  }
+
+  function updateProgressbar(type, amount) {
+
+    var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
+    var backWaterProgressbar = localStorage.getItem('waterProgressbar');
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    console.log(type);
+    console.log(amount);
+
+    backFiberProgressbar += amount;
+    backWaterProgressbar += amount;
+
+    if (type == 'fiber') {
+
+        frontFiberProgressbar.value = ((backFiberProgressbar / 30) * 100)
+        localStorage.setItem('fiberProgressbar', backFiberProgressbar);
+    }
+
+    else if (type == 'water') {
+
+        frontWaterProgressbar.value = ((backWaterProgressbar / 4) * 100);
+        localStorage.setItem('waterProgressbar', backWaterProgressbar);
+    }
+  }
 
   function addRecord(type, name, amount, measurement) {
 
@@ -447,16 +468,8 @@
       logCell['amountLiters'] = amount + ' L';
     }
     logCell['date'] = getFormattedTime();
-    console.log(getFormattedTime());
     //backLogTable.push(logCell);
     //localStorage.setItem('logTable', JSON.stringify(logTable));
-
-
-    console.log('type = ' + type );
-    console.log('name = ' + name);
-    console.log('amount = ' + amount)
-    console.log('measurement = ' + measurement);
-
 
     // Updating front end table
     var tr = document.createElement('tr');
@@ -464,13 +477,13 @@
     var tdName = document.createElement('td');
     var tdDate = document.createElement('td');
 
-    if (type =='water') {
+    if (type == 'water') {
 
       tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
       tdName.innerHTML = logCell['name'] + '<br>'
       tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
     }
-    else if (type == 'food') { 
+    else if (type == 'food') {
 
       var cups = '';
       if (amount > 1 && measurement == 'Cups') cups = 'Cups';
@@ -480,14 +493,16 @@
       tdName.innerHTML = logCell['name'] + '<br>' + logCell['amountCups'] + ' ' + cups;
       tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
     }
-  
+
     tr.appendChild(tdIcon);
     tr.appendChild(tdName);
     tr.appendChild(tdDate);
-    tr.id = 'row' + index; 
-    frontLogTable.appendChild(tr);
+    tr.id = 'row' + index;
+    frontLogTable.insertBefore(tr, frontLogTable.firstChild);
     index++;
-    
+
+    updateProgressbar(type, amount);
+
   }
 
   function modifyRecord() {
@@ -503,9 +518,8 @@
 
     var frontLogTable = document.getElementById('logTable');
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
-    console.log(backLogTable);
 
-    for (var i = 0; i < backLogTable.length; i++) {
+    for (var i = backLogTable.length - 1; i >= 0; i--) {
 
       var tr = document.createElement('tr');
       tr.id = 'row' + i;
@@ -529,8 +543,22 @@
       frontLogTable.appendChild(tr);
     }
     frontLogTable['data-row'] = backLogTable.length;
-
   }
+
+  function setProgressBar() {
+
+    var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
+    var backWaterProgressbar = localStorage.getItem('waterProgressbar');
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    console.log(backFiberProgressbar);
+    console.log(backWaterProgressbar);
+
+    frontFiberProgressbar.value = (backFiberProgressbar / 30) * 100;
+    frontWaterProgressbar.value = (backWaterProgressbar / 4) * 100;
+  }
+
 </script>
 <script>
   var modal = document.getElementById('addModal');
