@@ -3,18 +3,204 @@
   <head>
     <title>Profile Page</title>
     <meta charset="utf-8">
-  </head>
+  <style>
+      @font-face {
+        font-family: 'FontAwesome';
+        src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+        src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+      }
+
+      .fa {
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: xx-large;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: inline-block;
+      }
+
+      .fa-home:before {
+        content: "\f015";
+      }
+
+      .fa-search:before {
+        content: "\f002";
+      }
+
+      .fa-history:before {
+        content: "\f1da";
+      }
+
+      .fa-question-circle-o:before {
+        content: "\f29c";
+      }
+
+      .fa-gear:before {
+        content: "\f013";
+      }
+    </style>
+    <style>
+
+      body {
+        text-align: center;
+        margin: 5% 5% 0 5%;
+      }
+
+      .main {
+        margin-bottom: 10rem;
+      }
+
+      img {
+        width: 80%;
+        height: 80%;
+        margin-left: 7%;
+      }
+
+      .groupSeparator {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.35);
+        margin: 1rem 0 2rem 0;
+        font-size: 3rem;
+      }
+
+      .groupSeparator::before,
+      .groupSeparator::after {
+        content: "";
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.35);
+        height: 1px;
+        font-size: 0px;
+        line-height: 0px;
+        margin: 0px 8px;
+      }
+
+      progress {
+        height: 7rem;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #EEEEEE;
+        background: green;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+        margin-bottom: 2rem;
+      }
+
+      #waterProgressbar::-webkit-progress-value {
+        background: blue;
+      }
+
+      #waterProgressbar::-moz-progress-bar {
+        background: blue;
+      }
+
+      #progressbarDiv > label {
+        display: block;
+        text-align: left;
+        font-size: 3rem;
+      }
+
+      .tabs a {
+        text-decoration: none;
+        color: black;
+        font-size: 5rem;
+        margin: 1% 1% 1% 1%;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      #addButton {
+        background-color: green;
+        color: white;
+        border-radius: 50%;
+        border-color: green;
+        border-width: 0;
+        position: fixed;
+        width: 10rem;
+        line-height: 10rem;
+        vertical-align: middle;
+        font-size: 10em;
+        text-align: center;
+        top: 60%;
+        right: 0;
+      }
+
+      .tabs {
+        background-color: gray;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .measurementAndTime {
+        float: right;
+      }
+
+      ul li {
+        overflow: hidden;
+      }
+
+      table {
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 2rem;
+        width: 100%;
+      }
+
+      td {
+        border: 1px #dddddd;
+        text-align: left;
+        padding: 1rem;
+      }
+      tr:nth-child(odd) {
+        background-color: #dddddd;
+      }
+     </style>
   <body>
     <h1>Profile</h1>
-    <br>
-    <a href="../src/homepage.html">Back to homepage</a>
-    <br>
-    <a href="history.html">History page</a>
-    <br>
-    <a href="../src/search.html">Search page</a>
-    <br>
-    <a href="help.html">Help page</a>
-    <br>
-    <a href="../index.html">Login/logout page</a>
+    <div>
+      <p>Gender:</p>
+          <p><label for="gender"><input type="radio" class="radio" value="1" onclick='genClick()'  name="gender">Male</label>
+        <label for="gender">
+          <input type="radio" class="radio" value="1" onclick='genClick()'name="gender" />Female</label>
+        </p>
+      <p><label for="Age">Age:<br><input id="Age" type="number" name="Age" placeholder="Your Age Here"</label>
+      <br><br><button type="submit" onclick="displayMessage()">Save</button>
+    </div>
+    <div id="savedMessage"></div>
+    <div class="tabs">
+        <a class="fa fa-home" href="homepage.html"></a>
+        <a class="fa fa-search" href="search.html"></a>
+        <a class="fa fa-history" href="../skeleton/history.html"></a>
+        <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
+        <a class="fa fa-gear" href="../skeleton/profile.html"></a>
+    </div>
+    <script>
+      var click = false;
+      function genClick(){
+        click = true;
+      }
+      function displayMessage(){
+        var message = document.getElementById('savedMessage');
+        var age = document.getElementById('Age').value;
+        if((age < 200 && age > 0) && click == true)
+          message.innerHTML ="Profile Saved";
+        else if(click == false) {
+          message.innerHTML ="No Gender Selected"
+        }
+        else {
+          message.innerHTML="Invalid Age"
+        }
+      }
+
+    </script>
+
   </body>
 </html>
