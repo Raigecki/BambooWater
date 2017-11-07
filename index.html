@@ -3,12 +3,64 @@
   <head>
     <title>Login Page</title>
     <meta charset="utf-8">
+    <style>
+        body {
+            margin: 5% 5% 5% 5%;
+            text-align: center;
+            font-size: 4rem;
+        }
+
+        #login_button {
+            background-color: #5CB85C;
+            color: rgb(255,255,255);
+            border-color: #4CAE4C;
+            border-width: 0;
+            height: 7rem;
+            font-size: 6rem;
+            width: 100%
+        }
+
+        input {
+            width: 100%;
+            height: 7rem;
+            font-size: 4rem;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 5rem;
+            font-size: 3.5rem;
+            color: rgb(80, 77, 77);
+            background-color: #fff;
+            border: 5px solid #ccc;
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        .form-control:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+
+    </style>
   </head>
   <body>
     <h1>Login</h1>
-    <br>
-    <a href="src/homepage.html">To homepage (once logged in)</a>
-    <br>
-    <a href="skeleton/createaccount.html">Create account</a>
+    <form id="login_form" action="src/homepage.html">
+        <label for="login_user">User/Email:</label>
+        <input name="login_user" id="login_user" type="text" required class="form-control">
+        <label for="login_password">Password:</label>
+        <input name="login_password" id="login_password" type="password" required class="form-control">
+        <p><button id="login_button" type="submit">Login</button></p>
+    </form>
+
+    <a href="src/createaccount.html">Create an Account</a>
   </body>
 </html>
