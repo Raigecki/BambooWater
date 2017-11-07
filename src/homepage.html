@@ -78,7 +78,7 @@
     }
   </style>
 
-  <!-- Element Styles -->
+  <!-- Homepage Element Styles -->
   <style>
     body {
       text-align: center;
@@ -161,7 +161,7 @@
       width: 10rem;
       line-height: 10rem;
       vertical-align: middle;
-      font-size: 10em;
+      font-size: 3rem;
       text-align: center;
       top: 60%;
       right: 0;
@@ -203,6 +203,8 @@
       background-color: #dddddd;
     }
   </style>
+
+  <!-- Modal Styles -->
   <style>
     /* The Modal (background) */
 
@@ -282,12 +284,12 @@
 
     /* The Radio buttons*/
 
-    #formField > label {
+    #formField>label {
 
       font-size: 3rem;
     }
 
-    #formField > label > input {
+    #formField>label>input {
       width: 3rem;
       height: 3rem;
     }
@@ -309,13 +311,11 @@
     }
 
     .confirmButton {
-      position: absolute;
-      bottom: 0;
+     
       left: 0;
       right: 0;
       margin: 0 5% 5% 5%;
       color: #fff;
-      background-color: #5cb85c;
       border-color: #4cae4c;
       height: 7rem;
       width: 90%;
@@ -324,6 +324,29 @@
       text-align: center;
       border: 1px solid transparent;
       border-radius: 10px;
+    }
+
+    #confirmAddButton {
+      position: absolute;
+      bottom: 0;
+      border-color: #5cb85c;
+      background-color: #5cb85c;
+    }
+
+    #updateButton {
+      width: 100%;
+      margin: 5% 0 5% 0;
+      border-color: #ffcc00;
+      background-color: #ffcc00;
+      display: none;
+    }
+
+    #deleteButton {
+      position: absolute;
+      bottom: 0;
+      border-color: #cc0000;
+      background-color: #cc0000;
+      display: none;
     }
   </style>
 </head>
@@ -342,7 +365,7 @@
     </div>
 
     <div class="groupSeparator">Today's Log</div>
-    <table id="logTable" data-row="0"></table>
+    <table id="logTable"></table>
   </div>
   <div class="tabs">
     <a class="fa fa-home" href="homepage.html"></a>
@@ -353,7 +376,7 @@
   </div>
 
   <button id="addButton">
-    <span>&#43</span>
+    <span>ADD</span>
   </button>
 
   <h3 id="result"></h3>
@@ -363,12 +386,14 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <span>Add Food/Water</span>
+        <h3>Add Food/Water</h3>
         <span class="close">&times;</span>
       </div>
 
       <div class="modal-body">
         <form role="form" id="formField" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+
+          <input type="hidden" id="rowIndex">
 
           <select class="form-control" id="selectType">
             <option value="food">Food</option>
@@ -385,8 +410,12 @@
             <option value="Cups">Cups</option>
           </select>
 
-          <input type="button" name="submitButton" value="Add" id="confirmButton" data-toggle="modal" data-target="#confirm-submit"
-            class="confirmButton">
+          <input type="button" name="confirmAddButton" value="Add" id="confirmAddButton" data-toggle="modal" data-target="#confirm-add"
+            class="confirmButton" onclick="addRecord()">
+          <input type="button" name="updateButton" value="Update" id="updateButton" data-toggle="modal" data-target="#confirm-update"
+            class="confirmButton" onclick="updateRecord()">
+          <input type="button" name="deleteButton" value="Delete" id="deleteButton" data-toggle="modal" data-target="#confirm-delete"
+            class="confirmButton" onclick="deleteRecord()">
         </form>
 
       </div>
@@ -432,38 +461,44 @@
     var frontFiberProgressbar = document.getElementById('fiberProgressbar');
     var frontWaterProgressbar = document.getElementById('waterProgressbar');
 
-    console.log('type' + type);
-    console.log('amount' + amount);
     amount = parseFloat(amount);
 
     var waterAmt = parseFloat(backWaterProgressbar);
     var fiberAmt = parseFloat(backFiberProgressbar);
 
-    console.log('water: ' + waterAmt);
-    console.log('fiber: ' + fiberAmt);
+    //console.log('water: ' + waterAmt);
+    //console.log('fiber: ' + fiberAmt);
+    //console.log('New: ' + amount);
 
-    if (type == 'fiber') {
-        var newValue = fiberAmt + amount;
-        backFiberProgressbar = newValue;
-        frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
-        localStorage.setItem('fiberProgressbar', backFiberProgressbar);
+    if (type == 'food') {
+      var newValue = fiberAmt + amount;
+      backFiberProgressbar = newValue;
+      frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
+      localStorage.setItem('fiberProgressbar', backFiberProgressbar);
     }
 
     else if (type == 'water') {
-        var newValue = waterAmt + amount;
-        backWaterProgressbar = newValue;
-        frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
-        localStorage.setItem('waterProgressbar', backWaterProgressbar);
+      var newValue = waterAmt + amount;
+      backWaterProgressbar = newValue;
+      frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
+      localStorage.setItem('waterProgressbar', backWaterProgressbar);
     }
 
-    console.log('back fiber: ' + (backFiberProgressbar));
-    console.log('back water: ' + (backWaterProgressbar));
+    // console.log('back fiber: ' + (backFiberProgressbar));
+    // console.log('back water: ' + (backWaterProgressbar));
 
-    console.log('fiber front: ' + frontFiberProgressbar.value);
-    console.log('water front: ' + frontWaterProgressbar.value);
+    // console.log('fiber front: ' + frontFiberProgressbar.value);
+    // console.log('water front: ' + frontWaterProgressbar.value);
   }
 
-  function addRecord(type, name, amount, measurement) {
+  function addRecord() {
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
 
     var logCell = {};
     var frontLogTable = document.getElementById('logTable');
@@ -473,8 +508,7 @@
     // Updating localstorage table
     if (type == 'food') {
       logCell['name'] = name;
-      logCell['amountCups'] = amount + ' cups';
-      logCell['amountGrams'] = 'Unknown g';
+      logCell['amountGrams'] = amount + ' g';
     }
     else if (type == 'water') {
       logCell['name'] = 'Water';
@@ -493,8 +527,10 @@
     if (type == 'water') {
 
       tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
-      tdName.innerHTML = logCell['name'] + '<br>'
+      tdName.innerHTML = logCell['name'];
       tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
+      tdDate['data-amountLiters'] = logCell['amountLiters'];
+      tdDate['data-date'] = logCell['date'];
     }
     else if (type == 'food') {
 
@@ -504,26 +540,164 @@
 
       tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
       tdName.innerHTML = logCell['name'] + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdName['data-name'] = logCell['name'];
+      tdName['data-amountCups'] = logCell['amountCups']
       tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
+      tdDate['data-amountGrams'] = logCell['amountGrams'];
+      tdDate['data-date'] = logCell['date'];
     }
 
     tr.appendChild(tdIcon);
     tr.appendChild(tdName);
     tr.appendChild(tdDate);
-    tr.id = 'row' + index;
+    tr['data-index'] = index;
+    tr.addEventListener('click', modifyRecord);
     frontLogTable.insertBefore(tr, frontLogTable.firstChild);
+    frontLogTable['data-row']++;
+    console.log('New frontLogTable row value = ' + frontLogTable['data-row']);
     index++;
 
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    modal.style.display = 'none';
     updateProgressbar(type, amount);
-
   }
 
   function modifyRecord() {
 
+    //open the modal
+    document.getElementById('addModal').style.display = 'block';
+    document.getElementById('addModal').children[0].children[0].children[0].innerHTML = 'Update Entry';
+    document.getElementById('confirmAddButton').style.display = 'none';
+    document.getElementById ('updateButton').style.display = 'block';
+    document.getElementById('deleteButton').style.display = 'block';
+
+
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var index = this['data-index'];
+    document.getElementById('rowIndex').value = index;
+    var type = this.children[1].innerHTML;
+
+    //load the modal with data
+    if (type == 'Water') {
+      //console.log('It is water');
+      document.getElementById('selectType').value = 'water';
+      document.getElementById('amount').value = this.children[2]['data-amountLiters'];
+      document.getElementById('selectMeasurement').value = 'Liters';
+    }
+
+    else {
+      //console.log('It is food');
+      document.getElementById('selectType').value = 'food';
+      document.getElementById('foodName').value = this.children[1]['data-name'];
+      document.getElementById('amount').value = this.children[2]['data-amountGrams'];
+      document.getElementById('selectMeasurement').value = 'Grams';
+    }
+    //console.log('Index = ' + index);
+
+  }
+
+  function updateRecord() {
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
+    var index = document.getElementById('rowIndex').value;
+
+    // Updating front end table
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var rows = frontLogTable['data-row'];
+
+    var tr = frontLogTable.children[rows - index -1];
+    console.log('data-row = ' + frontLogTable['data-row']);
+    var tdIcon = tr.children[0];
+    var tdName = tr.children[1];
+    var tdDate = tr.children[2];
+
+    var logCell = {};
+    
+
+    // Updating localstorage table
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['amountGrams'] = amount + ' g';
+      logCell['date'] = tdDate['data-date'];
+    }
+    else if (type == 'water') {
+      logCell['name'] = 'Water';
+      logCell['amountLiters'] = amount + ' L';
+      logCell['date'] = tdDate['data-date'];
+    }
+
+    //backLogTable[index] = logCell;
+    //localStorage.setItem('logTable', JSON.stringify(logTable));
+
+    if (type == 'water') {
+
+      tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
+      tdName.innerHTML = logCell['name'];
+      tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
+      tdDate['data-amountLiters'] = amount;
+    }
+    else if (type == 'food') {
+
+      var cups = '';
+      if (amount > 1 && measurement == 'Cups') cups = 'Cups';
+      else if (amount < 1 && measurement == 'Cups') cups = 'Cup';
+
+      tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
+      tdName.innerHTML = logCell['name'] + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdName['data-name'] = logCell['name'];
+      tdName['data-amountCups'] = logCell['amountCups']
+      tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
+      tdDate['data-amountGrams'] = amount;
+    }
+
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    modal.style.display = 'none';
+    updateProgressbar(type, amount);
   }
 
   function deleteRecord() {
 
+    // Updating front end table
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var rows = frontLogTable['data-row'];
+    var index = document.getElementById('rowIndex').value;
+
+    console.log('Rows before: ' + rows);
+    console.log('Index: ' + index);
+
+
+    //removing from backlog
+    //backLogTable.splice(index, 1);
+    //localStorage.setItem('logTable', JSON.stringify(logTable));
+    frontLogTable.removeChild(frontLogTable.children[rows - index - 1]);
+
+    rows--;
+    frontLogTable['data-row'] = rows;
+    console.log('Rows after: ' + rows); 
+
+    //resetting indices of all tr with index > the one removed
+    for (var i = index; i < rows; i++) {
+
+      --frontLogTable.children[i]['data-index'];
+    }
+    
+    modal.style.display = 'none';
+
+    for (var i = 0; i < rows; i++) {
+
+      console.log(frontLogTable.children[i]['data-index']);
+    }
   }
 
   //function to create tr and td according to the stored information
@@ -535,26 +709,45 @@
     for (var i = backLogTable.length - 1; i >= 0; i--) {
 
       var tr = document.createElement('tr');
-      tr.id = 'row' + i;
+      tr['data-index'] = i;
       var tdIcon = document.createElement('td');
       var tdName = document.createElement('td');
       var tdDate = document.createElement('td');
 
-      var cups = '';
-      if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
-      else cups = 'Cup';
+      if (backLogTable[i].name == 'Water') {
 
-      //Needs to be changed
-      tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
-      tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
-      tdDate.innerHTML = backLogTable[i]['amountGrams'] + 'g' + '<br>' + backLogTable[i]['date'];
+        tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
+        tdName.innerHTML = logCell['name'];
+        tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
+        tdDate['data-amountLiters'] = logCell['amountLiters'];
+        tdDate['data-date'] = logCell['date'];
+      }
+      else {
+
+        var cups = '';
+        if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
+        else cups = 'Cup';
+
+        tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
+        tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
+        tdName['data-name'] = backLogTable[i]['name'];
+        tdName['data-amountCups'] = backLogTable[i]['amountCups']
+        tdDate.innerHTML = backLogTable[i]['amountGrams'] + ' g' + '<br>' + backLogTable[i]['date'];
+        tdDate['data-amountGrams'] = backLogTable[i]['amountGrams'];
+        tdDate['data-date'] = backLogTable[i]['date'];
+
+        //console.log('BackLogName = ' + backLogTable[i]['name']);
+        //console.log('tdName = ' + tdName['data-name']);
+      }
 
       tr.appendChild(tdIcon);
       tr.appendChild(tdName);
       tr.appendChild(tdDate);
+      tr.addEventListener('click', modifyRecord);
 
       frontLogTable.appendChild(tr);
     }
+    //console.log(backLogTable.length);
     frontLogTable['data-row'] = backLogTable.length;
   }
 
@@ -585,36 +778,21 @@
   var modal = document.getElementById('addModal');
   var addButton = document.getElementById('addButton');
   var span = document.getElementsByClassName('close')[0];
-  var confirm = document.getElementById('confirmButton');
+  var confirm = document.getElementById('confirmAddButton');
 
-  // When the user clicks the button, open the modal
+  // When the user clicks the add  button, open the modal
   addButton.onclick = function () {
+
+    document.getElementById('addModal').children[0].children[0].children[0].innerHTML = 'New Entry';
+    document.getElementById('confirmAddButton').style.display = 'block';
+    document.getElementById ('updateButton').style.display = 'none';
+    document.getElementById('deleteButton').style.display = 'none';
+
     modal.style.display = 'block';
   }
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
-    modal.style.display = 'none';
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  }
-
-  //When the user clicks the add/delete button
-  confirm.onclick = function (event) {
-
-    var selectType = document.getElementById('selectType');
-    var type = selectType[selectType.selectedIndex].value
-    var name = document.getElementById('foodName').value;
-    var amount = document.getElementById('amount').value;
-    var selectMeasurement = document.getElementById('selectMeasurement');
-    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
-
-    addRecord(type, name, amount, measurement);
 
     //resetting the fields
     document.getElementById('foodName').value = '';
@@ -622,6 +800,19 @@
 
     modal.style.display = 'none';
   }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+
+      //resetting the fields
+      document.getElementById('foodName').value = '';
+      document.getElementById('amount').value = '';
+
+      modal.style.display = 'none';
+    }
+  }
+
 </script>
 
 </html>
