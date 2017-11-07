@@ -5,13 +5,13 @@
       <title>Homepage</title>
 
       <!-- Font Awesome Styles -->
-      <style>       
+      <style>
           @font-face {
             font-family: 'FontAwesome';
             src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
             src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
           }
-    
+
           .fa {
             font: normal normal normal 14px/1 FontAwesome;
             font-size: xx-large;
@@ -20,7 +20,7 @@
             -moz-osx-font-smoothing: grayscale;
             display: inline-block;
           }
-    
+
           .fa-home:before {
             content: "\f015";
           }
@@ -90,11 +90,11 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
             margin-bottom: 2rem;
           }
-          
+
           #waterProgressbar::-webkit-progress-value {
             background: blue;
           }
-          
+
           #waterProgressbar::-moz-progress-bar {
             background: blue;
           }
@@ -167,7 +167,7 @@
             background-color: #dddddd;
           }
 
-          
+
          </style>
     </head>
 
@@ -176,12 +176,12 @@
       <img src="images/icon.jpg">
 
       <div class="main">
-        <div class="groupSeparator">Daily Progress</div>      
+        <div class="groupSeparator">Daily Progress</div>
         <div id="progressbarDiv">
           <label for="fiberProgressbar">Fiber</label>
           <progress id="fiberProgressbar" value="22" max="100"></progress>
           <label for="waterProgressbar">Water</label>
-          <progress id="waterProgressbar" value="40" max="100"></progress>     
+          <progress id="waterProgressbar" value="40" max="100"></progress>
         </div>
 
         <div class="groupSeparator">Today's Log</div>
@@ -203,7 +203,7 @@
     <script>
         // Check browser support
         if (typeof(Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-     
+
         //function to generating mock data
         function generateData() {
           var logTable = [];
@@ -222,7 +222,7 @@
               ampm = 'PM';
             }
             var time = hours + ':' + date.getMinutes() + ' ' + ampm;
-            
+
             logCell['name'] = name;
 			      logCell['amountCups'] = amountCups;
             logCell['amountGrams'] = amountGrams;
@@ -248,13 +248,16 @@
         setTable();
         //debug();
 
-      
+
         //function to create tr and td according to the stored information
         function setTable() {
-          
+
           var frontLogTable = document.getElementById('logTable');
           var backLogTable = JSON.parse(localStorage.getItem('logTable'));
           console.log(backLogTable);
+
+          var name = "avocado";
+          var test2 = '<img src="../iconassets/' + name + '.svg"\>';
 
           for (var i = 0; i < backLogTable.length; i++) {
 
@@ -268,7 +271,7 @@
             else cups = 'Cup';
 
             //Needs to be changed
-            tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
+            tdIcon.innerHTML = test2;
             tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
             tdDate.innerHTML = backLogTable[i]['amountGrams'] + 'g' + '<br>' + backLogTable[i]['date'];
 
@@ -280,6 +283,6 @@
           }
 
         }
-        
+
         </script>
 </html>
