@@ -50,12 +50,12 @@
         font-size: 5rem;
         margin: 1% 1% 1% 1%;
       }
-  
+
       .tabs a span:nth-child(2) {
         text-decoration: none;
         font-size: 3rem;
       }
-  
+
       .tabs a {
         text-decoration: none;
         text-align: center;
@@ -123,6 +123,7 @@
 
      </style>
   <body>
+    <h3 id="result"></h3>
     <h1>Profile</h1>
     <div>
       <p>Gender:</p>
@@ -146,13 +147,18 @@
     <a href=""><span class="fa fa-gear"></span><br><span>Profile</span></a>
   </div>
     <script>
+      loadInfo();
+
       function displayMessage(){
         var genderSelect = document.getElementById('gender');
         var selectedValue = genderSelect.options[genderSelect.selectedIndex].value;
         var age = document.getElementById('Age').value;
         if((age < 200 && age > 0) && selectedValue != "none")
           //message.innerHTML ="Profile Saved";
-          alert('Profile Saved!')
+        {  alert('Profile Saved!');
+          localStorage.setItem('genderVal', genderSelect.selectedIndex);
+          localStorage.setItem('ageVal', age);
+        }
         else if (selectedValue == "none") {
           //message.innerHTML ="No Gender Selected";
           alert("No Gender Selected");
@@ -160,6 +166,21 @@
         else {
           alert("Invalid Age");
           //message.innerHTML="Invalid Age"
+        }
+      }
+
+      function loadInfo() {
+        var genderSelector = document.getElementById('gender');
+        if (localStorage.getItem('genderVal') == undefined) {
+          genderSelector.selectedIndex = 0;
+        }
+        else {
+          genderSelector.selectedIndex = parseInt(localStorage.getItem('genderVal'));
+        }
+
+        var savedAge = document.getElementById('Age');
+        if (localStorage.getItem('ageVal') != undefined) {
+          savedAge.value = localStorage.getItem('ageVal');
         }
       }
 
