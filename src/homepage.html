@@ -542,7 +542,12 @@
 
     //check for correct units
     if ((type == 'food' && measurement == 'Liters') || (type == 'water' && measurement == 'Grams')) {
-      alert('Food cannot be in Liters and water cannot be in grams');
+      alert('Food cannot be in liters and water cannot be in grams');
+      return 0;
+    }
+
+    if (amount == '') {
+      alert('You must specify the amount in grams or liters');
       return 0;
     }
 

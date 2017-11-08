@@ -150,8 +150,8 @@
 </body>
 <script>
 
-    if (localStorage.getItem('historytable') == undefined) generateTable();
-    checkHistory();
+    if (localStorage.getItem('historyTable') == undefined) generateTable();
+    //checkHistory();
     setTable();
 
     //function to create tr and td according to the stored information
@@ -199,6 +199,13 @@
             'date': homeTimeStamp,
             'fiber': homeFiber,
             'water': homeWater
+        }
+
+        for (var i = 0; i < backHistoryTable.length; ++i) {
+            if (homeTimeStamp == backHistoryTable[i].date) {
+                alert('You cannot add multiple history entries for the same day (Wizard of Oz)');
+                return 0;
+            }
         }
 
         console.log(backHistoryTable);
