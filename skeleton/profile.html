@@ -3,18 +3,167 @@
   <head>
     <title>Profile Page</title>
     <meta charset="utf-8">
-  </head>
+  <style>
+      @font-face {
+        font-family: 'FontAwesome';
+        src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+        src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+      }
+
+      .fa {
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: xx-large;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: inline-block;
+      }
+
+      .fa-home:before {
+        content: "\f015";
+      }
+
+      .fa-search:before {
+        content: "\f002";
+      }
+
+      .fa-history:before {
+        content: "\f1da";
+      }
+
+      .fa-question-circle-o:before {
+        content: "\f29c";
+      }
+
+      .fa-gear:before {
+        content: "\f013";
+      }
+
+      body {
+        margin: 5% 5% 20% 5%;
+        font-size: 4rem;
+      }
+
+      .tabs a span:nth-child(1){
+        text-decoration: none;
+        color: black;
+        font-size: 5rem;
+        margin: 1% 1% 1% 1%;
+      }
+  
+      .tabs a span:nth-child(2) {
+        text-decoration: none;
+        font-size: 3rem;
+      }
+  
+      .tabs a {
+        text-decoration: none;
+        text-align: center;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .tabs {
+        background-color: gray;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #save_button {
+            background-color: #5CB85C;
+            color: rgb(255,255,255);
+            border-color: #4CAE4C;
+            border-width: 0;
+            height: 7rem;
+            font-size: 6rem;
+            width: 100%
+        }
+
+      #Age {
+        height: 7rem;
+        width: 100%;
+        font-size: 3rem;
+      }
+
+      #gender {
+        height: 7rem;
+        width: 100%;
+        font-size: 3rem;
+        text-align: center;
+      }
+
+      .form-control {
+            display: block;
+            width: 100%;
+            height: 5rem;
+            font-size: 3.5rem;
+            color: rgb(80, 77, 77);
+            background-color: #fff;
+            border: 5px solid #ccc;
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+        .form-control:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+
+     </style>
   <body>
     <h1>Profile</h1>
-    <br>
-    <a href="../src/homepage.html">Back to homepage</a>
-    <br>
-    <a href="history.html">History page</a>
-    <br>
-    <a href="../src/search.html">Search page</a>
-    <br>
-    <a href="help.html">Help page</a>
-    <br>
-    <a href="../index.html">Login/logout page</a>
+    <div>
+      <p>Gender:</p>
+        <label for="gender">
+          <select name="gender" id="gender">
+            <option value="none" disabled selected>--Select Your Gender--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </label>
+      <p><label for="Age">Age:</label></p>
+      <input id="Age" type="number" name="Age" placeholder="Your Age Here" class="form-control">
+      <p><button type="submit" onclick="displayMessage()" id="save_button">Save</button></p>
+    </div>
+    <div id="savedMessage"></div>
+    <div class="tabs">
+    <a href="../src/homepage.html"><span class="fa fa-home"></span><br><span>Home</span></a>
+    <a href="../src/search.html"><span class="fa fa-search"></span><br><span>Search</span></a>
+    <a href="history.html"><span class="fa fa-history"></span><br><span>History</span></a>
+    <a href="help.html"><span class="fa fa-question-circle-o"></span><br><span>Help</span></a>
+    <a href=""><span class="fa fa-gear"></span><br><span>Profile</span></a>
+  </div>
+    <script>
+      function displayMessage(){
+        var genderSelect = document.getElementById('gender');
+        var selectedValue = genderSelect.options[genderSelect.selectedIndex].value;
+        var age = document.getElementById('Age').value;
+        if((age < 200 && age > 0) && selectedValue != "none")
+          //message.innerHTML ="Profile Saved";
+          alert('Profile Saved!')
+        else if (selectedValue == "none") {
+          //message.innerHTML ="No Gender Selected";
+          alert("No Gender Selected");
+        }
+        else {
+          alert("Invalid Age");
+          //message.innerHTML="Invalid Age"
+        }
+      }
+
+    </script>
+
   </body>
 </html>

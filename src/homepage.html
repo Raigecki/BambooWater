@@ -119,7 +119,6 @@
       height: 7rem;
       width: 100%;
       box-sizing: border-box;
-      background-color: #EEEEEE;
       background: green;
       border-radius: 2px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
@@ -140,11 +139,32 @@
       font-size: 3rem;
     }
 
-    .tabs a {
+    .tabs a span:nth-child(1){
       text-decoration: none;
       color: black;
       font-size: 5rem;
       margin: 1% 1% 1% 1%;
+    }
+
+    .tabs a span:nth-child(2) {
+      text-decoration: none;
+      font-size: 3rem;
+    }
+
+    .tabs a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .tabs {
+      background-color: gray;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
     }
 
     h2 {
@@ -165,17 +185,6 @@
       text-align: center;
       top: 60%;
       right: 0;
-    }
-
-    .tabs {
-      background-color: gray;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
     }
 
     .measurementAndTime {
@@ -349,6 +358,9 @@
       display: none;
     }
   </style>
+
+  <script src="../iconMap.js"></script>
+  <script src="general.js"></script>  
 </head>
 
 <body>
@@ -368,12 +380,12 @@
     <table id="logTable"></table>
   </div>
   <div class="tabs">
-    <a class="fa fa-home" href="homepage.html"></a>
-    <a class="fa fa-search" href="search.html"></a>
-    <a class="fa fa-history" href="../skeleton/history.html"></a>
-    <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
-    <a class="fa fa-gear" href="../skeleton/profile.html"></a>
-  </div>
+      <a href="homepage.html"><span class="fa fa-home"></span><br><span>Home</span></a>
+      <a href="search.html"><span class="fa fa-search"></span><br><span>Search</span></a>
+      <a href="history.html"><span class="fa fa-history"></span><br><span>History</span></a>
+      <a href="../skeleton/help.html"><span class="fa fa-question-circle-o"></span><br><span>Help</span></a>
+      <a href="../skeleton/profile.html"><span class="fa fa-gear"></span><br><span>Profile</span></a>
+    </div>
 
   <button id="addButton">
     <span>ADD</span>
@@ -431,15 +443,33 @@
 <script>
   // Check browser support
   if (typeof (Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-  if (localStorage.getItem('logTable') == undefined) generateData();
+  if (localStorage.getItem('logTable') == undefined) generateLocalStorageTable();
   if (localStorage.getItem('fiberProgressbar') == undefined) localStorage.setItem('fiberProgressbar', 0.0);
   if (localStorage.getItem('waterProgressbar') == undefined) localStorage.setItem('waterProgressbar', 0.0);
 
+  if (localStorage.getItem('homeTimeStamp') == undefined) {
+
+      var date = getFormattedDate();
+      localStorage.setItem('homeTimeStamp', date);
+  }
+
   //generateData();
   setProgressBar();
-  resetProgressBar();
+  //resetProgressBar();
   setTable();
+  checkHistory();
   //debug();
+
+  function getFormattedDate() {
+  
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth();
+  var day = date.getDate();
+
+  var currentDate = month + '/' + day + '/' + year;
+  return currentDate;
+}
 
   function getFormattedTime() {
     var date = new Date();
@@ -451,6 +481,11 @@
     }
     var time = hours + ':' + date.getMinutes() + ' ' + ampm;
     return time;
+  }
+
+  function generateLocalStorageTable() {
+    var logTable = [];
+    localStorage.setItem('logTable', JSON.stringify(logTable));
   }
 
   function updateProgressbar(type, amount) {
@@ -502,6 +537,7 @@
     var logCell = {};
     var frontLogTable = document.getElementById('logTable');
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    console.log(backLogTable);
     var index = frontLogTable['data-row'];
 
     //check for correct units
@@ -514,16 +550,17 @@
     if (type == 'food') {
       logCell['name'] = name;
       logCell['type'] = 'food';
-      logCell['amountGrams'] = amount + ' g';
+      logCell['amountGrams'] = amount;
     }
     else if (type == 'water') {
       logCell['name'] = 'Water';
       logCell['type'] = 'water';
-      logCell['amountLiters'] = amount + ' L';
+      logCell['amountLiters'] = amount;
     }
     logCell['date'] = getFormattedTime();
-    //backLogTable.push(logCell);
-    //localStorage.setItem('logTable', JSON.stringify(logTable));
+    
+    backLogTable.push(logCell);
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
 
     // Updating front end table
     var tr = document.createElement('tr');
@@ -535,17 +572,17 @@
 
       tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
       tdName.innerHTML = logCell['name'];
-      tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
+      tdDate.innerHTML = logCell['amountLiters'] + ' L'+ '<br>' + logCell['date'];
       tdDate['data-amountLiters'] = amount;
       tdDate['data-date'] = logCell['date'];
       tdName['data-type'] = logCell['type'];
     }
     else if (type == 'food') {
 
-      tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
+      tdIcon.innerHTML = setIcon(logCell['name']);
       tdName.innerHTML = logCell['name']; // + '<br>' + logCell['amountCups'] + ' ' + cups;
       tdName['data-name'] = logCell['name'];
-      tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
+      tdDate.innerHTML = logCell['amountGrams'] + ' g' + '<br>' + logCell['date'];
       tdDate['data-amountGrams'] = amount;
       tdDate['data-date'] = logCell['date'];
       tdName['data-type'] = logCell['type'];
@@ -640,25 +677,25 @@
     // Updating localstorage table
     if (type == 'food') {
       logCell['name'] = name;
-      logCell['amountGrams'] = amount + ' g';
+      logCell['amountGrams'] = amount;
       logCell['date'] = tdDate['data-date'];
       logCell['type'] = 'food';
     }
     else if (type == 'water') {
       logCell['name'] = 'Water';
-      logCell['amountLiters'] = amount + ' L';
+      logCell['amountLiters'] = amount;
       logCell['date'] = tdDate['data-date'];
       logCell['type'] = 'water';
     }
 
-    //backLogTable[index] = logCell;
-    //localStorage.setItem('logTable', JSON.stringify(logTable));
+    backLogTable[index] = logCell;
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
 
     if (type == 'water') {
       console.log('in water case');
       tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
       tdName.innerHTML = logCell['name'];
-      tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
+      tdDate.innerHTML = logCell['amountLiters'] + ' L' + '<br>' + logCell['date'];
       tdDate['data-amountLiters'] = amount;
       tdName['data-type'] = 'water';
     }
@@ -668,11 +705,11 @@
       if (amount > 1 && measurement == 'Cups') cups = 'Cups';
       else if (amount < 1 && measurement == 'Cups') cups = 'Cup';
       */
-      tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
+      tdIcon.innerHTML = setIcon(logCell['name']);     //Needs to be changed
       tdName.innerHTML = logCell['name']; // + '<br>' + logCell['amountCups'] + ' ' + cups;
       tdName['data-name'] = logCell['name'];
       //tdName['data-amountCups'] = logCell['amountCups']
-      tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
+      tdDate.innerHTML = logCell['amountGrams'] + ' g' + '<br>' + logCell['date'];
       tdDate['data-amountGrams'] = amount;
       tdName['data-type'] = 'food';
     } 
@@ -718,8 +755,8 @@
 
 
     //removing from backlog
-    //backLogTable.splice(index, 1);
-    //localStorage.setItem('logTable', JSON.stringify(logTable));
+    backLogTable.splice(index, 1);
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
     frontLogTable.removeChild(frontLogTable.children[rows - index - 1]);
 
     rows--;
@@ -760,13 +797,13 @@
         tdName.innerHTML = backLogTable[i]['name'];
         tdName['data-name'] = backLogTable[i]['name'];
         tdName['data-type'] = 'water';
-        tdDate.innerHTML = backLogTable[i]['amountLiters'] + '<br>' + backLogTable[i]['date'];
+        tdDate.innerHTML = backLogTable[i]['amountLiters'] + ' L' + '<br>' + backLogTable[i]['date'];
         tdDate['data-amountLiters'] = backLogTable[i]['amountLiters'];
         tdDate['data-date'] = backLogTable[i]['date'];
       }
       else {
 
-        tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
+        tdIcon.innerHTML = setIcon(backLogTable[i]['name']);
         tdName.innerHTML = backLogTable[i]['name'];
         tdName['data-name'] = backLogTable[i]['name'];
         tdName['data-type'] = 'food';
@@ -787,6 +824,21 @@
     }
     //console.log(backLogTable.length);
     frontLogTable['data-row'] = backLogTable.length;
+  }
+
+  function setIcon(name) {
+
+    var foodName = name.toLowerCase();
+    console.log(foodName);
+    var iconTagString;
+
+    if (foodName in fiberMap) {
+      iconTagString = '<img src="../iconassets/' + fiberMap[foodName]['icon'] + '.svg"\>';
+    }
+    else {
+      iconTagString = '<img src="../iconassets/' + fiberMap['default']['icon'] + '.svg"\>';
+    }
+    return iconTagString;
   }
 
   function setProgressBar() {
