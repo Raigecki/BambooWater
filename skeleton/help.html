@@ -1,169 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Help Page</title>
-    <meta charset="utf-8">
-    <style>
-        @font-face {
-          font-family: 'FontAwesome';
-          src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
-          src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
-        }
 
-        .fa {
-          font: normal normal normal 14px/1 FontAwesome;
-          font-size: xx-large;
-          text-rendering: auto;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          display: inline-block;
-        }
-        .fa-home:before {
-          content: "\f015";
-        }
-        .fa-search:before {
-          content: "\f002";
-        }
-        .fa-history:before {
-          content: "\f1da";
-        }
-        .fa-question-circle-o:before {
-          content: "\f29c";
-        }
-        .fa-gear:before {
-          content: "\f013";
-        }
-      </style>
-  </head>
+<head>
+  <title>Help Page</title>
+  <meta charset="utf-8">
   <style>
-
-  body {
-    text-align: center;
-    margin: 5% 5% 0 5%;
-    margin-bottom: 100px;
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+      src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
     }
 
-  .main {
-    margin-bottom: 10rem;
-  }
+    .fa {
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: xx-large;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+    }
 
-  img {
-    width: 80%;
-    height: 80%;
-    margin-left: 7%;
-  }
+    .fa-home:before {
+      content: "\f015";
+    }
 
-  .groupSeparator {
-    display: flex;
-    flex-basis: 100%;
-    align-items: center;
-    color: rgba(0, 0, 0, 0.35);
-    margin: 1rem 0 2rem 0;
-    font-size: 3rem;
-  }
+    .fa-search:before {
+      content: "\f002";
+    }
 
-  .groupSeparator::before,
-  .groupSeparator::after {
-    content: "";
-    flex-grow: 1;
-    background: rgba(0, 0, 0, 0.35);
-    height: 1px;
-    font-size: 0px;
-    line-height: 0px;
-    margin: 0px 8px;
-  }
+    .fa-history:before {
+      content: "\f1da";
+    }
 
-  progress {
-    height: 7rem;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #EEEEEE;
-    background: green;
-    border-radius: 2px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-    margin-bottom: 2rem;
-  }
+    .fa-question-circle-o:before {
+      content: "\f29c";
+    }
 
-  #waterProgressbar::-webkit-progress-value {
-    background: blue;
-  }
+    .fa-gear:before {
+      content: "\f013";
+    }
 
-  #waterProgressbar::-moz-progress-bar {
-    background: blue;
-  }
+    .tabs a span:nth-child(1) {
+      text-decoration: none;
+      color: black;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
 
-  #progressbarDiv > label {
-    display: block;
-    text-align: left;
-    font-size: 3rem;
-  }
+    .tabs a span:nth-child(2) {
+      text-decoration: none;
+      font-size: 3rem;
+    }
 
-  .tabs a {
-    text-decoration: none;
-    color: black;
-    font-size: 5rem;
-    margin: 1% 1% 1% 1%;
-  }
+    .tabs a {
+      text-decoration: none;
+      text-align: center;
+    }
 
-  #addButton {
-    background-color: green;
-    color: white;
-    border-radius: 50%;
-    border-color: green;
-    border-width: 0;
-    position: fixed;
-    width: 10rem;
-    line-height: 10rem;
-    vertical-align: middle;
-    font-size: 10em;
-    text-align: center;
-    top: 60%;
-    right: 0;
-  }
+    .tabs {
+      background-color: gray;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
 
-  .tabs {
-    background-color: gray;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
+    body {
+      text-align: center;
+      margin: 5% 5% 0 5%;
+      margin-bottom: 100px;
+    }
 
-  .measurementAndTime {
-    float: right;
-  }
-
-  ul li {
-    overflow: hidden;
-  }
-
-  table {
-    border-collapse: collapse;
-    text-align: left;
-    font-size: 2rem;
-    width: 100%;
-  }
-
-  td {
-    border: 1px #dddddd;
-    text-align: left;
-    padding: 1rem;
-  }
-  tr:nth-child(odd) {
-    background-color: #dddddd;
-  }
-
-    .About{
+    .About {
       text-align: left;
       font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
       font-style: normal;
       font-size: 2rem;
     }
 
-    .About h2{
+    .About h2 {
       font-size: 2.5rem;
     }
 
@@ -171,13 +89,14 @@
       font-size: 5rem;
       font-family: "Arial Rounded MT Bold", Arial;
     }
+  </style>
+</head>
 
-   </style>
-  <body>
-    <h1 id = "pagetitle">Help</h1>
+<body>
+  <h1 id="pagetitle">Help</h1>
 
-    <div class ="About">
-      <div id="scroll" style="overflow-y:scroll;">
+  <div class="About">
+    <div id="scroll" style="overflow-y:scroll;">
 
       <div id="text">
         <h2>What is Bamboo Water?</h2>
@@ -187,25 +106,26 @@
       </div>
       <div>
         <h2> Adding an Entry </h2>
-        <p>To add an entry into the log you would press the add (+) button, which causes a window to popup.
-          In this window you can select to add food or water.
-          Then you can type the name of the food followed by amount and finally units (grams or liters).
-          After this you can press the submit button which will close the modal. The new entry should appear at the top of the log.
+        <p>To add an entry into the log you would press the add (+) button, which causes a window to popup. In this window you
+          can select to add food or water. Then you can type the name of the food followed by amount and finally units (grams
+          or liters). After this you can press the submit button which will close the modal. The new entry should appear
+          at the top of the log.
         </p>
         <hr>
       </div>
       <div>
         <h2> Editing an Entry </h2>
-        <p> To edit an entry on today's log you need to click on the entry. Once that happens a window should pop up with the details of that entry where you can edit
-          the details of that entry. You can then either hit submit which will update the entry with the new details you have added, or you can press the delete button
-          which will remove the entry from the list.
+        <p> To edit an entry on today's log you need to click on the entry. Once that happens a window should pop up with the
+          details of that entry where you can edit the details of that entry. You can then either hit submit which will update
+          the entry with the new details you have added, or you can press the delete button which will remove the entry from
+          the list.
         </p>
         <hr>
       </div>
       <div>
         <h2>Viewing Log of a Previous Day</h2>
-        <p>Viewing a log of a previous day is very simple. All you need to do is go to the history page by pressing the middle button on the menu bar.
-        Once there you should see a list with different dates. Clicking on any of these dates will bring up the log of that date. That's it!
+        <p>Viewing a log of a previous day is very simple. All you need to do is go to the history page by pressing the middle
+          button on the menu bar. Once there you should see a list with different dates.
         </p>
         <hr>
       </div>
@@ -213,11 +133,32 @@
     </div>
 
     <div class="tabs">
-        <a class="fa fa-home" href="../src/homepage.html"></a>
-        <a class="fa fa-search" href="../src/search.html"></a>
-        <a class="fa fa-history" href="../skeleton/history.html"></a>
-        <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
-        <a class="fa fa-gear" href="../skeleton/profile.html"></a>
+      <a href="../src/homepage.html">
+        <span class="fa fa-home"></span>
+        <br>
+        <span>Home</span>
+      </a>
+      <a href="../src/search.html">
+        <span class="fa fa-search"></span>
+        <br>
+        <span>Search</span>
+      </a>
+      <a href="../src/history.html">
+        <span class="fa fa-history"></span>
+        <br>
+        <span>History</span>
+      </a>
+      <a href="">
+        <span class="fa fa-question-circle-o"></span>
+        <br>
+        <span>Help</span>
+      </a>
+      <a href="profile.html">
+        <span class="fa fa-gear"></span>
+        <br>
+        <span>Profile</span>
+      </a>
     </div>
-  </body>
+</body>
+
 </html>
