@@ -237,7 +237,7 @@
       border-radius: 10px;
       border: 1px solid #888;
       width: 80%;
-      height: 50%;
+      height: 80%;
       margin: 10%;
       vertical-align: middle;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -336,7 +336,7 @@
     }
 
     #confirmAddButton {
-      position: absolute;
+      /* position: absolute; */
       bottom: 0;
       border-color: #5cb85c;
       background-color: #5cb85c;
@@ -351,7 +351,7 @@
     }
 
     #deleteButton {
-      position: absolute;
+      /* position: absolute; */
       bottom: 0;
       border-color: #cc0000;
       background-color: #cc0000;
@@ -474,12 +474,27 @@
   function getFormattedTime() {
     var date = new Date();
     var hours = date.getHours();
+    if (hours < 10) {
+      if (hours == '0') {
+        hours = '12';
+      }
+      else { 
+        hours = '0' + hours;
+      }
+    }
+    
+    var minutes = date.getMinutes();
+
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
     var ampm = 'AM';
     if (hours > 12) {
       hours -= 12;
       ampm = 'PM';
     }
-    var time = hours + ':' + date.getMinutes() + ' ' + ampm;
+    var time = hours + ':' + minutes + ' ' + ampm;
     return time;
   }
 
