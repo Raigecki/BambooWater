@@ -17,6 +17,7 @@ function generateData() {
     }
     var time = hours + ':' + date.getMinutes() + ' ' + ampm;
 
+    //icon name, name, type, date, amount
     logCell['name'] = name;
     logCell['amountCups'] = amountCups;
     logCell['amountGrams'] = amountGrams;
@@ -26,7 +27,6 @@ function generateData() {
   }
   localStorage.setItem('logTable', JSON.stringify(logTable));
 }
-
 function debug() {
 
   var logTable = JSON.parse(localStorage.getItem('logTable'));

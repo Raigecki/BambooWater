@@ -407,13 +407,12 @@
           <select class="form-control" id="selectMeasurement">
             <option value="Grams">Grams</option>
             <option value="Liters">Liters</option>
-            <option value="Cups">Cups</option>
           </select>
 
           <input type="button" name="confirmAddButton" value="Add" id="confirmAddButton" data-toggle="modal" data-target="#confirm-add"
             class="confirmButton" onclick="addRecord()">
           <input type="button" name="updateButton" value="Update" id="updateButton" data-toggle="modal" data-target="#confirm-update"
-            class="confirmButton" onclick="updateRecord()">
+            class="confirmButton">
           <input type="button" name="deleteButton" value="Delete" id="deleteButton" data-toggle="modal" data-target="#confirm-delete"
             class="confirmButton" onclick="deleteRecord()">
         </form>
@@ -468,7 +467,7 @@
 
     //console.log('water: ' + waterAmt);
     //console.log('fiber: ' + fiberAmt);
-    //console.log('New: ' + amount);
+    console.log('New: ' + amount);
 
     if (type == 'food') {
       var newValue = fiberAmt + amount;
@@ -505,13 +504,21 @@
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
     var index = frontLogTable['data-row'];
 
+    //check for correct units
+    if ((type == 'food' && measurement == 'Liters') || (type == 'water' && measurement == 'Grams')) {
+      alert('Food cannot be in Liters and water cannot be in grams');
+      return 0;
+    }
+
     // Updating localstorage table
     if (type == 'food') {
       logCell['name'] = name;
+      logCell['type'] = 'food';
       logCell['amountGrams'] = amount + ' g';
     }
     else if (type == 'water') {
       logCell['name'] = 'Water';
+      logCell['type'] = 'water';
       logCell['amountLiters'] = amount + ' L';
     }
     logCell['date'] = getFormattedTime();
@@ -529,22 +536,19 @@
       tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
       tdName.innerHTML = logCell['name'];
       tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
-      tdDate['data-amountLiters'] = logCell['amountLiters'];
+      tdDate['data-amountLiters'] = amount;
       tdDate['data-date'] = logCell['date'];
+      tdName['data-type'] = logCell['type'];
     }
     else if (type == 'food') {
 
-      var cups = '';
-      if (amount > 1 && measurement == 'Cups') cups = 'Cups';
-      else if (amount < 1 && measurement == 'Cups') cups = 'Cup';
-
       tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
-      tdName.innerHTML = logCell['name'] + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdName.innerHTML = logCell['name']; // + '<br>' + logCell['amountCups'] + ' ' + cups;
       tdName['data-name'] = logCell['name'];
-      tdName['data-amountCups'] = logCell['amountCups']
       tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
-      tdDate['data-amountGrams'] = logCell['amountGrams'];
+      tdDate['data-amountGrams'] = amount;
       tdDate['data-date'] = logCell['date'];
+      tdName['data-type'] = logCell['type'];
     }
 
     tr.appendChild(tdIcon);
@@ -573,17 +577,19 @@
     document.getElementById ('updateButton').style.display = 'block';
     document.getElementById('deleteButton').style.display = 'block';
 
+    var originalAmount;
 
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
     var index = this['data-index'];
     document.getElementById('rowIndex').value = index;
-    var type = this.children[1].innerHTML;
+    var type = this.children[1]['data-type'];
 
     //load the modal with data
-    if (type == 'Water') {
+    if (type == 'water') {
       //console.log('It is water');
       document.getElementById('selectType').value = 'water';
-      document.getElementById('amount').value = this.children[2]['data-amountLiters'];
+      originalAmount = this.children[2]['data-amountLiters'];
+      document.getElementById('amount').value = originalAmount;
       document.getElementById('selectMeasurement').value = 'Liters';
     }
 
@@ -591,14 +597,18 @@
       //console.log('It is food');
       document.getElementById('selectType').value = 'food';
       document.getElementById('foodName').value = this.children[1]['data-name'];
-      document.getElementById('amount').value = this.children[2]['data-amountGrams'];
+      originalAmount = this.children[2]['data-amountGrams'];
+      document.getElementById('amount').value = originalAmount;
       document.getElementById('selectMeasurement').value = 'Grams';
     }
     //console.log('Index = ' + index);
+    document.getElementById('updateButton').onclick = function() {
+      updateRecord(originalAmount, type);
+    }
 
   }
 
-  function updateRecord() {
+  function updateRecord(originalAmount, originalType) {
 
     var selectType = document.getElementById('selectType');
     var type = selectType[selectType.selectedIndex].value
@@ -607,6 +617,12 @@
     var selectMeasurement = document.getElementById('selectMeasurement');
     var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
     var index = document.getElementById('rowIndex').value;
+
+    //check for correct units
+    if ((type == 'food' && measurement == 'Liters') || (type == 'water' && measurement == 'Grams')) {
+      alert('Food cannot be in Liters and water cannot be in grams');
+      return 0;
+    }
 
     // Updating front end table
     var frontLogTable = document.getElementById('logTable');
@@ -621,48 +637,62 @@
 
     var logCell = {};
     
-
     // Updating localstorage table
     if (type == 'food') {
       logCell['name'] = name;
       logCell['amountGrams'] = amount + ' g';
       logCell['date'] = tdDate['data-date'];
+      logCell['type'] = 'food';
     }
     else if (type == 'water') {
       logCell['name'] = 'Water';
       logCell['amountLiters'] = amount + ' L';
       logCell['date'] = tdDate['data-date'];
+      logCell['type'] = 'water';
     }
 
     //backLogTable[index] = logCell;
     //localStorage.setItem('logTable', JSON.stringify(logTable));
 
     if (type == 'water') {
-
+      console.log('in water case');
       tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
       tdName.innerHTML = logCell['name'];
       tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
       tdDate['data-amountLiters'] = amount;
+      tdName['data-type'] = 'water';
     }
     else if (type == 'food') {
-
+      /*
       var cups = '';
       if (amount > 1 && measurement == 'Cups') cups = 'Cups';
       else if (amount < 1 && measurement == 'Cups') cups = 'Cup';
-
+      */
       tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
-      tdName.innerHTML = logCell['name'] + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdName.innerHTML = logCell['name']; // + '<br>' + logCell['amountCups'] + ' ' + cups;
       tdName['data-name'] = logCell['name'];
-      tdName['data-amountCups'] = logCell['amountCups']
+      //tdName['data-amountCups'] = logCell['amountCups']
       tdDate.innerHTML = logCell['amountGrams'] + '<br>' + logCell['date'];
       tdDate['data-amountGrams'] = amount;
-    }
+      tdName['data-type'] = 'food';
+    } 
 
     //resetting the fields
     document.getElementById('foodName').value = '';
     document.getElementById('amount').value = '';
     modal.style.display = 'none';
-    updateProgressbar(type, amount);
+
+    console.log('TYPE: ' + type);
+    console.log('originaltype: ' + originalType);
+    if (type == originalType) {
+      console.log('in equal case');
+      var resultAmount = parseFloat(amount) - parseFloat(originalAmount);
+      updateProgressbar(type, resultAmount);
+    }
+    else {
+      updateProgressbar(originalType, '-' + originalAmount);
+      updateProgressbar(type, amount);
+    }
   }
 
   function deleteRecord() {
@@ -672,6 +702,16 @@
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
     var rows = frontLogTable['data-row'];
     var index = document.getElementById('rowIndex').value;
+
+    //updating progress bar
+    var amountFiber = frontLogTable.children[rows - index -1].children[2]['data-amountGrams'];
+    var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amountLiters'];
+
+    console.log('delete fiber = ' + amountFiber);
+    console.log('delete water = ' + amountWater);
+
+    if (amountFiber == undefined) updateProgressbar('water', '-' + amountWater);
+    else updateProgressbar('food', '-' + amountFiber);
 
     console.log('Rows before: ' + rows);
     console.log('Index: ' + index);
@@ -687,7 +727,7 @@
     console.log('Rows after: ' + rows); 
 
     //resetting indices of all tr with index > the one removed
-    for (var i = index; i < rows; i++) {
+    for (var i = rows - index -1; i >= 0; i--) {
 
       --frontLogTable.children[i]['data-index'];
     }
@@ -714,24 +754,22 @@
       var tdName = document.createElement('td');
       var tdDate = document.createElement('td');
 
-      if (backLogTable[i].name == 'Water') {
+      if (backLogTable[i].type == 'water') {
 
         tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
-        tdName.innerHTML = logCell['name'];
-        tdDate.innerHTML = logCell['amountLiters'] + '<br>' + logCell['date'];
-        tdDate['data-amountLiters'] = logCell['amountLiters'];
-        tdDate['data-date'] = logCell['date'];
+        tdName.innerHTML = backLogTable[i]['name'];
+        tdName['data-name'] = backLogTable[i]['name'];
+        tdName['data-type'] = 'water';
+        tdDate.innerHTML = backLogTable[i]['amountLiters'] + '<br>' + backLogTable[i]['date'];
+        tdDate['data-amountLiters'] = backLogTable[i]['amountLiters'];
+        tdDate['data-date'] = backLogTable[i]['date'];
       }
       else {
 
-        var cups = '';
-        if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
-        else cups = 'Cup';
-
         tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';     //Needs to be changed
-        tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
+        tdName.innerHTML = backLogTable[i]['name'];
         tdName['data-name'] = backLogTable[i]['name'];
-        tdName['data-amountCups'] = backLogTable[i]['amountCups']
+        tdName['data-type'] = 'food';
         tdDate.innerHTML = backLogTable[i]['amountGrams'] + ' g' + '<br>' + backLogTable[i]['date'];
         tdDate['data-amountGrams'] = backLogTable[i]['amountGrams'];
         tdDate['data-date'] = backLogTable[i]['date'];
