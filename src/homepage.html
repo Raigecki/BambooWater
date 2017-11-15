@@ -724,6 +724,8 @@
     var index = document.getElementById('rowIndex').value;
 
     //updating progress bar
+    console.log('rows: ' + rows);
+    console.log('index: ' + index);
     var amountFiber = frontLogTable.children[rows - index -1].children[2]['data-amount'];
     var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amount'];
 
@@ -736,9 +738,9 @@
     frontLogTable.removeChild(frontLogTable.children[rows - index - 1]);
 
     //resetting indices of all tr with index > the one removed
-    for (var i = rows - index -1; i >= 0; i--) {
-
-      --frontLogTable.children[i]['data-index'];
+    for (var i = rows - index -2; i >= 0; i--) {
+      console.log(frontLogTable.children[i]);
+      frontLogTable.children[i]['data-index']--;
     }
     resetModalFields();
     
