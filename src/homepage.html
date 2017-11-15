@@ -1,374 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <title>Homepage</title>
 
-      <!-- Font Awesome Styles -->
-      <style>       
-          @font-face {
-            font-family: 'FontAwesome';
-            src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
-            src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
-          }
-    
-          .fa {
-            font: normal normal normal 14px/1 FontAwesome;
-            font-size: xx-large;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            display: inline-block;
-          }
-    
-          .fa-home:before {
-            content: "\f015";
-          }
+<head>
+  <meta charset="UTF-8">
+  <title>Homepage</title>
 
-          .fa-search:before {
-            content: "\f002";
-          }
+  <!-- Font Awesome Styles -->
+  <style>
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+      src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    }
 
-          .fa-history:before {
-            content: "\f1da";
-          }
+    .fa {
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: xx-large;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+    }
 
-          .fa-question-circle-o:before {
-            content: "\f29c";
-          }
+    .fa-home:before {
+      content: "\f015";
+    }
 
-          .fa-gear:before {
-            content: "\f013";
-          }
-        </style>
+    .fa-search:before {
+      content: "\f002";
+    }
 
-        <!-- Element Styles -->
-        <style>
+    .fa-history:before {
+      content: "\f1da";
+    }
 
-          body {
-            text-align: center;
-            margin: 5% 5% 0 5%;
-          }
+    .fa-question-circle-o:before {
+      content: "\f29c";
+    }
 
-          .main {
-            margin-bottom: 10rem;
-          }
+    .fa-gear:before {
+      content: "\f013";
+    }
+  </style>
 
-          img {
-            width: 80%;
-            height: 80%;
-            margin-left: 7%;
-          }
+  <!-- Bootstraps Styles -->
+  <style>
+    .form-control {
+      display: block;
+      width: 98%;
+      height: 8rem;
+      font-size: 5rem;
+      color: rgb(80, 77, 77);
+      background-color: #fff;
+      border: 5px solid #ccc;
+      border-radius: 1rem;
+      margin-bottom: 0.5rem;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
 
-          .groupSeparator {
-            display: flex;
-            flex-basis: 100%;
-            align-items: center;
-            color: rgba(0, 0, 0, 0.35);
-            margin: 1rem 0 2rem 0;
-            font-size: 3rem;
-          }
+    .form-control:focus {
+      border-color: #66afe9;
+      outline: 0;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    }
 
-          .groupSeparator::before,
-          .groupSeparator::after {
-            content: "";
-            flex-grow: 1;
-            background: rgba(0, 0, 0, 0.35);
-            height: 1px;
-            font-size: 0px;
-            line-height: 0px;
-            margin: 0px 8px;
-          }
+    .form-control::-moz-placeholder {
+      color: #999;
+      opacity: 1;
+    }
 
-          progress {
-            height: 7rem;
-            width: 100%;
-            box-sizing: border-box;
-            background-color: #EEEEEE;
-            background: green;
-            border-radius: 2px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-            margin-bottom: 2rem;
-          }
-          
-          #waterProgressbar::-webkit-progress-value {
-            background: blue;
-          }
-          
-          #waterProgressbar::-moz-progress-bar {
-            background: blue;
-          }
+    .form-control:-ms-input-placeholder {
+      color: #999;
+    }
+  </style>
 
-          #progressbarDiv > label {
-            display: block;
-            text-align: left;
-            font-size: 3rem;
-          }
+  <!-- Homepage Element Styles -->
+  <style>
+    body {
+      text-align: center;
+      margin: 5% 5% 0 5%;
+    }
 
-          .tabs a {
-            text-decoration: none;
-            color: black;
-            font-size: 5rem;
-            margin: 1% 1% 1% 1%;
-          }
+    .main {
+      margin-bottom: 10rem;
+    }
 
-          h2 {
-            text-align: center;
-          }
+    img {
+      width: 80%;
+      height: 80%;
+      margin-left: 7%;
+    }
 
-          #addButton {
-            background-color: green;
-            color: white;
-            border-radius: 50%;
-            border-color: green;
-            border-width: 0;
-            position: fixed;
-            width: 10rem;
-            line-height: 10rem;
-            vertical-align: middle;
-            font-size: 10em;
-            text-align: center;
-            top: 60%;
-            right: 0;
-          }
+    .groupSeparator {
+      display: flex;
+      flex-basis: 100%;
+      align-items: center;
+      color: rgba(0, 0, 0, 0.35);
+      margin: 1rem 0 2rem 0;
+      font-size: 3rem;
+    }
 
-          .tabs {
-            background-color: gray;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-          }
+    .groupSeparator::before,
+    .groupSeparator::after {
+      content: "";
+      flex-grow: 1;
+      background: rgba(0, 0, 0, 0.35);
+      height: 1px;
+      font-size: 0px;
+      line-height: 0px;
+      margin: 0px 8px;
+    }
 
-          .measurementAndTime {
-            float: right;
-          }
+    progress {
+      height: 7rem;
+      width: 100%;
+      box-sizing: border-box;
+      background: green;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+      margin-bottom: 2rem;
+    }
 
-          ul li {
-            overflow: hidden;
-          }
+    #waterProgressbar::-webkit-progress-value {
+      background: blue;
+    }
 
-          table {
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 2rem;
-            width: 100%;
-          }
+    #waterProgressbar::-moz-progress-bar {
+      background: blue;
+    }
 
-          td {
-            border: 1px #dddddd;
-            text-align: left;
-            padding: 1rem;
-          }
-          tr:nth-child(odd) {
-            background-color: #dddddd;
-          }
-        </style>
-        <style>
-          /* The Modal*/
-          .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 3rem;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-          }
-          /* Modal Content */
-          .modal-content {
-            position: relative;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 0;
-            border-radius: 10px;
-            border: 1px solid #888;
-            width: 80%;
-            height: 70%;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 0.5s;
-            animation-name: animatetop;
-            animation-duration: 0.5s
-          }
-          /* Add Animation */
+    #ProgressbarDiv label {
+      display: block;
+      text-align: left;
+      font-size: 3rem;
+    }
 
-          @-webkit-keyframes animatetop {
-            from {
-              top: -300px;
-              opacity: 0
-            }
-            to {
-              top: 0;
-              opacity: 1
-            }
-          }
+    .tabs a span:nth-child(1){
+      text-decoration: none;
+      color: black;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
 
-          @keyframes animatetop {
-            from {
-              top: -300px;
-              opacity: 0
-            }
-            to {
-              top: 0;
-              opacity: 1
-            }
-          }
+    .tabs a span:nth-child(2) {
+      text-decoration: none;
+      font-size: 3rem;
+    }
 
-          /* The Close Button */
-          .close {
-            color: white;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-          }
+    .tabs a {
+      color: black;
+      text-decoration: none;
+    }
 
-          .close:hover,
-          .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-          }
+    .tabs {
+      background-color: gray;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
 
-          .modal-header {
-            border-radius: 10px 10px 0px 0px;
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            text-align: center;
-            color: white;
-          }
+    h2 {
+      text-align: center;
+    }
 
-          .modal-body {
-            padding: 2px 16px;
-            text-align: center;
-          }
-    </style>
+    #addButton {
+      background-color: green;
+      color: white;
+      border-radius: 50%;
+      border-color: green;
+      border-width: 0;
+      position: fixed;
+      width: 10rem;
+      line-height: 10rem;
+      vertical-align: middle;
+      font-size: 3rem;
+      text-align: center;
+      top: 60%;
+      right: 0;
+    }
 
-    <style>
-      /* The Modal*/
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        padding-top: 1rem;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.4);
-      }
+    .measurementAndTime {
+      float: right;
+    }
 
-      /* Modal Content */
-      .modal-content {
-        position: relative;
-        background-color: #fefefe;
-        margin: auto;
-        padding: 1rem;
-        margin-top: 20%;
-        border-radius: 10px;
-        border: 1px solid #888;
-        width: 80%;
-        height: 70%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        -webkit-animation-name: animatetop;
-        -webkit-animation-duration: 0.5s;
-        animation-name: animatetop;
-        animation-duration: 0.5s
-      }
-      /* Add Animation */
-      @-webkit-keyframes animatetop {
-        from {
-          top: -300px;
-          opacity: 0
-        }
-        to {
-          top: 0;
-          opacity: 1
-        }
-      }
+    ul li {
+      overflow: hidden;
+    }
 
-      @keyframes animatetop {
-        from {
-          top: -300px;
-          opacity: 0
-        }
-        to {
-          top: 0;
-          opacity: 1
-        }
-      }
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 2rem;
+      width: 100%;
+    }
 
-      /* The Close Button */
-      .close {
-        color: white;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
+    td {
+      border: 1px #dddddd;
+      text-align: left;
+      padding: 1rem;
+    }
 
-      .close:hover,
-      .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
+    tr:nth-child(odd) {
+      background-color: #dddddd;
+    }
+  </style>
 
-      .modal-header {
-        border-radius: 10px 10px 0px 0px;
-        padding: 2px 16px;
-        background-color: #5cb85c;
-        text-align: center;
-        color: white;
-      }
+  <!-- Modal Styles -->
+  <style>
+    /* The Modal (background) */
 
-      .modal-body {
-        padding: 2px 16px;
-        text-align: center;
-      }
-    </style>
-
-    <style>
-    /* The Modal*/
     .modal {
       display: none;
       position: fixed;
       z-index: 1;
-      padding-top: 1rem;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
+      line-height: 100%;
       overflow: auto;
       background-color: rgb(0, 0, 0);
       background-color: rgba(0, 0, 0, 0.4);
     }
-    /* Modal Content */
 
     .modal-content {
       position: relative;
       background-color: #fefefe;
-      margin-top: 20%;
-      padding: 0;
       border-radius: 10px;
       border: 1px solid #888;
-      width: 80%;
-      height: 70%;
+      width: 80%; 
+      margin: 10%;
+      vertical-align: middle;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       -webkit-animation-name: animatetop;
       -webkit-animation-duration: 0.5s;
       animation-name: animatetop;
       animation-duration: 0.5s
     }
-    /* Add Animation */
 
-    @-webkit-keyframes animatetop {
+    .modal-header {
+      border-radius: 1rem 1rem 0px 0px;
+      background-color: #5cb85c;
+      text-align: center;
+      height: 8rem;
+      color: white;
+      font-size: 5rem;
+      line-height: 8rem;
+    }
+
+    .modal-header span:first-child{
+      margin-left: 4rem;
+    }
+
+    .modal-header span:nth-child(2){
+      margin-right: 1.5rem;
+    }
+
+    .modal-body {
+      padding: 4%;
+      text-align: center;
+    }
+
+    optgroup {
+      font-size: 1rem;
+    }
+
+    #selectType {
+      height: 8rem;
+      width: 100%
+    }
+
+    #foodName {
+      display: none;
+    }
+
+    #selectMeasurement {
+      height: 8rem;
+      width: 100%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: white;
+      float: right;
+      font-size: 6rem;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confirmButton {
+      left: 0;
+      right: 0;
+      color: #fff;
+      height: 7rem;
+      width: 100%;
+      padding: 6px 12px;
+      font-size: 4rem;
+      text-align: center;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    }
+
+    #confirmAddButton {
+      /* position: absolute; */
+      bottom: 0;
+      border-color: #5cb85c;
+      background-color: #5cb85c;
+      margin-top: 2rem;
+    }
+
+    #updateButton {
+      width: 100%;
+      margin: 5% 0 5% 0;
+      border-color: #ffcc00;
+      background-color: #ffcc00;
+      display: none;
+    }
+
+    #deleteButton {
+      /* position: absolute; */
+      bottom: 0;
+      border-color: #cc0000;
+      background-color: #cc0000;
+      display: none;
+    }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
       from {
         top: -300px;
         opacity: 0
@@ -389,182 +362,519 @@
         opacity: 1
       }
     }
-    /* The Close Button */
-
-    .close {
-      color: white;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .modal-header {
-      border-radius: 10px 10px 0px 0px;
-      padding: 2px 16px;
-      background-color: #5cb85c;
-      text-align: center;
-      color: white;
-    }
-
-    .modal-body {
-      padding: 2px 16px;
-      text-align: center;
-    }
   </style>
 
-    </head>
+  <script src="../iconMap.js"></script>
+  <script src="general.js"></script>  
+</head>
 
-    <body>
+<body>
 
-      <img src="images/icon.jpg">
+  <img src="images/icon.jpg">
 
-      <div class="main">
-        <div class="groupSeparator">Daily Progress</div>      
-        <div id="progressbarDiv">
-          <label for="fiberProgressbar">Fiber</label>
-          <progress id="fiberProgressbar" value="22" max="100"></progress>
-          <label for="waterProgressbar">Water</label>
-          <progress id="waterProgressbar" value="40" max="100"></progress>     
-        </div>
+  <div class="main">
+    <div class="groupSeparator">Daily Progress</div>
+    <div id="ProgressbarDiv">
+      <label for="fiberProgressbar">Fiber</label>
+      <progress id="fiberProgressbar" value="0.0" max="30"></progress>
+      <label for="waterProgressbar">Water</label>
+      <progress id="waterProgressbar" value="0.0" max="4"></progress>
+    </div>
 
-        <div class="groupSeparator">Today's Log</div>
-        <table id="logTable"></table>
+    <div class="groupSeparator">Today's Log</div>
+    <table id="logTable"></table>
+  </div>
+  <div class="tabs">
+      <a href=""><span class="fa fa-home"></span><br><span>Home</span></a>
+      <a href="search.html"><span class="fa fa-search"></span><br><span>Search</span></a>
+      <a href="history.html"><span class="fa fa-history"></span><br><span>History</span></a>
+      <a href="../skeleton/help.html"><span class="fa fa-question-circle-o"></span><br><span>Help</span></a>
+      <a href="../skeleton/profile.html"><span class="fa fa-gear"></span><br><span>Profile</span></a>
+    </div>
+
+  <button id="addButton" onclick="modalAppear()">
+    <span>ADD</span>
+  </button>
+
+  <h3 id="result"></h3>
+
+  <!-- The Modal -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <span></span>
+        <span class="close">&times;</span>
       </div>
-      <div class="tabs">
-          <a class="fa fa-home" href="homepage.html"></a>
-          <a class="fa fa-search" href="search.html"></a>
-          <a class="fa fa-history" href="../skeleton/history.html"></a>
-          <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
-          <a class="fa fa-gear" href="../skeleton/profile.html"></a>
+
+      <div class="modal-body">
+        <form role="form" id="modalForm">
+
+          <input type="hidden" id="rowIndex">
+
+          <select class="form-control" id="selectType" onChange="typeSelected()">
+            <optgroup>
+              <option value="none" selected disabled>--Select Type--</option>
+              <option value="food">Food</option>
+              <option value="water">Water</option>
+          </optgroup>
+          </select>
+
+          <input class="form-control" placeholder="Name" id="foodName">
+
+          <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'></input>
+
+          <select class="form-control" id="selectMeasurement">
+            <optgroup>
+              <option value="none" selected disabled>--Selety Units--</option>
+              <option value="Cups">Cups</option>
+              <option value="Grams">Grams</option>
+              <option value="Liters">Liters</option>
+          </optgroup>
+          </select>
+
+          <input type="button" name="confirmAddButton" value="Add" id="confirmAddButton" data-toggle="modal" data-target="#confirm-add"
+            class="confirmButton" onclick="addRecord()">
+          <input type="button" name="updateButton" value="Update" id="updateButton" data-toggle="modal" data-target="#confirm-update"
+            class="confirmButton">
+          <input type="button" name="deleteButton" value="Delete" id="deleteButton" data-toggle="modal" data-target="#confirm-delete"
+            class="confirmButton" onclick="deleteRecord()">
+        </form>
+
       </div>
+      <!-- modal body div -->
 
-      <button id="addButton"><span>&#43</span></button>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- content div -->
 
-      <h3 id="result"></h3>
+  </div>
+</body>
 
+<script>
+  // Check browser support
+  if (typeof (Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+  if (localStorage.getItem('logTable') == undefined) generateLocalStorageTable();
+  if (localStorage.getItem('fiberProgressbar') == undefined) localStorage.setItem('fiberProgressbar', 0.0);
+  if (localStorage.getItem('waterProgressbar') == undefined) localStorage.setItem('waterProgressbar', 0.0);
 
-      <!-- The Modal -->
-      <div id="addModal" class="modal">
+  if (localStorage.getItem('homeTimeStamp') == undefined) {
+
+      var date = getFormattedDate();
+      localStorage.setItem('homeTimeStamp', date);
+  }
+
+  setProgressBar();
+  setTable();
+  checkHistory();
+
+  function generateLocalStorageTable() {
+    var logTable = [];
+    localStorage.setItem('logTable', JSON.stringify(logTable));
+  }
+
+  function updateProgressbar(type, amount) {
+
+    var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
+    var backWaterProgressbar = localStorage.getItem('waterProgressbar');
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    amount = parseFloat(amount);
+
+    var waterAmt = parseFloat(backWaterProgressbar);
+    var fiberAmt = parseFloat(backFiberProgressbar);
+
+    if (type == 'food') {
+      var newValue = fiberAmt + amount;
+      backFiberProgressbar = newValue;
+      frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
+      localStorage.setItem('fiberProgressbar', backFiberProgressbar);
+    }
+
+    else if (type == 'water') {
+      var newValue = waterAmt + amount;
+      backWaterProgressbar = newValue;
+      frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
+      localStorage.setItem('waterProgressbar', backWaterProgressbar);
+    }
+  }
+
+  function appendFrontEndTable(type, name, amount, units, date, index) {
+
     
-          <!-- Modal content -->
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="close">&times;</span>
-              <h2>Add Food/Water</h2>
-            </div>
-            <div class="modal-body">
-              <form role="form" id="formfield" action="inc/Controller/OperatorController.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+  }
+
+  function addRecord() {
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
+    var date = getFormattedTime();
+
+    var logCell = {};
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var index = frontLogTable['data-row'];
+
+    if (amount == '') {
+      alert('You must specify the amount in grams or liters');
+      return 0;
+    }
+
+    // Updating localstorage table
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['type'] = 'food';
+      logCell['amount'] = amount;
+      logCell['units'] = measurement;
+    }
+    else if (type == 'water') {
+      logCell['name'] = 'Water';
+      logCell['type'] = 'water';
+      logCell['amount'] = amount;
+      logCell['units'] = measurement;
+    }
+    logCell['date'] = date;
     
-                <div>
-                    <input type="radio" class="radio" value="1" name="fooby[1][]" />Food</label>
-                  <label>
-                    <input type="radio" class="radio" value="1" name="fooby[1][]" />Water</label>
-                </div>
+    backLogTable.push(logCell);
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+
+    // updating front end table
+    var tr = document.createElement('tr');
+    var tdIcon = document.createElement('td');
+    var tdName = document.createElement('td');
+    var tdDate = document.createElement('td');
+    var img = document.createElement('img');
+
+    if (type == 'water') {
+
+      img.src = "../iconassets/water.svg"
+      tdIcon.innerHTML = img;
+      tdName.innerHTML = 'Water';
+      tdDate.innerHTML = amount + ' ' + units +  '<br>' + date;
+      tdName['data-type'] = type;
+      tdDate['data-amount'] = amount;
+      tdDate['data-unit'] = units;
+      tdDate['data-date'] = date;
+    }
+    else if (type == 'food') {
+
+      tdIcon.innerHTML = setIcon(name);
+      tdName.innerHTML = name;
+      tdDate.innerHTML = logCell['amountGrams'] + ' g' + '<br>' + logCell['date'];
+
+      tdName['data-type'] = type;
+      tdName['data-name'] = name;
+      tdDate['data-amount'] = amount;
+      tdDate['data-unit'] = units;
+      tdDate['data-date'] = date;
+    }
+
+    tr.appendChild(tdIcon);
+    tr.appendChild(tdName);
+    tr.appendChild(tdDate);
+    tr['data-index'] = index;
+    tr.addEventListener('click', modifyRecord);
+    frontLogTable.insertBefore(tr, frontLogTable.firstChild);
+    frontLogTable['data-row']++;
+    index++;
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    modal.style.display = 'none';
+    updateProgressbar(type, amount);
+  }
+
+  function modifyRecord() {
+
+    //open the modal
+    document.getElementById('addModal').style.display = 'block';
+    document.getElementById('addModal').children[0].children[0].children[0].innerHTML = 'Update Entry';
+    document.getElementById('confirmAddButton').style.display = 'none';
+    document.getElementById ('updateButton').style.display = 'block';
+    document.getElementById('deleteButton').style.display = 'block';
+
+    var originalAmount;
+
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var index = this['data-index'];
+    document.getElementById('rowIndex').value = index;
+    var type = this.children[1]['data-type'];
+
+    //load the modal with data
+    if (type == 'water') {
+      //console.log('It is water');
+      document.getElementById('selectType').value = 'water';
+      originalAmount = this.children[2]['data-amountLiters'];
+      document.getElementById('amount').value = originalAmount;
+      document.getElementById('selectMeasurement').value = 'Liters';
+    }
+
+    else {
+      document.getElementById('selectType').value = 'food';
+      document.getElementById('foodName').value = this.children[1]['data-name'];
+      originalAmount = this.children[2]['data-amountGrams'];
+      document.getElementById('amount').value = originalAmount;
+      document.getElementById('selectMeasurement').value = 'Grams';
+    }
+    document.getElementById('updateButton').onclick = function() {
+      updateRecord(originalAmount, type);
+    }
+  }
+
+  function updateRecord(originalAmount, originalType) {
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
+    var index = document.getElementById('rowIndex').value;
+
+    //check for correct units
+    if ((type == 'food' && measurement == 'Liters') || (type == 'water' && measurement == 'Grams')) {
+      alert('Food cannot be in Liters and water cannot be in grams');
+      return 0;
+    }
+
+    var logCell = {};
     
-                <div class="form-group">
-                  <label></label>Name<span class="label label-danger"> *required</span>
-                  <input class="form-control" placeholder="Name" name="name" id="name">
-                </div>
+    // Updating localstorage table
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['amountGrams'] = amount;
+      logCell['date'] = tdDate['data-date'];
+      logCell['type'] = 'food';
+    }
+    else if (type == 'water') {
+      logCell['name'] = 'Water';
+      logCell['amountLiters'] = amount;
+      logCell['date'] = tdDate['data-date'];
+      logCell['type'] = 'water';
+    }
+
+    backLogTable[index] = logCell;
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+
+    // Updating front end table
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var rows = frontLogTable['data-row'];
+
+    var tr = frontLogTable.children[rows - index -1];
+    console.log('data-row = ' + frontLogTable['data-row']);
+    var tdIcon = tr.children[0];
+    var tdName = tr.children[1];
+    var tdDate = tr.children[2];
+
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    modal.style.display = 'none';
+
+    console.log('TYPE: ' + type);
+    console.log('originaltype: ' + originalType);
+    if (type == originalType) {
+      console.log('in equal case');
+      var resultAmount = parseFloat(amount) - parseFloat(originalAmount);
+      updateProgressbar(type, resultAmount);
+    }
+    else {
+      updateProgressbar(originalType, '-' + originalAmount);
+      updateProgressbar(type, amount);
+    }
+  }
+
+  function deleteRecord() {
+
+    // Updating front end table
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var rows = frontLogTable['data-row'];
+    var index = document.getElementById('rowIndex').value;
+
+    //updating progress bar
+    var amountFiber = frontLogTable.children[rows - index -1].children[2]['data-amountGrams'];
+    var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amountLiters'];
+
+    if (amountFiber == undefined) updateProgressbar('water', '-' + amountWater);
+    else updateProgressbar('food', '-' + amountFiber);
+
+    //removing from backlog
+    backLogTable.splice(index, 1);
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+    frontLogTable.removeChild(frontLogTable.children[rows - index - 1]);
+
+    rows--;
+    frontLogTable['data-row'] = rows;
+    console.log('Rows after: ' + rows); 
+
+    //resetting indices of all tr with index > the one removed
+    for (var i = rows - index -1; i >= 0; i--) {
+
+      --frontLogTable.children[i]['data-index'];
+    }
+    resetModalFields();
+  }
+
+  //function to create tr and td according to the stored information
+  function setTable() {
+
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+
+    for (var i = backLogTable.length - 1; i >= 0; i--) {
+
+      var tr = document.createElement('tr');
+      tr['data-index'] = i;
+      var tdIcon = document.createElement('td');
+      var tdName = document.createElement('td');
+      var tdDate = document.createElement('td');
+
+      if (backLogTable[i].type == 'water') {
+
+        img.src = "../iconassets/water.svg"
+        tdIcon.innerHTML = img;
+        tdName.innerHTML = backLogTable[i]['name'];
+        tdName['data-name'] = backLogTable[i]['name'];
+        tdName['data-type'] = 'water';
+        tdDate.innerHTML = backLogTable[i]['amountLiters'] + ' L' + '<br>' + backLogTable[i]['date'];
+        tdDate['data-amountLiters'] = backLogTable[i]['amountLiters'];
+        tdDate['data-date'] = backLogTable[i]['date'];
+      }
+      else {
+
+        tdIcon.innerHTML = setIcon(backLogTable[i]['name']);
+        tdName.innerHTML = backLogTable[i]['name'];
+        tdName['data-name'] = backLogTable[i]['name'];
+        tdName['data-type'] = 'food';
+        tdDate.innerHTML = backLogTable[i]['amountGrams'] + ' g' + '<br>' + backLogTable[i]['date'];
+        tdDate['data-amountGrams'] = backLogTable[i]['amountGrams'];
+        tdDate['data-date'] = backLogTable[i]['date'];
+      }
+
+      tr.appendChild(tdIcon);
+      tr.appendChild(tdName);
+      tr.appendChild(tdDate);
+      tr.addEventListener('click', modifyRecord);
+
+      frontLogTable.appendChild(tr);
+    }
+    //console.log(backLogTable.length);
+    frontLogTable['data-row'] = backLogTable.length;
+  }
+
+  function setIcon(name) {
+
+    var foodName = name.toLowerCase();
+    console.log(foodName);
+    var iconTagString;
+
+    if (foodName in fiberMap) {
+      iconTagString = '<img src="../iconassets/' + fiberMap[foodName]['icon'] + '.svg"\>';
+    }
+    else {
+      iconTagString = '<img src="../iconassets/' + fiberMap['default']['icon'] + '.svg"\>';
+    }
+    return iconTagString;
+  }
+
+  function setProgressBar() {
+
+    var backFiberProgressbar = parseFloat(localStorage.getItem('fiberProgressbar'));
+    var backWaterProgressbar = parseFloat(localStorage.getItem('waterProgressbar'));
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    frontFiberProgressbar.value = backFiberProgressbar;
+    frontWaterProgressbar.value = backWaterProgressbar;
+  }
+
+</script>
+<script>
+  var modal = document.getElementById('addModal');
+  var addButton = document.getElementById('addButton');
+  var span = document.getElementsByClassName('close')[0];
+  var confirm = document.getElementById('confirmAddButton');
+
+  function typeSelected() {
+
+    var type = document.getElementById('selectType');
+    var name = document.getElementById('foodName');
+    var units = document.getElementById('selectMeasurement');
+    var amount = document.getElementById('amount');
+
+    if (type[type.selectedIndex].value == 'water') {
+      amount.placeholder = 'Amount of Water';
+      units.options[1].style.display = 'none';
+      units.options[2].style.display = 'none';
+      units.options[3].style.display = 'block';
+      units.options[3].selected = 'selected';
+      name.style.display = 'none';
+
+    }
+    else if (type[type.selectedIndex].value == 'food') {
+      amount.placeholder = 'Amount of Fiber';
+      units.options[1].style.display = 'none';
+      units.options[3].style.display = 'none';
+      units.options[2].style.display = 'block';
+      units.options[2].selected = 'selected';
+      name.style.display = 'block';
+    }
+
+    else {
+      units.options[1].style.display = 'none';
+      units.options[2].style.display = 'block';
+      units.options[3].style.display = 'block';
+    }
+  }
+
+  function resetModalFields() {
     
-                <div class="form-group">
-                  <label></label>Amount<span class="label label-danger"> *required</span>
-                  <input type="text" placeholder="Amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></input>
-                </div>
-                <div class="form-group">
-                  <label>Unit</label><span class="label label-danger">*required</span>
-                  <select>
-                    <option value="Grams">Grams</option>
-                    <option value="Liters">Liters</option>
-    
-                  </select>
-                </div>
-              </form>
-              <input type="button" name="btn" value="Submit" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-default" />
-            </div>
-    
-            <div class="modal-footer">
-            </div>
-          </div>
-        </div>      
-    </body>
+    var selectType = document.getElementById('selectType');
+    selectType.selectedIndex = 0;
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    document.getElementById('amount').placeholder = 'Amount';
+    document.getElementById('foodName').style.display = 'none';
+    document.getElementById('selectMeasurement').options[0].selected = 'selected';
 
-    <script>
-        // Check browser support
-        if (typeof(Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+  }
 
-        function debug() {
+  // When the user clicks the add  button, open the modal
+  function modalAppear() {
 
-          var logTable = JSON.parse(localStorage.getItem('logTable'));
-          console.log('logTable = ' + logTable);
-          console.log('logTable[0] = ' + logTable[0]);
-          console.log(logTable[0]['name']);
-          console.log(logTable[0]['amount']);
-          console.log(logTable[0]['date']);
-        }
+    document.getElementById('addModal').children[0].children[0].children[0].innerHTML = 'New Entry';
+    document.getElementById('confirmAddButton').style.display = 'block';
+    document.getElementById ('updateButton').style.display = 'none';
+    document.getElementById('deleteButton').style.display = 'none';
 
-        if (localStorage.getItem('logTable') == undefined) generateData();
-        //generateData();
-        setTable();
-        //debug();
+    modal.style.display = 'block';
+  }
 
-      
-        //function to create tr and td according to the stored information
-        function setTable() {
-          
-          var frontLogTable = document.getElementById('logTable');
-          var backLogTable = JSON.parse(localStorage.getItem('logTable'));
-          console.log(backLogTable);
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
 
-          for (var i = 0; i < backLogTable.length; i++) {
+    //resetting the fields
+    resetModalFields();
+    modal.style.display = 'none';
+  }
 
-            var tr = document.createElement('tr');
-            var tdIcon = document.createElement('td');
-            var tdName = document.createElement('td');
-            var tdDate = document.createElement('td');
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
 
-            var cups = '';
-            if (backLogTable[i]['amountCups'] > 1) cups = 'Cups';
-            else cups = 'Cup';
+      resetModalFields();
+      modal.style.display = 'none';
+    }
+  }
 
-            //Needs to be changed
-            tdIcon.innerHTML = '<img src=\"../iconassets/apple-1.svg\">';
-            tdName.innerHTML = backLogTable[i]['name'] + '<br>' + backLogTable[i]['amountCups'] + ' ' + cups;
-            tdDate.innerHTML = backLogTable[i]['amountGrams'] + 'g' + '<br>' + backLogTable[i]['date'];
+</script>
 
-            tr.appendChild(tdIcon);
-            tr.appendChild(tdName);
-            tr.appendChild(tdDate);
-
-            frontLogTable.appendChild(tr);
-          }
-        }
-        </script>
-        <script>
-            
-          var modal = document.getElementById('addModal');
-          var btn = document.getElementById("addButton");
-          var span = document.getElementsByClassName("close")[0];
-            
-          btn.onclick = function() {
-            modal.style.display = "block";
-          }
-            
-          span.onclick = function() {
-            modal.style.display = "none";
-          }
-            
-          window.onclick = function(event) {
-            if (event.target == modal) {
-              modal.style.display = "none";
-            }
-          }
-            
-      </script>
 </html>
