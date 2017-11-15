@@ -498,11 +498,6 @@
     }
   }
 
-  function appendFrontEndTable(type, name, amount, units, date, index) {
-
-    
-  }
-
   function addRecord() {
 
     var selectType = document.getElementById('selectType');
@@ -511,12 +506,12 @@
     var amount = document.getElementById('amount').value;
     var selectMeasurement = document.getElementById('selectMeasurement');
     var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
-    var date = getFormattedTime();
+    var date = getFormattedDate();
 
     var logCell = {};
     var frontLogTable = document.getElementById('logTable');
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
-    var index = frontLogTable['data-row'];
+    var index = frontLogTable.childElementCount;
 
     if (amount == '') {
       alert('You must specify the amount in grams or liters');
@@ -529,12 +524,14 @@
       logCell['type'] = 'food';
       logCell['amount'] = amount;
       logCell['units'] = measurement;
+      logCell['date'] = date;
     }
     else if (type == 'water') {
       logCell['name'] = 'Water';
       logCell['type'] = 'water';
       logCell['amount'] = amount;
       logCell['units'] = measurement;
+      logCell['date'] = date;
     }
     logCell['date'] = date;
     
@@ -550,25 +547,24 @@
 
     if (type == 'water') {
 
-      img.src = "../iconassets/water.svg"
-      tdIcon.innerHTML = img;
+      tdIcon.innerHTML = setIcon('Water');
       tdName.innerHTML = 'Water';
-      tdDate.innerHTML = amount + ' ' + units +  '<br>' + date;
+      tdDate.innerHTML = amount + ' ' + measurement +  '<br>' + date;
       tdName['data-type'] = type;
       tdDate['data-amount'] = amount;
-      tdDate['data-unit'] = units;
+      tdDate['data-units'] = measurement;
       tdDate['data-date'] = date;
     }
     else if (type == 'food') {
 
       tdIcon.innerHTML = setIcon(name);
       tdName.innerHTML = name;
-      tdDate.innerHTML = logCell['amountGrams'] + ' g' + '<br>' + logCell['date'];
+      tdDate.innerHTML = logCell['amount'] + ' ' + measurement + '<br>' + logCell['date'];
 
       tdName['data-type'] = type;
       tdName['data-name'] = name;
       tdDate['data-amount'] = amount;
-      tdDate['data-unit'] = units;
+      tdDate['data-units'] = measurement;
       tdDate['data-date'] = date;
     }
 
@@ -578,11 +574,11 @@
     tr['data-index'] = index;
     tr.addEventListener('click', modifyRecord);
     frontLogTable.insertBefore(tr, frontLogTable.firstChild);
-    frontLogTable['data-row']++;
     index++;
     //resetting the fields
     document.getElementById('foodName').value = '';
     document.getElementById('amount').value = '';
+    resetModalFields();
     modal.style.display = 'none';
     updateProgressbar(type, amount);
   }
@@ -602,22 +598,32 @@
     var index = this['data-index'];
     document.getElementById('rowIndex').value = index;
     var type = this.children[1]['data-type'];
+    var name = this.children[1]['data-name'];
+    var amount = this.children[2]['data-amount'];
+    var units = this.children[2]['data-units'];
+    var date = this.children[2]['data-date'];
 
     //load the modal with data
     if (type == 'water') {
-      //console.log('It is water');
-      document.getElementById('selectType').value = 'water';
-      originalAmount = this.children[2]['data-amountLiters'];
-      document.getElementById('amount').value = originalAmount;
-      document.getElementById('selectMeasurement').value = 'Liters';
+      document.getElementById('selectType').value = type;
+      originalAmount = amount;
+      var amount = document.getElementById('amount');
+      amount.value = originalAmount;
+      amount.placeholder = 'Amount of Water';
+      document.getElementById('selectMeasurement').value = units;
     }
 
     else {
+      nameField = document.getElementById('foodName');
+      nameField.style.display = 'block';
+      nameField.value = name;
       document.getElementById('selectType').value = 'food';
-      document.getElementById('foodName').value = this.children[1]['data-name'];
-      originalAmount = this.children[2]['data-amountGrams'];
-      document.getElementById('amount').value = originalAmount;
-      document.getElementById('selectMeasurement').value = 'Grams';
+      document.getElementById('foodName').value = name;
+      originalAmount = amount;
+      amount =  document.getElementById('amount');
+      amount.value = originalAmount;
+      amount.placeholder = 'Amount of Fiber';
+      document.getElementById('selectMeasurement').value = units;
     }
     document.getElementById('updateButton').onclick = function() {
       updateRecord(originalAmount, type);
@@ -627,7 +633,8 @@
   function updateRecord(originalAmount, originalType) {
 
     var selectType = document.getElementById('selectType');
-    var type = selectType[selectType.selectedIndex].value
+    var type = selectType[selectType.selectedIndex].value;
+    console.log('656: ' + type);
     var name = document.getElementById('foodName').value;
     var amount = document.getElementById('amount').value;
     var selectMeasurement = document.getElementById('selectMeasurement');
@@ -640,39 +647,50 @@
       return 0;
     }
 
-    var logCell = {};
-    
-    // Updating localstorage table
-    if (type == 'food') {
-      logCell['name'] = name;
-      logCell['amountGrams'] = amount;
-      logCell['date'] = tdDate['data-date'];
-      logCell['type'] = 'food';
-    }
-    else if (type == 'water') {
-      logCell['name'] = 'Water';
-      logCell['amountLiters'] = amount;
-      logCell['date'] = tdDate['data-date'];
-      logCell['type'] = 'water';
-    }
-
-    backLogTable[index] = logCell;
-    localStorage.setItem('logTable', JSON.stringify(backLogTable));
-
     // Updating front end table
     var frontLogTable = document.getElementById('logTable');
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
-    var rows = frontLogTable['data-row'];
+    var rows = frontLogTable.childElementCount;
 
+    //getting the element from front end
     var tr = frontLogTable.children[rows - index -1];
-    console.log('data-row = ' + frontLogTable['data-row']);
     var tdIcon = tr.children[0];
     var tdName = tr.children[1];
     var tdDate = tr.children[2];
 
+    if (type == 'water') name = 'water';
+    tdIcon.innerHTML = setIcon(name);
+    tdName.innerHTML = name;
+    tdDate.innerHTML = amount + ' ' + measurement + '<br>' + tdDate['data-date'];
+
+    tdName['data-type'] = type;
+    tdName['data-name'] = name;
+    tdDate['data-amount'] = amount;
+    tdDate['data-units'] = measurement;
+
+
+    // Updating localstorage table
+    var logCell = {};
+    
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['amount'] = amount;
+      logCell['date'] = tdDate['data-date'];
+      logCell['type'] = type;
+      logCell['units'] = measurement;
+    }
+    else if (type == 'water') {
+      logCell['name'] = name;
+      logCell['amount'] = amount;
+      logCell['date'] = tdDate['data-date'];
+      logCell['type'] = type;
+      logCell['units'] = measurement;
+    }
+    backLogTable[index] = logCell;
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+
     //resetting the fields
-    document.getElementById('foodName').value = '';
-    document.getElementById('amount').value = '';
+    resetModalFields();
     modal.style.display = 'none';
 
     console.log('TYPE: ' + type);
@@ -693,12 +711,12 @@
     // Updating front end table
     var frontLogTable = document.getElementById('logTable');
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
-    var rows = frontLogTable['data-row'];
+    var rows = frontLogTable.childElementCount;
     var index = document.getElementById('rowIndex').value;
 
     //updating progress bar
-    var amountFiber = frontLogTable.children[rows - index -1].children[2]['data-amountGrams'];
-    var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amountLiters'];
+    var amountFiber = frontLogTable.children[rows - index -1].children[2]['data-amount'];
+    var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amount'];
 
     if (amountFiber == undefined) updateProgressbar('water', '-' + amountWater);
     else updateProgressbar('food', '-' + amountFiber);
@@ -708,16 +726,14 @@
     localStorage.setItem('logTable', JSON.stringify(backLogTable));
     frontLogTable.removeChild(frontLogTable.children[rows - index - 1]);
 
-    rows--;
-    frontLogTable['data-row'] = rows;
-    console.log('Rows after: ' + rows); 
-
     //resetting indices of all tr with index > the one removed
     for (var i = rows - index -1; i >= 0; i--) {
 
       --frontLogTable.children[i]['data-index'];
     }
     resetModalFields();
+    document.getElementById('addModal').style.display = 'none';
+
   }
 
   //function to create tr and td according to the stored information
@@ -728,6 +744,12 @@
 
     for (var i = backLogTable.length - 1; i >= 0; i--) {
 
+      var type = backLogTable[i].type;
+      var name = backLogTable[i].name;
+      var amount = backLogTable[i].amount;
+      var units = backLogTable[i].units;
+      var date = backLogTable[i].date;
+
       var tr = document.createElement('tr');
       tr['data-index'] = i;
       var tdIcon = document.createElement('td');
@@ -736,24 +758,25 @@
 
       if (backLogTable[i].type == 'water') {
 
-        img.src = "../iconassets/water.svg"
-        tdIcon.innerHTML = img;
-        tdName.innerHTML = backLogTable[i]['name'];
-        tdName['data-name'] = backLogTable[i]['name'];
-        tdName['data-type'] = 'water';
-        tdDate.innerHTML = backLogTable[i]['amountLiters'] + ' L' + '<br>' + backLogTable[i]['date'];
-        tdDate['data-amountLiters'] = backLogTable[i]['amountLiters'];
-        tdDate['data-date'] = backLogTable[i]['date'];
+        tdIcon.innerHTML = setIcon('Water');
+        tdName.innerHTML = name;
+        tdName['data-name'] = name;
+        tdName['data-type'] = type;
+        tdDate.innerHTML = amount + ' ' + units + '<br>' + date;
+        tdDate['data-amount'] = amount;
+        tdDate['data-units'] = units;
+        tdDate['data-date'] = date;
       }
       else {
 
-        tdIcon.innerHTML = setIcon(backLogTable[i]['name']);
-        tdName.innerHTML = backLogTable[i]['name'];
-        tdName['data-name'] = backLogTable[i]['name'];
-        tdName['data-type'] = 'food';
-        tdDate.innerHTML = backLogTable[i]['amountGrams'] + ' g' + '<br>' + backLogTable[i]['date'];
-        tdDate['data-amountGrams'] = backLogTable[i]['amountGrams'];
-        tdDate['data-date'] = backLogTable[i]['date'];
+        tdIcon.innerHTML = setIcon(name);
+        tdName.innerHTML = name;
+        tdName['data-name'] = name;
+        tdName['data-type'] = type;
+        tdDate.innerHTML = amount + ' ' + units + '<br>' + date;
+        tdDate['data-amount'] = amount;
+        tdDate['data-units'] = units;
+        tdDate['data-date'] = date;
       }
 
       tr.appendChild(tdIcon);
@@ -763,14 +786,11 @@
 
       frontLogTable.appendChild(tr);
     }
-    //console.log(backLogTable.length);
-    frontLogTable['data-row'] = backLogTable.length;
   }
 
   function setIcon(name) {
 
     var foodName = name.toLowerCase();
-    console.log(foodName);
     var iconTagString;
 
     if (foodName in fiberMap) {
@@ -812,7 +832,6 @@
         frontFiberProgressbar.max = '21';
       }
     }
-
   }
 
 </script>
