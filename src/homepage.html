@@ -722,15 +722,18 @@
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
     var rows = frontLogTable.childElementCount;
     var index = document.getElementById('rowIndex').value;
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value;
 
     //updating progress bar
     console.log('rows: ' + rows);
     console.log('index: ' + index);
-    var amountFiber = frontLogTable.children[rows - index -1].children[2]['data-amount'];
-    var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amount'];
+    var amount = frontLogTable.children[rows - index -1].children[2]['data-amount'];
+    //var amountWater = frontLogTable.children[rows - index -1].children[2]['data-amount'];
 
-    if (amountFiber == undefined) updateProgressbar('water', '-' + amountWater);
-    else updateProgressbar('food', '-' + amountFiber);
+    //if (amountFiber == undefined) updateProgressbar('water', '-' + amountWater);
+    //else updateProgressbar('food', '-' + amountFiber);
+    updateProgressbar(type, '-' + amount);
 
     //removing from backlog
     backLogTable.splice(index, 1);
