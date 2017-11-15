@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Homepage</title>
-
+  <script src="../iconMap.js"></script>
+  <script src="general.js"></script>
   <!-- Font Awesome Styles -->
   <style>
     @font-face {
@@ -357,10 +358,7 @@
       background-color: #cc0000;
       display: none;
     }
-  </style>
-
-  <script src="../iconMap.js"></script>
-  <script src="general.js"></script>  
+  </style>  
 </head>
 
 <body>
@@ -373,7 +371,7 @@
       <label for="fiberProgressbar">Fiber</label>
       <progress id="fiberProgressbar" value="0.0" max="30"></progress>
       <label for="waterProgressbar">Water</label>
-      <progress id="waterProgressbar" value="0.0" max="4"></progress>
+      <progress id="waterProgressbar" value="0.0" max="3"></progress>
     </div>
 
     <div class="groupSeparator">Today's Log</div>
@@ -452,51 +450,12 @@
       var date = getFormattedDate();
       localStorage.setItem('homeTimeStamp', date);
   }
-
+  importAtMidnight();
   //generateData();
   setProgressBar();
   //resetProgressBar();
   setTable();
-  checkHistory();
   //debug();
-
-  function getFormattedDate() {
-  
-  var date = new Date();
-  var year = date.getFullYear();
-  var month = date.getMonth();
-  var day = date.getDate();
-
-  var currentDate = month + '/' + day + '/' + year;
-  return currentDate;
-}
-
-  function getFormattedTime() {
-    var date = new Date();
-    var hours = date.getHours();
-    if (hours < 10) {
-      if (hours == '0') {
-        hours = '12';
-      }
-      else { 
-        hours = '0' + hours;
-      }
-    }
-    
-    var minutes = date.getMinutes();
-
-    if (minutes < 10) {
-      minutes = '0' + minutes;
-    }
-
-    var ampm = 'AM';
-    if (hours > 12) {
-      hours -= 12;
-      ampm = 'PM';
-    }
-    var time = hours + ':' + minutes + ' ' + ampm;
-    return time;
-  }
 
   function generateLocalStorageTable() {
     var logTable = [];
@@ -870,6 +829,28 @@
 
     frontFiberProgressbar.value = backFiberProgressbar;
     frontWaterProgressbar.value = backWaterProgressbar;
+
+    var gender = parseInt(localStorage.getItem('genderVal'));
+    var age = parseInt(localStorage.getItem('ageVal'));
+    if (gender == 1) {
+      frontWaterProgressbar.max = '3';
+      if (age != undefined && age < 50) {
+        frontFiberProgressbar.max = '38';
+      }
+      else if (age != undefined && age >= 50) {
+        frontFiberProgressbar.max = '30';
+      }
+    }
+    else if (gender == 2) {
+      frontWaterProgressbar.max = '2.2';
+      if (age != undefined && age < 50) {
+        frontFiberProgressbar.max = '25';
+      }
+      else if (age != undefined && age >= 50) {
+        frontFiberProgressbar.max = '21';
+      }
+    }
+
   }
 
   function resetProgressBar() {

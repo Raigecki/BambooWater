@@ -3,6 +3,7 @@
   <head>
     <title>Profile Page</title>
     <meta charset="utf-8">
+    <script src="../src/general.js"></script>
   <style>
       @font-face {
         font-family: 'FontAwesome';
@@ -149,7 +150,7 @@
   </div>
     <script>
       loadInfo();
-
+      importAtMidnight();
       function displayMessage(){
         var genderSelect = document.getElementById('gender');
         var selectedValue = genderSelect.options[genderSelect.selectedIndex].value;
