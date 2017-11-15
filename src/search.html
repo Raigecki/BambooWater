@@ -126,11 +126,17 @@
     tr:nth-child(odd) {
       background-color: #dddddd;
     }
+    
+    #searchDisclaimer {
+      text-align: left;
+      font-size: 1.5rem;
+    }
   </style>
 </head>
 
 <body>
   <div id="searchDiv">
+    <h3 id="searchDisclaimer">Search for fiber contents of common food items</h3>
     <label id="searchLabel" for="searchInput">
       <input name="searchInput" list="searchList" id="searchInput" type="search" placeholder="Search..." value="" onkeyup="showDynamicAutocomplete()">
       <button id="searchButton" type="submit" class="fa fa-search" onclick="setTable()"></button>
