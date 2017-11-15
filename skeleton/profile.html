@@ -38,94 +38,31 @@
       .fa-gear:before {
         content: "\f013";
       }
-    </style>
-    <style>
 
       body {
-        text-align: center;
-        margin: 5% 5% 0 5%;
+        margin: 5% 5% 20% 5%;
+        font-size: 4rem;
       }
 
-      .main {
-        margin-bottom: 10rem;
-      }
-
-      img {
-        width: 80%;
-        height: 80%;
-        margin-left: 7%;
-      }
-
-      .groupSeparator {
-        display: flex;
-        flex-basis: 100%;
-        align-items: center;
-        color: rgba(0, 0, 0, 0.35);
-        margin: 1rem 0 2rem 0;
-        font-size: 3rem;
-      }
-
-      .groupSeparator::before,
-      .groupSeparator::after {
-        content: "";
-        flex-grow: 1;
-        background: rgba(0, 0, 0, 0.35);
-        height: 1px;
-        font-size: 0px;
-        line-height: 0px;
-        margin: 0px 8px;
-      }
-
-      progress {
-        height: 7rem;
-        width: 100%;
-        box-sizing: border-box;
-        background-color: #EEEEEE;
-        background: green;
-        border-radius: 2px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-        margin-bottom: 2rem;
-      }
-
-      #waterProgressbar::-webkit-progress-value {
-        background: blue;
-      }
-
-      #waterProgressbar::-moz-progress-bar {
-        background: blue;
-      }
-
-      #progressbarDiv > label {
-        display: block;
-        text-align: left;
-        font-size: 3rem;
-      }
-
-      .tabs a {
+      .tabs a span:nth-child(1){
         text-decoration: none;
         color: black;
         font-size: 5rem;
         margin: 1% 1% 1% 1%;
       }
 
-      h2 {
+      .tabs a span:nth-child(2) {
+        text-decoration: none;
+        font-size: 3rem;
+      }
+
+      .tabs a {
+        text-decoration: none;
         text-align: center;
       }
 
-      #addButton {
-        background-color: green;
-        color: white;
-        border-radius: 50%;
-        border-color: green;
-        border-width: 0;
-        position: fixed;
-        width: 10rem;
-        line-height: 10rem;
-        vertical-align: middle;
-        font-size: 10em;
+      h1 {
         text-align: center;
-        top: 60%;
-        right: 0;
       }
 
       .tabs {
@@ -139,64 +76,129 @@
         justify-content: space-between;
       }
 
-      .measurementAndTime {
-        float: right;
+      #save_button {
+            background-color: #5CB85C;
+            color: rgb(255,255,255);
+            border-color: #4CAE4C;
+            border-width: 0;
+            height: 7rem;
+            font-size: 6rem;
+            width: 100%
+        }
+      #logout{
+        background-color: rgb(245, 80, 14);
+            color: rgb(255,255,255);
+            border-color: rgb(245, 80, 14);
+            border-width: 0;
+            border-radius: 5%;
+            height: 7rem;
+            font-size: 6rem;
+      }
+      #test{
+        display: flex;
+             align-items: center;
+            justify-content: center
       }
 
-      ul li {
-        overflow: hidden;
-      }
-
-      table {
-        border-collapse: collapse;
-        text-align: left;
-        font-size: 2rem;
+      #Age {
+        height: 7rem;
         width: 100%;
+        font-size: 3rem;
       }
 
-      td {
-        border: 1px #dddddd;
-        text-align: left;
-        padding: 1rem;
+      #gender {
+        height: 7rem;
+        width: 100%;
+        font-size: 3rem;
+        text-align: center;
       }
-      tr:nth-child(odd) {
-        background-color: #dddddd;
-      }
+
+      .form-control {
+            display: block;
+            width: 100%;
+            height: 5rem;
+            font-size: 3.5rem;
+            color: rgb(80, 77, 77);
+            background-color: #fff;
+            border: 5px solid #ccc;
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+        .form-control:focus {
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+
      </style>
   <body>
+    <h3 id="result"></h3>
     <h1>Profile</h1>
     <div>
       <p>Gender:</p>
-          <p><label for="gender"><input type="radio" class="radio" value="1" onclick='genClick()'  name="gender">Male</label>
         <label for="gender">
-          <input type="radio" class="radio" value="1" onclick='genClick()'name="gender" />Female</label>
-        </p>
-      <p><label for="Age">Age:<br><input id="Age" type="number" name="Age" placeholder="Your Age Here"</label>
-      <br><br><button type="submit" onclick="displayMessage()">Save</button>
+          <select name="gender" id="gender">
+            <option value="none" disabled selected>--Select Your Gender--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </label>
+      <p><label for="Age">Age:</label></p>
+      <input id="Age" type="number" name="Age" placeholder="Your Age Here" class="form-control">
+      <p><button type="submit" onclick="displayMessage()" id="save_button">Save</button></p>
+
+      <div id = "test">
+        <p><button type="submit" onclick="window.location.href='../index.html'" id="logout">Logout</button></p>      
+      </div>
     </div>
     <div id="savedMessage"></div>
     <div class="tabs">
-        <a class="fa fa-home" href="homepage.html"></a>
-        <a class="fa fa-search" href="search.html"></a>
-        <a class="fa fa-history" href="../skeleton/history.html"></a>
-        <a class="fa fa-question-circle-o" href="../skeleton/help.html"></a>
-        <a class="fa fa-gear" href="../skeleton/profile.html"></a>
-    </div>
+    <a href="../src/homepage.html"><span class="fa fa-home"></span><br><span>Home</span></a>
+    <a href="../src/search.html"><span class="fa fa-search"></span><br><span>Search</span></a>
+    <a href="../src/history.html"><span class="fa fa-history"></span><br><span>History</span></a>
+    <a href="help.html"><span class="fa fa-question-circle-o"></span><br><span>Help</span></a>
+    <a href=""><span class="fa fa-gear"></span><br><span>Profile</span></a>
+  </div>
     <script>
-      var click = false;
-      function genClick(){
-        click = true;
-      }
+      loadInfo();
+
       function displayMessage(){
-        var message = document.getElementById('savedMessage');
+        var genderSelect = document.getElementById('gender');
+        var selectedValue = genderSelect.options[genderSelect.selectedIndex].value;
         var age = document.getElementById('Age').value;
-        if((age < 200 && age > 0) && click == true)
-          message.innerHTML ="Profile Saved";
-        else if(click == false) {
-          message.innerHTML ="No Gender Selected"
+        if((age < 200 && age > 0) && selectedValue != "none")
+          //message.innerHTML ="Profile Saved";
+        {  alert('Profile Saved!');
+          localStorage.setItem('genderVal', genderSelect.selectedIndex);
+          localStorage.setItem('ageVal', age);
+        }
+        else if (selectedValue == "none") {
+          //message.innerHTML ="No Gender Selected";
+          alert("No Gender Selected");
         }
         else {
-          message.innerHTML="Invalid Age"
+          alert("Invalid Age");
+          //message.innerHTML="Invalid Age"
+        }
+      }
+
+      function loadInfo() {
+        var genderSelector = document.getElementById('gender');
+        if (localStorage.getItem('genderVal') == undefined) {
+          genderSelector.selectedIndex = 0;
+        }
+        else {
+          genderSelector.selectedIndex = parseInt(localStorage.getItem('genderVal'));
+        }
+
+        var savedAge = document.getElementById('Age');
+        if (localStorage.getItem('ageVal') != undefined) {
+          savedAge.value = localStorage.getItem('ageVal');
         }
       }
 
