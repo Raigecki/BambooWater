@@ -104,13 +104,13 @@ function importData() {
     'fiber': homeFiber,
     'water': homeWater
   }
-  /* Needed only for button
+  
   for (var i = 0; i < backHistoryTable.length; ++i) {
     if (homeTimeStamp == undefined || homeTimeStamp == backHistoryTable[i].date) {
-      alert('You cannot add multiple history entries for the same day (Wizard of Oz)');
+      alert('You cannot add multiple history entries for the same day');
       return 0;
     }
-  }*/
+  }
 
   backHistoryTable.push(historyCell);
   localStorage.setItem('historyTable', JSON.stringify(backHistoryTable));

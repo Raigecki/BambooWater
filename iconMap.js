@@ -82,4 +82,5 @@ fiberMap['tea'] = {icon: 'tea-1', value: '0', amount:'cup'};
 fiberMap['toast'] = {icon: 'toast', value: '1.1', amount:'slice'};
 fiberMap['tomato'] = {icon: 'tomato', value: '1.5', amount:'tomato'};
 fiberMap['turkey'] = {icon: 'turkey', value: '0', amount:'100g'};
+fiberMap['water'] = {icon: 'water', value: '0', amount:'cup'};
 fiberMap['watermelon'] = {icon: 'watermelon', value: '1.1', amount:'wedge'};
