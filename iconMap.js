@@ -10,6 +10,7 @@ fiberMap['biscuit'] = {icon:'biscuit', value: '0.9', amount:'biscuit'};
 fiberMap['blueberries'] = {icon: 'blueberries', value: '3.6', amount:'cup'};
 fiberMap['bread (whole wheat)'] = {icon: 'bread', value: '1.9', amount: 'slice'};
 fiberMap['bread (rye)'] = {icon: 'bread', value: '1.9', amount: 'slice'};
+fiberMap['bread (white)'] = {icon: 'bread', value: '0.8', amount: 'slice'};
 fiberMap['broccoli'] = {icon: 'broccoli', value: '3.9', amount:'stalk'};
 fiberMap['cabbage'] = {icon: 'cabbage', value:'23', amount:'head'};
 fiberMap['carrot'] = {icon: 'carrot', value: '1.7', amount:'carrot'};

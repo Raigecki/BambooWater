@@ -508,6 +508,11 @@
     var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
     var date = getFormattedTime();
 
+    if (selectType.selectedIndex == 0 || selectMeasurement.selectedIndex == 0) {
+      alert("You must select a type before trying to add a new entry");
+      return 0;
+    }
+
     var logCell = {};
     var frontLogTable = document.getElementById('logTable');
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
@@ -520,6 +525,7 @@
 
     if (type == 'food' && name == '') {
       alert('You must specify the name of the food');
+      return 0;
     }
 
     // Updating localstorage table
@@ -563,7 +569,7 @@
 
       tdIcon.innerHTML = setIcon(name);
       tdName.innerHTML = name;
-      tdDate.innerHTML = logCell['amount'] + ' ' + measurement + '<br>' + logCell['date'];
+      tdDate.innerHTML = logCell['amount'] + ' ' + measurement + ' of fiber' + '<br>' + logCell['date'];
 
       tdName['data-type'] = type;
       tdName['data-name'] = name;
@@ -638,7 +644,6 @@
 
     var selectType = document.getElementById('selectType');
     var type = selectType[selectType.selectedIndex].value;
-    console.log('656: ' + type);
     var name = document.getElementById('foodName').value;
     var amount = document.getElementById('amount').value;
     var selectMeasurement = document.getElementById('selectMeasurement');
@@ -736,6 +741,7 @@
       --frontLogTable.children[i]['data-index'];
     }
     resetModalFields();
+    
     document.getElementById('addModal').style.display = 'none';
 
   }
