@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Homepage</title>
-
+  <script src="../iconMap.js"></script>
+  <script src="general.js"></script>
   <!-- Font Awesome Styles -->
   <style>
     @font-face {
@@ -363,9 +364,6 @@
       }
     }
   </style>
-
-  <script src="../iconMap.js"></script>
-  <script src="general.js"></script>  
 </head>
 
 <body>
@@ -378,7 +376,7 @@
       <label for="fiberProgressbar">Fiber</label>
       <progress id="fiberProgressbar" value="0.0" max="30"></progress>
       <label for="waterProgressbar">Water</label>
-      <progress id="waterProgressbar" value="0.0" max="4"></progress>
+      <progress id="waterProgressbar" value="0.0" max="3"></progress>
     </div>
 
     <div class="groupSeparator">Today's Log</div>
@@ -464,10 +462,9 @@
       var date = getFormattedDate();
       localStorage.setItem('homeTimeStamp', date);
   }
-
+  importAtMidnight();
   setProgressBar();
   setTable();
-  checkHistory();
 
   function generateLocalStorageTable() {
     var logTable = [];
@@ -794,6 +791,28 @@
 
     frontFiberProgressbar.value = backFiberProgressbar;
     frontWaterProgressbar.value = backWaterProgressbar;
+
+    var gender = parseInt(localStorage.getItem('genderVal'));
+    var age = parseInt(localStorage.getItem('ageVal'));
+    if (gender == 1) {
+      frontWaterProgressbar.max = '3';
+      if (age != undefined && age < 50) {
+        frontFiberProgressbar.max = '38';
+      }
+      else if (age != undefined && age >= 50) {
+        frontFiberProgressbar.max = '30';
+      }
+    }
+    else if (gender == 2) {
+      frontWaterProgressbar.max = '2.2';
+      if (age != undefined && age < 50) {
+        frontFiberProgressbar.max = '25';
+      }
+      else if (age != undefined && age >= 50) {
+        frontFiberProgressbar.max = '21';
+      }
+    }
+
   }
 
 </script>
