@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Search</title>
+    <title>History</title>
     <script src="../iconMap.js" type="text/javascript"></script>
+    <script src="general.js"></script>
     <style>
         @font-face {
             font-family: 'FontAwesome';
@@ -94,6 +95,23 @@
         tr:nth-child(odd) {
             background-color: #dddddd;
         }
+
+        #clear_button{
+            background-color: rgb(245, 80, 14);
+            color: rgb(255,255,255);
+            border-color: rgb(245, 80, 14);
+            border-width: 0;
+            border-radius: 5%;
+            height: 3rem;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20%;
+            margin-top: 6.6%;
+            margin-right: 5%;
+            font-size: 2rem;
+      }
     </style>
     <!-- Element Styles-->
     <style>
@@ -104,12 +122,12 @@
             font-size: 4rem;
         }
     </style>
-    <script src="general.js"></script>
+    
 </head>
 
 <body>
     <h1>History</h1>
-    <button onclick="importData()">Import</button>
+    <button id="clear_button" onclick="clearData()">Clear</button>
     <table id="historyTable">
         <tr>
             <th>Date</th>
@@ -149,74 +167,16 @@
     <h3 id="result"></h3>
 </body>
 <script>
+    importAtMidnight();
+    setHistoryTable();
 
-    if (localStorage.getItem('historyTable') == undefined) generateTable();
-    //checkHistory();
-    setTable();
-
-    //function to create tr and td according to the stored information
-    function setTable() {
-
-        var backHistoryTable = JSON.parse(localStorage.getItem('historyTable'));
+    function clearData() {
         var frontHistoryTable = document.getElementById('historyTable');
-        var historyMessage = document.getElementById('historyMessage');
-
-        if (backHistoryTable.length == 0) {
-
-            historyMessage.innerHTML = 'There are currently no history available';
-            return 0;
+        while (frontHistoryTable.length > 1) {
+            frontHistoryTable.removeChild(frontHistoryTable.lastChild);
         }
-
-        var tr = document.createElement('tr');
-        var tdDate = document.createElement('td');
-        var tdFiber = document.createElement('td');
-        var tdWater = document.createElement('td');
-        var table = document.getElementById('historyTable');
-
-        var historyIndex = backHistoryTable.length - 1;
-        var date = backHistoryTable[historyIndex].date;
-        tdDate.innerHTML = backHistoryTable[historyIndex].date;
-        tdFiber.innerHTML = backHistoryTable[historyIndex].fiber + ' g';
-        tdWater.innerHTML = backHistoryTable[historyIndex].water + ' L';
-       
-        tr.appendChild(tdDate);
-        tr.appendChild(tdFiber);
-        tr.appendChild(tdWater);
-
-        frontHistoryTable.appendChild(tr);
-        historyMessage.innerHTML = '';
-    }
-    function importData() {
-        var backHistoryTable = JSON.parse(localStorage.getItem('historyTable'));
-        var homeTimeStamp = localStorage.getItem('homeTimeStamp');
-        var homeFiber = localStorage.getItem('fiberProgressbar');
-        var homeWater = localStorage.getItem('waterProgressbar');
-
-        console.log('fiber: ' + homeFiber);
-        console.log('water: ' + homeWater);
-
-        var historyCell = {
-            'date': homeTimeStamp,
-            'fiber': homeFiber,
-            'water': homeWater
-        }
-
-        for (var i = 0; i < backHistoryTable.length; ++i) {
-            if (homeTimeStamp == backHistoryTable[i].date) {
-                alert('You cannot add multiple history entries for the same day (Wizard of Oz)');
-                return 0;
-            }
-        }
-
-        console.log(backHistoryTable);
-        console.log(historyCell);
-        backHistoryTable.push(historyCell);
-        localStorage.setItem('historyTable', JSON.stringify(backHistoryTable));
-        localStorage.removeItem('logTable');
-        localStorage.removeItem('fiberProgressbar');
-        localStorage.removeItem('waterProgressbar');
-        localStorage.removeItem('homeTimeStamp');
-        setTable();
+        localStorage.setItem('historyTable', JSON.stringify(frontHistoryTable));
+        location.reload();
     }
 
 </script>

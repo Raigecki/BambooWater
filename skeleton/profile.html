@@ -3,6 +3,7 @@
   <head>
     <title>Profile Page</title>
     <meta charset="utf-8">
+    <script src="../src/general.js"></script>
   <style>
       @font-face {
         font-family: 'FontAwesome';
@@ -85,6 +86,20 @@
             font-size: 6rem;
             width: 100%
         }
+      #logout{
+        background-color: rgb(245, 80, 14);
+            color: rgb(255,255,255);
+            border-color: rgb(245, 80, 14);
+            border-width: 0;
+            border-radius: 5%;
+            height: 7rem;
+            font-size: 6rem;
+      }
+      #test{
+        display: flex;
+             align-items: center;
+            justify-content: center
+      }
 
       #Age {
         height: 7rem;
@@ -137,7 +152,10 @@
       <p><label for="Age">Age:</label></p>
       <input id="Age" type="number" name="Age" placeholder="Your Age Here" class="form-control">
       <p><button type="submit" onclick="displayMessage()" id="save_button">Save</button></p>
-      <p><a href="../index.html">Logout</a></p>
+
+      <div id = "test">
+        <p><button type="submit" onclick="window.location.href='../index.html'" id="logout">Logout</button></p>      
+      </div>
     </div>
     <div id="savedMessage"></div>
     <div class="tabs">
@@ -149,6 +167,7 @@
   </div>
     <script>
       loadInfo();
+      importAtMidnight();
 
       function displayMessage(){
         var genderSelect = document.getElementById('gender');

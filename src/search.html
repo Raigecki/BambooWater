@@ -69,8 +69,13 @@
       left: 0;
       right: 0;
       width: 100%;
+      height: 7rem;
       display: flex;
       justify-content: space-between;
+    }
+
+    #searchDiv {
+      margin-bottom: 7rem;
     }
 
     body {
@@ -121,16 +126,24 @@
     tr:nth-child(odd) {
       background-color: #dddddd;
     }
+    
+    #searchDisclaimer {
+      text-align: left;
+      font-size: 1.5rem;
+    }
   </style>
 </head>
 
 <body>
-  <label id="searchLabel" for="searchInput">
-    <input name="searchInput" id="searchInput" type="search" placeholder="Search..." value="">
-    <button id="searchButton" type="submit" class="fa fa-search" onclick="setTable()"></button>
-  </label>
-  <table id="searchTable">
-  </table>
+  <div id="searchDiv">
+    <h3 id="searchDisclaimer">Search for fiber contents of common food items</h3>
+    <label id="searchLabel" for="searchInput">
+      <input name="searchInput" list="searchList" id="searchInput" type="search" placeholder="Search..." value="" onkeyup="showDynamicAutocomplete()">
+      <button id="searchButton" type="submit" class="fa fa-search" onclick="setTable()"></button>
+    </label>
+    <table id="searchTable">
+    </table>
+  </div>
 
   <div class="tabs">
     <a href="homepage.html"><span class="fa fa-home"></span><br><span>Home</span></a>
@@ -143,7 +156,42 @@
 </body>
 <script>
 
-  checkHistory();
+  importAtMidnight();
+
+  function showDynamicAutocomplete() {
+    var input = document.getElementById('searchInput').value.toLowerCase();
+    var strLen = input.length;
+    var matches = [];
+    var table = document.getElementById('searchTable');
+    while (table.firstChild) {
+      table.removeChild(table.firstChild);
+    }
+    if (strLen <= 0) {
+      return 0;
+    }
+    for (var key in fiberMap) {
+      if (fiberMap.hasOwnProperty(key) && key != 'default') {
+        if (key.substr(0, strLen) == input) {
+          matches.push(key);
+        }
+      }
+    }
+    
+    for (var i = 0; i < matches.length; i++) {
+      var tr = document.createElement('tr');
+      var tdIcon = document.createElement('td');
+      var tdName = document.createElement('td');
+      var tdAmount = document.createElement('td');
+      tdIcon.innerHTML = '<img src="../iconassets/' + fiberMap[matches[i]]['icon'] + '.svg"\>';
+      tdName.innerHTML = matches[i].charAt(0).toUpperCase() + matches[i].slice(1);
+      tdAmount.innerHTML = fiberMap[matches[i]]['value'] + 'g of fiber per ' + fiberMap[matches[i]]['amount'];
+      tr.appendChild(tdIcon);
+      tr.appendChild(tdName);
+      tr.appendChild(tdAmount);
+      table.appendChild(tr);
+    }
+  }
+
   //function to create tr and td according to the stored information
   function setTable() {
     var input = document.getElementById('searchInput').value.toLowerCase();
@@ -159,10 +207,10 @@
 
     console.log('input: ' + input);
 
-    if (input in fiberMap) {
+    if (input in fiberMap && input != 'default') {
       tdIcon.innerHTML = '<img src="../iconassets/' + fiberMap[input]['icon'] + '.svg"\>';
       tdName.innerHTML = input.charAt(0).toUpperCase() + input.slice(1);
-      tdAmount.innerHTML = fiberMap[input]['value'] + 'g/' + fiberMap[input]['amount'];
+      tdAmount.innerHTML = fiberMap[input]['value'] + 'g of fiber per ' + fiberMap[input]['amount'];
     }
     else {
       tdName.innerHTML = 'We do not have information about the food: ' + input.charAt(0).toUpperCase() + input.slice(1);
