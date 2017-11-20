@@ -67,7 +67,6 @@ function setHistoryTable() {
   var historyMessage = document.getElementById('historyMessage');
 
   if (backHistoryTable.length == 0) {
-
     historyMessage.innerHTML = 'There are currently no history available';
     return 0;
   }

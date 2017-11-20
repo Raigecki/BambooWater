@@ -40,6 +40,10 @@
         content: "\f013";
       }
 
+      .fa-sign-out:before {
+  content: "\f08b";
+}
+
       body {
         margin: 5% 5% 20% 5%;
         font-size: 4rem;
@@ -84,21 +88,24 @@
             border-width: 0;
             height: 7rem;
             font-size: 6rem;
+            border-radius: 1rem;
             width: 100%
         }
-      #logout{
-        background-color: rgb(245, 80, 14);
+      #logoutButton{
+        background-color: rgb(255, 140, 0);
             color: rgb(255,255,255);
-            border-color: rgb(245, 80, 14);
+            border-color: rgb(255, 140, 0);
             border-width: 0;
-            border-radius: 5%;
+            border-radius: 1rem;
             height: 7rem;
-            font-size: 6rem;
+            padding-bottom: 1rem;
+            width: 100%;
       }
-      #test{
-        display: flex;
-             align-items: center;
-            justify-content: center
+
+      #logoutButton > span {
+            line-height: 7rem;
+            vertical-align: middle;
+            font-size: 5rem;
       }
 
       #Age {
@@ -153,9 +160,7 @@
       <input id="Age" type="number" name="Age" placeholder="Your Age Here" class="form-control">
       <p><button type="submit" onclick="displayMessage()" id="save_button">Save</button></p>
 
-      <div id = "test">
-        <p><button type="submit" onclick="window.location.href='../index.html'" id="logout">Logout</button></p>      
-      </div>
+      <button id="logoutButton" onclick="confirmLogout()"><span class="fa fa-sign-out">Logout</span></button>
     </div>
     <div id="savedMessage"></div>
     <div class="tabs">
@@ -201,6 +206,12 @@
         var savedAge = document.getElementById('Age');
         if (localStorage.getItem('ageVal') != undefined) {
           savedAge.value = localStorage.getItem('ageVal');
+        }
+      }
+
+      function confirmLogout() {
+        if (window.confirm("Do you want to log out?")) {
+          location.href = "../index.html";
         }
       }
 
