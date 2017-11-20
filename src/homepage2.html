@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Homepage</title>
+
+  <!-- Font Awesome Styles -->
+  <style>
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+      src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    }
+
+    .fa {
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: xx-large;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+    }
+
+    .fa-home:before {
+      content: "\f015";
+    }
+
+    .fa-search:before {
+      content: "\f002";
+    }
+
+    .fa-history:before {
+      content: "\f1da";
+    }
+
+    .fa-question-circle-o:before {
+      content: "\f29c";
+    }
+
+    .fa-gear:before {
+      content: "\f013";
+    }
+  </style>
+
+  <!-- Bootstraps Styles -->
+  <style>
+    .form-control {
+      display: block;
+      width: 100%;
+      height: 5rem;
+      font-size: 3.5rem;
+      color: rgb(80, 77, 77);
+      background-color: #fff;
+      border: 5px solid #ccc;
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .form-control:focus {
+      border-color: #66afe9;
+      outline: 0;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+
+    .form-control::-moz-placeholder {
+      color: #999;
+      opacity: 1;
+    }
+
+    .form-control:-ms-input-placeholder {
+      color: #999;
+    }
+  </style>
+
+  <!-- Homepage Element Styles -->
+  <style>
+    body {
+      text-align: center;
+      margin: 5% 5% 0 5%;
+    }
+
+    .main {
+      margin-bottom: 10rem;
+    }
+
+    img {
+      width: 80%;
+      height: 80%;
+      margin-left: 7%;
+    }
+
+    .groupSeparator {
+      display: flex;
+      flex-basis: 100%;
+      align-items: center;
+      color: rgba(0, 0, 0, 0.35);
+      margin: 1rem 0 2rem 0;
+      font-size: 3rem;
+    }
+
+    .groupSeparator::before,
+    .groupSeparator::after {
+      content: "";
+      flex-grow: 1;
+      background: rgba(0, 0, 0, 0.35);
+      height: 1px;
+      font-size: 0px;
+      line-height: 0px;
+      margin: 0px 8px;
+    }
+
+    progress {
+      height: 7rem;
+      width: 100%;
+      box-sizing: border-box;
+      background: green;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+      margin-bottom: 2rem;
+    }
+
+    #waterProgressbar::-webkit-progress-value {
+      background: blue;
+    }
+
+    #waterProgressbar::-moz-progress-bar {
+      background: blue;
+    }
+
+    .progressImageContainer {
+      width: 100%;
+      height: 8rem;
+      text-align: left;
+    }
+
+    #ProgressbarDiv>label {
+      display: block;
+      text-align: right;
+      font-size: 3rem;
+    }
+
+    #emptyFiberBar {
+      width: 80%;
+      margin-left: 2%;
+      height: auto;
+      position: absolute;
+      z-index: -1;
+    }
+
+    #filledFiberBar {
+      width: 80%;
+      height: auto;
+      margin-left: 1.5%;
+      position: absolute;
+      -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+    }
+
+    #emptyWaterBar {
+      width: 80%;
+      margin-left: 2%;
+      margin-top: 0.6%;
+      height: auto;
+      position: absolute;
+      z-index: -1;
+    }
+
+    #filledWaterBar {
+      width: 80%;
+      height: auto;
+      margin-left: 1.5%;
+      position: absolute;
+      -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+    }
+
+    .tabs a span:nth-child(1) {
+      text-decoration: none;
+      color: black;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
+
+    .tabs a span:nth-child(2) {
+      text-decoration: none;
+      font-size: 3rem;
+    }
+
+    .tabs a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .tabs {
+      background-color: gray;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    #addButton {
+      background-color: green;
+      color: white;
+      border-radius: 50%;
+      border-color: green;
+      border-width: 0;
+      position: fixed;
+      width: 10rem;
+      line-height: 10rem;
+      vertical-align: middle;
+      font-size: 3rem;
+      text-align: center;
+      top: 60%;
+      right: 0;
+    }
+
+    .measurementAndTime {
+      float: right;
+    }
+
+    ul li {
+      overflow: hidden;
+    }
+
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 2rem;
+      width: 100%;
+    }
+
+    td {
+      border: 1px #dddddd;
+      text-align: left;
+      padding: 1rem;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #dddddd;
+    }
+  </style>
+
+  <!-- Modal Styles -->
+  <style>
+    /* The Modal (background) */
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      line-height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #fefefe;
+      border-radius: 10px;
+      border: 1px solid #888;
+      width: 80%;
+      height: 50%;
+      margin: 10%;
+      vertical-align: middle;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.5s;
+      animation-name: animatetop;
+      animation-duration: 0.5s
+    }
+
+    .modal-header {
+      border-radius: 10px 10px 0px 0px;
+      padding: 4px;
+      background-color: #5cb85c;
+      text-align: center;
+      color: white;
+      height: 7rem;
+      font-size: 4rem;
+      padding: 1rem 1rem 1rem 2rem;
+    }
+
+    .modal-body {
+      padding: 4%;
+      text-align: center;
+    }
+
+    #selectMeasurement {
+      height: 6rem;
+    }
+
+    /* Add Animation */
+
+    @-webkit-keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0
+      }
+      to {
+        top: 0;
+        opacity: 1
+      }
+    }
+
+    @keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0
+      }
+      to {
+        top: 0;
+        opacity: 1
+      }
+    }
+
+    /* The Radio buttons*/
+
+    #formField>label {
+
+      font-size: 3rem;
+    }
+
+    #formField>label>input {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    /* The Close Button */
+
+    .close {
+      color: white;
+      float: right;
+      font-size: 6rem;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confirmButton {
+
+      left: 0;
+      right: 0;
+      margin: 0 5% 5% 5%;
+      color: #fff;
+      border-color: #4cae4c;
+      height: 7rem;
+      width: 90%;
+      padding: 6px 12px;
+      font-size: 4rem;
+      text-align: center;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    }
+
+    #confirmAddButton {
+      position: absolute;
+      bottom: 0;
+      border-color: #5cb85c;
+      background-color: #5cb85c;
+    }
+
+    #updateButton {
+      width: 100%;
+      margin: 5% 0 5% 0;
+      border-color: #ffcc00;
+      background-color: #ffcc00;
+      display: none;
+    }
+
+    #deleteButton {
+      position: absolute;
+      bottom: 0;
+      border-color: #cc0000;
+      background-color: #cc0000;
+      display: none;
+    }
+  </style>
+
+  <script src="../iconMap.js"></script>
+  <script src="general.js"></script>
+</head>
+
+<body>
+
+  <img src="images/icon.jpg">
+
+  <div class="main">
+    <div class="groupSeparator">Daily Progress</div>
+    <div id="ProgressbarDiv">
+      <label for="fiberProgressbar">Fiber</label>
+      <div class="progressImageContainer">
+        <img id="emptyFiberBar" src="./images/progressBarEmptyAvocadoResized.jpg" alt="Fiber Progress Bar">
+        <img id="filledFiberBar" src="./images/progressBarFilledAvocadoResized.jpg" alt="Fiber Progress Bar">
+      </div>
+      <progress id="fiberProgressbar" value="0.0" max="30" style="display:none"></progress>
+      <label for="waterProgressbar">Water</label>
+      <div class="progressImageContainer">
+        <img id="emptyWaterBar" src="./images/progressBarEmptyWaterResized.jpg" alt="Water Progress Bar">
+        <img id="filledWaterBar" src="./images/progressBarFilledWaterResized.jpg" alt="Water Progress Bar">
+      </div>
+    </div>
+    <progress id="waterProgressbar" value="0.0" max="4" style="display:none"></progress>
+  </div>
+
+  <div class="groupSeparator">Today's Log</div>
+  <table id="logTable"></table>
+  </div>
+  <div class="tabs">
+    <a href="">
+      <span class="fa fa-home"></span>
+      <br>
+      <span>Home</span>
+    </a>
+    <a href="search.html">
+      <span class="fa fa-search"></span>
+      <br>
+      <span>Search</span>
+    </a>
+    <a href="history.html">
+      <span class="fa fa-history"></span>
+      <br>
+      <span>History</span>
+    </a>
+    <a href="../skeleton/help.html">
+      <span class="fa fa-question-circle-o"></span>
+      <br>
+      <span>Help</span>
+    </a>
+    <a href="../skeleton/profile.html">
+      <span class="fa fa-gear"></span>
+      <br>
+      <span>Profile</span>
+    </a>
+  </div>
+
+  <button id="addButton">
+    <span>ADD</span>
+  </button>
+
+  <h3 id="result"></h3>
+
+  <!-- The Modal -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3>Add Food/Water</h3>
+        <span class="close">&times;</span>
+      </div>
+
+      <div class="modal-body">
+        <form role="form" id="formField" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+
+          <input type="hidden" id="rowIndex">
+
+          <select class="form-control" id="selectType">
+            <option value="food">Food</option>
+            <option value="water">Water</option>
+          </select>
+
+          <input class="form-control" placeholder="Name" name="name" id="foodName">
+
+          <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'></input>
+
+          <select class="form-control" id="selectMeasurement">
+            <option value="Grams">Grams</option>
+            <option value="Liters">Liters</option>
+          </select>
+
+          <input type="button" name="confirmAddButton" value="Add" id="confirmAddButton" data-toggle="modal" data-target="#confirm-add"
+            class="confirmButton" onclick="addRecord()">
+          <input type="button" name="updateButton" value="Update" id="updateButton" data-toggle="modal" data-target="#confirm-update"
+            class="confirmButton">
+          <input type="button" name="deleteButton" value="Delete" id="deleteButton" data-toggle="modal" data-target="#confirm-delete"
+            class="confirmButton" onclick="deleteRecord()">
+        </form>
+
+      </div>
+      <!-- modal body div -->
+
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- content div -->
+
+  </div>
+</body>
+
+<script>
+  // Check browser support
+  if (typeof (Storage) == "undefined") document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+  if (localStorage.getItem('logTable') == undefined) generateLocalStorageTable();
+  if (localStorage.getItem('fiberProgressbar') == undefined) localStorage.setItem('fiberProgressbar', 0.0);
+  if (localStorage.getItem('waterProgressbar') == undefined) localStorage.setItem('waterProgressbar', 0.0);
+
+  if (localStorage.getItem('homeTimeStamp') == undefined) {
+
+    var date = getFormattedDate();
+    localStorage.setItem('homeTimeStamp', date);
+  }
+
+  //generateData();
+  setProgressBar();
+  //resetProgressBar();
+  setTable();
+  checkHistory();
+  //debug();
+
+  function getFormattedDate() {
+
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+
+    var currentDate = month + '/' + day + '/' + year;
+    return currentDate;
+  }
+
+  function getFormattedTime() {
+    var date = new Date();
+    var hours = date.getHours();
+    var ampm = 'AM';
+    if (hours > 12) {
+      hours -= 12;
+      ampm = 'PM';
+    }
+    var time = hours + ':' + date.getMinutes() + ' ' + ampm;
+    return time;
+  }
+
+  function generateLocalStorageTable() {
+    var logTable = [];
+    localStorage.setItem('logTable', JSON.stringify(logTable));
+  }
+
+  function updateProgressbar(type, amount) {
+
+    var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
+    var backWaterProgressbar = localStorage.getItem('waterProgressbar');
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+
+
+    amount = parseFloat(amount);
+
+    var waterAmt = parseFloat(backWaterProgressbar);
+    var fiberAmt = parseFloat(backFiberProgressbar);
+
+    //console.log('water: ' + waterAmt);
+    //console.log('fiber: ' + fiberAmt);
+    console.log('New: ' + amount);
+
+    if (type == 'food') {
+      var newValue = fiberAmt + amount;
+      backFiberProgressbar = newValue;
+      frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
+      setProgressBar();
+      localStorage.setItem('fiberProgressbar', backFiberProgressbar);
+    }
+
+    else if (type == 'water') {
+      var newValue = waterAmt + amount;
+      backWaterProgressbar = newValue;
+      frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
+      setProgressBar();
+      localStorage.setItem('waterProgressbar', backWaterProgressbar);
+    }
+
+    // console.log('back fiber: ' + (backFiberProgressbar));
+    // console.log('back water: ' + (backWaterProgressbar));
+
+    // console.log('fiber front: ' + frontFiberProgressbar.value);
+    // console.log('water front: ' + frontWaterProgressbar.value);
+  }
+
+  function addRecord() {
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
+
+    var logCell = {};
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    console.log(backLogTable);
+    var index = frontLogTable['data-row'];
+
+    //check for correct units
+    if ((type == 'food' && measurement == 'Liters') || (type == 'water' && measurement == 'Grams')) {
+      alert('Food cannot be in liters and water cannot be in grams');
+      return 0;
+    }
+
+    if (amount == '') {
+      alert('You must specify the amount in grams or liters');
+      return 0;
+    }
+
+    // Updating localstorage table
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['type'] = 'food';
+      logCell['amountGrams'] = amount;
+    }
+    else if (type == 'water') {
+      logCell['name'] = 'Water';
+      logCell['type'] = 'water';
+      logCell['amountLiters'] = amount;
+    }
+    logCell['date'] = getFormattedTime();
+
+    backLogTable.push(logCell);
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+
+    // Updating front end table
+    var tr = document.createElement('tr');
+    var tdIcon = document.createElement('td');
+    var tdName = document.createElement('td');
+    var tdDate = document.createElement('td');
+
+    if (type == 'water') {
+
+      tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
+      tdName.innerHTML = logCell['name'];
+      tdDate.innerHTML = logCell['amountLiters'] + ' L' + '<br>' + logCell['date'];
+      tdDate['data-amountLiters'] = amount;
+      tdDate['data-date'] = logCell['date'];
+      tdName['data-type'] = logCell['type'];
+    }
+    else if (type == 'food') {
+
+      tdIcon.innerHTML = setIcon(logCell['name']);
+      tdName.innerHTML = logCell['name']; // + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdName['data-name'] = logCell['name'];
+      tdDate.innerHTML = logCell['amountGrams'] + ' g' + '<br>' + logCell['date'];
+      tdDate['data-amountGrams'] = amount;
+      tdDate['data-date'] = logCell['date'];
+      tdName['data-type'] = logCell['type'];
+    }
+
+    tr.appendChild(tdIcon);
+    tr.appendChild(tdName);
+    tr.appendChild(tdDate);
+    tr['data-index'] = index;
+    tr.addEventListener('click', modifyRecord);
+    frontLogTable.insertBefore(tr, frontLogTable.firstChild);
+    frontLogTable['data-row']++;
+    console.log('New frontLogTable row value = ' + frontLogTable['data-row']);
+    index++;
+
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    modal.style.display = 'none';
+    updateProgressbar(type, amount);
+  }
+
+  function modifyRecord() {
+
+    //open the modal
+    document.getElementById('addModal').style.display = 'block';
+    document.getElementById('addModal').children[0].children[0].children[0].innerHTML = 'Update Entry';
+    document.getElementById('confirmAddButton').style.display = 'none';
+    document.getElementById('updateButton').style.display = 'block';
+    document.getElementById('deleteButton').style.display = 'block';
+
+    var originalAmount;
+
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var index = this['data-index'];
+    document.getElementById('rowIndex').value = index;
+    var type = this.children[1]['data-type'];
+
+    //load the modal with data
+    if (type == 'water') {
+      //console.log('It is water');
+      document.getElementById('selectType').value = 'water';
+      originalAmount = this.children[2]['data-amountLiters'];
+      document.getElementById('amount').value = originalAmount;
+      document.getElementById('selectMeasurement').value = 'Liters';
+    }
+
+    else {
+      //console.log('It is food');
+      document.getElementById('selectType').value = 'food';
+      document.getElementById('foodName').value = this.children[1]['data-name'];
+      originalAmount = this.children[2]['data-amountGrams'];
+      document.getElementById('amount').value = originalAmount;
+      document.getElementById('selectMeasurement').value = 'Grams';
+    }
+    //console.log('Index = ' + index);
+    document.getElementById('updateButton').onclick = function () {
+      updateRecord(originalAmount, type);
+    }
+
+  }
+
+  function updateRecord(originalAmount, originalType) {
+
+    var selectType = document.getElementById('selectType');
+    var type = selectType[selectType.selectedIndex].value
+    var name = document.getElementById('foodName').value;
+    var amount = document.getElementById('amount').value;
+    var selectMeasurement = document.getElementById('selectMeasurement');
+    var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
+    var index = document.getElementById('rowIndex').value;
+
+    //check for correct units
+    if ((type == 'food' && measurement == 'Liters') || (type == 'water' && measurement == 'Grams')) {
+      alert('Food cannot be in Liters and water cannot be in grams');
+      return 0;
+    }
+
+    // Updating front end table
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var rows = frontLogTable['data-row'];
+
+    var tr = frontLogTable.children[rows - index - 1];
+    console.log('data-row = ' + frontLogTable['data-row']);
+    var tdIcon = tr.children[0];
+    var tdName = tr.children[1];
+    var tdDate = tr.children[2];
+
+    var logCell = {};
+
+    // Updating localstorage table
+    if (type == 'food') {
+      logCell['name'] = name;
+      logCell['amountGrams'] = amount;
+      logCell['date'] = tdDate['data-date'];
+      logCell['type'] = 'food';
+    }
+    else if (type == 'water') {
+      logCell['name'] = 'Water';
+      logCell['amountLiters'] = amount;
+      logCell['date'] = tdDate['data-date'];
+      logCell['type'] = 'water';
+    }
+
+    backLogTable[index] = logCell;
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+
+    if (type == 'water') {
+      console.log('in water case');
+      tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
+      tdName.innerHTML = logCell['name'];
+      tdDate.innerHTML = logCell['amountLiters'] + ' L' + '<br>' + logCell['date'];
+      tdDate['data-amountLiters'] = amount;
+      tdName['data-type'] = 'water';
+    }
+    else if (type == 'food') {
+      /*
+      var cups = '';
+      if (amount > 1 && measurement == 'Cups') cups = 'Cups';
+      else if (amount < 1 && measurement == 'Cups') cups = 'Cup';
+      */
+      tdIcon.innerHTML = setIcon(logCell['name']);     //Needs to be changed
+      tdName.innerHTML = logCell['name']; // + '<br>' + logCell['amountCups'] + ' ' + cups;
+      tdName['data-name'] = logCell['name'];
+      //tdName['data-amountCups'] = logCell['amountCups']
+      tdDate.innerHTML = logCell['amountGrams'] + ' g' + '<br>' + logCell['date'];
+      tdDate['data-amountGrams'] = amount;
+      tdName['data-type'] = 'food';
+    }
+
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+    modal.style.display = 'none';
+
+    console.log('TYPE: ' + type);
+    console.log('originaltype: ' + originalType);
+    if (type == originalType) {
+      console.log('in equal case');
+      var resultAmount = parseFloat(amount) - parseFloat(originalAmount);
+      updateProgressbar(type, resultAmount);
+    }
+    else {
+      updateProgressbar(originalType, '-' + originalAmount);
+      updateProgressbar(type, amount);
+    }
+  }
+
+  function deleteRecord() {
+
+    // Updating front end table
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+    var rows = frontLogTable['data-row'];
+    var index = document.getElementById('rowIndex').value;
+
+    //updating progress bar
+    var amountFiber = frontLogTable.children[rows - index - 1].children[2]['data-amountGrams'];
+    var amountWater = frontLogTable.children[rows - index - 1].children[2]['data-amountLiters'];
+
+    console.log('delete fiber = ' + amountFiber);
+    console.log('delete water = ' + amountWater);
+
+    if (amountFiber == undefined) updateProgressbar('water', '-' + amountWater);
+    else updateProgressbar('food', '-' + amountFiber);
+
+    console.log('Rows before: ' + rows);
+    console.log('Index: ' + index);
+
+
+    //removing from backlog
+    backLogTable.splice(index, 1);
+    localStorage.setItem('logTable', JSON.stringify(backLogTable));
+    frontLogTable.removeChild(frontLogTable.children[rows - index - 1]);
+
+    rows--;
+    frontLogTable['data-row'] = rows;
+    console.log('Rows after: ' + rows);
+
+    //resetting indices of all tr with index > the one removed
+    for (var i = rows - index - 1; i >= 0; i--) {
+
+      --frontLogTable.children[i]['data-index'];
+    }
+
+    modal.style.display = 'none';
+
+    for (var i = 0; i < rows; i++) {
+
+      console.log(frontLogTable.children[i]['data-index']);
+    }
+  }
+
+  //function to create tr and td according to the stored information
+  function setTable() {
+
+    var frontLogTable = document.getElementById('logTable');
+    var backLogTable = JSON.parse(localStorage.getItem('logTable'));
+
+    for (var i = backLogTable.length - 1; i >= 0; i--) {
+
+      var tr = document.createElement('tr');
+      tr['data-index'] = i;
+      var tdIcon = document.createElement('td');
+      var tdName = document.createElement('td');
+      var tdDate = document.createElement('td');
+
+      if (backLogTable[i].type == 'water') {
+
+        tdIcon.innerHTML = '<img src=\"../iconassets/water.svg\">';
+        tdName.innerHTML = backLogTable[i]['name'];
+        tdName['data-name'] = backLogTable[i]['name'];
+        tdName['data-type'] = 'water';
+        tdDate.innerHTML = backLogTable[i]['amountLiters'] + ' L' + '<br>' + backLogTable[i]['date'];
+        tdDate['data-amountLiters'] = backLogTable[i]['amountLiters'];
+        tdDate['data-date'] = backLogTable[i]['date'];
+      }
+      else {
+
+        tdIcon.innerHTML = setIcon(backLogTable[i]['name']);
+        tdName.innerHTML = backLogTable[i]['name'];
+        tdName['data-name'] = backLogTable[i]['name'];
+        tdName['data-type'] = 'food';
+        tdDate.innerHTML = backLogTable[i]['amountGrams'] + ' g' + '<br>' + backLogTable[i]['date'];
+        tdDate['data-amountGrams'] = backLogTable[i]['amountGrams'];
+        tdDate['data-date'] = backLogTable[i]['date'];
+
+        //console.log('BackLogName = ' + backLogTable[i]['name']);
+        //console.log('tdName = ' + tdName['data-name']);
+      }
+
+      tr.appendChild(tdIcon);
+      tr.appendChild(tdName);
+      tr.appendChild(tdDate);
+      tr.addEventListener('click', modifyRecord);
+
+      frontLogTable.appendChild(tr);
+    }
+    //console.log(backLogTable.length);
+    frontLogTable['data-row'] = backLogTable.length;
+  }
+
+  function setIcon(name) {
+
+    var foodName = name.toLowerCase();
+    console.log(foodName);
+    var iconTagString;
+
+    if (foodName in fiberMap) {
+      iconTagString = '<img src="../iconassets/' + fiberMap[foodName]['icon'] + '.svg"\>';
+    }
+    else {
+      iconTagString = '<img src="../iconassets/' + fiberMap['default']['icon'] + '.svg"\>';
+    }
+    return iconTagString;
+  }
+
+  function setProgressBar() {
+
+    var backFiberProgressbar = parseFloat(localStorage.getItem('fiberProgressbar'));
+    var backWaterProgressbar = parseFloat(localStorage.getItem('waterProgressbar'));
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    frontFiberProgressbar.value = backFiberProgressbar;
+    frontWaterProgressbar.value = backWaterProgressbar;
+
+    var filledFiberImg = document.getElementById('filledFiberBar');
+    var progressPercent = parseFloat(backFiberProgressbar) / 30 * 100 + 20;
+    var clipString = 'polygon(0% 0%, ' + progressPercent + '% 0%, ' + (progressPercent - 8.5) + '% 100%, 0% 100%)';
+    filledFiberImg.style['-webkit-clip-path'] = clipString;
+    filledFiberImg.style['-moz-clip-path'] = clipString;
+    filledFiberImg.style['clip-path'] = clipString;
+
+    var filledWaterImg = document.getElementById('filledWaterBar');
+    var progressPercent = parseFloat(backWaterProgressbar) / 30 * 100 + 20;
+    var clipString = 'polygon(0% 0%, ' + progressPercent + '% 0%, ' + (progressPercent - 8.5) + '% 100%, 0% 100%)';
+    filledWaterImg.style['-webkit-clip-path'] = clipString;
+    filledWaterImg.style['-moz-clip-path'] = clipString;
+    filledWaterImg.style['clip-path'] = clipString;
+
+  }
+
+  function resetProgressBar() {
+
+    var backFiberProgressbar = localStorage.setItem('fiberProgressbar', 0);
+    var backWaterProgressbar = localStorage.setItem('waterProgressbar', 0);
+    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+
+    frontFiberProgressbar.value = 0;
+    frontWaterProgressbar.value = 0;
+  }
+
+</script>
+<script>
+  var modal = document.getElementById('addModal');
+  var addButton = document.getElementById('addButton');
+  var span = document.getElementsByClassName('close')[0];
+  var confirm = document.getElementById('confirmAddButton');
+
+  // When the user clicks the add  button, open the modal
+  addButton.onclick = function () {
+
+    document.getElementById('addModal').children[0].children[0].children[0].innerHTML = 'New Entry';
+    document.getElementById('confirmAddButton').style.display = 'block';
+    document.getElementById('updateButton').style.display = 'none';
+    document.getElementById('deleteButton').style.display = 'none';
+
+    modal.style.display = 'block';
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+
+    //resetting the fields
+    document.getElementById('foodName').value = '';
+    document.getElementById('amount').value = '';
+
+    modal.style.display = 'none';
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+
+      //resetting the fields
+      document.getElementById('foodName').value = '';
+      document.getElementById('amount').value = '';
+
+      modal.style.display = 'none';
+    }
+  }
+
+</script>
+
+</html>
