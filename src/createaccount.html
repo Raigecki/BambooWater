@@ -53,14 +53,14 @@
   </head>
   <body>
     <h1>Create Account</h1>
-    <form id="createaccount_form" action="homepage.html">
+    <form id="createaccount_form" action="../skeleton/profile.html">
         <label for="create_user">User/Email:</label>
         <input name="create_user" id="create_user" type="text" required class="form-control">
         <label for="create_password">Password:</label>
         <input name="create_password" id="create_password" type="password" required onchange="checkPasswords()" class="form-control">
         <label for="create_confirmpassword">Confirm Password:</label>
         <input name="create_confirmpassword" id="create_confirmpassword" type="password" class="form-control" required onchange="checkPasswords()" oninput="checkPasswords()">
-        <p><button id="start_button" type="submit">Start</button></p>
+        <p><input id="start_button" type="submit" value="Start"></p>
     </form>
 
     <a href="../index.html">Back to Login</a>
