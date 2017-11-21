@@ -374,7 +374,6 @@
 <body>
 
   <img src="images/icon.jpg">
-
   <div class="main">
     <div class="groupSeparator">Daily Progress</div>
     <div id="ProgressbarDiv">
@@ -425,7 +424,7 @@
 
           <input class="form-control" placeholder="Name" id="foodName">
 
-          <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'></input>
+          <input type="text" class="form-control" placeholder="Amount" id="amount" onfocus="this.type='number';">
 
           <select class="form-control" id="selectMeasurement">
             <optgroup>
@@ -512,7 +511,6 @@
     var selectMeasurement = document.getElementById('selectMeasurement');
     var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
     var date = getFormattedTime();
-
     if (selectType.selectedIndex == 0 || selectMeasurement.selectedIndex == 0) {
       alert("You must select a type before trying to add a new entry");
       return 0;
