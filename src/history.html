@@ -46,10 +46,15 @@
             content: "\f002";
         }
 
+        .fa-user-circle:before {
+            content: "\f2bd";
+        }
+
         .tabs a span:nth-child(1) {
             text-decoration: none;
             font-size: 5rem;
             margin: 1% 1% 1% 1%;
+            padding-left: 7%;
         }
 
         .tabs a span:nth-child(2) {
@@ -58,9 +63,21 @@
         }
 
         .tabs a {
-            text-decoration: none;
             color: white;
             font-size: 3.5rem;
+            text-decoration: none;
+        }
+
+        .tabs {
+            background-color: rgb(45, 45, 45);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            padding-top: 1rem;
+            justify-content: space-between;
         }
 
         main {
@@ -117,7 +134,7 @@
 
         #clear_button {
             background-color: rgb(245, 80, 14);
-            color: rgb(255,255,255);
+            color: rgb(255, 255, 255);
             border-color: rgb(245, 80, 14);
             border-width: 0;
             border-radius: 5%;
@@ -128,14 +145,15 @@
     </style>
     <!-- Element Styles-->
     <style>
-        #historyMessage{
+        #historyMessage {
             font-size: 2rem;
         }
+
         h1 {
             font-size: 4rem;
         }
     </style>
-    
+
 </head>
 
 <body>
@@ -172,7 +190,7 @@
             <span>Help</span>
         </a>
         <a href="../skeleton/profile.html">
-            <span class="fa fa-gear"></span>
+            <span class="fa fa-user-circle"></span>
             <br>
             <span>Profile</span>
         </a>
