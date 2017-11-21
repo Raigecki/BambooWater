@@ -42,6 +42,10 @@
     .fa-gear:before {
       content: "\f013";
     }
+
+    .fa-user-circle:before {
+      content: "\f2bd";
+    }
   </style>
 
   <!-- Bootstraps Styles -->
@@ -143,7 +147,6 @@
 
     .tabs a span:nth-child(1){
       text-decoration: none;
-      color: black;
       font-size: 5rem;
       margin: 1% 1% 1% 1%;
     }
@@ -154,18 +157,20 @@
     }
 
     .tabs a {
-      color: black;
+      color: white;
+      font-size: 3.5rem;
       text-decoration: none;
     }
 
     .tabs {
-      background-color: gray;
+      background-color: rgb(45, 45, 45);
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       width: 100%;
       display: flex;
+      padding-top : 1rem;
       justify-content: space-between;
     }
 
@@ -387,7 +392,7 @@
       <a href="search.html"><span class="fa fa-search"></span><br><span>Search</span></a>
       <a href="history.html"><span class="fa fa-history"></span><br><span>History</span></a>
       <a href="../skeleton/help.html"><span class="fa fa-question-circle-o"></span><br><span>Help</span></a>
-      <a href="../skeleton/profile.html"><span class="fa fa-gear"></span><br><span>Profile</span></a>
+      <a href="../skeleton/profile.html"><span class="fa fa-user-circle"></span><br><span>Profile</span></a>
     </div>
 
   <button id="addButton" onclick="modalAppear()">
@@ -722,8 +727,7 @@
     var backLogTable = JSON.parse(localStorage.getItem('logTable'));
     var rows = frontLogTable.childElementCount;
     var index = document.getElementById('rowIndex').value;
-    var selectType = document.getElementById('selectType');
-    var type = selectType[selectType.selectedIndex].value;
+    var type = backLogTable[index].type;
 
     //updating progress bar
     console.log('rows: ' + rows);
