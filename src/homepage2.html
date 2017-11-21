@@ -434,12 +434,12 @@
   <div class="main">
     <div class="groupSeparator">Daily Progress</div>
     <div id="ProgressbarDiv">
-      <label for="fiberProgressbar">Fiber</label>
+      <label for="fiberProgressbar" id="fiberIndicator"> Fiber</label>
       <div class="progressImageContainer">
         <img id="emptyFiberBar" src="./images/progressBarEmptyAvocadoResized.jpg" alt="Fiber Progress Bar">
         <img id="filledFiberBar" src="./images/progressBarFilledAvocadoResized.jpg" alt="Fiber Progress Bar">
       </div>
-      <label for="waterProgressbar">Water</label>
+      <label for="waterProgressbar" id="waterIndicator">Water</label>
       <div class="progressImageContainer">
         <img id="emptyWaterBar" src="./images/progressBarEmptyWaterResized.jpg" alt="Water Progress Bar">
         <img id="filledWaterBar" src="./images/progressBarFilledWaterResized.jpg" alt="Water Progress Bar">
@@ -918,6 +918,8 @@
             frontFiberProgressbar.max = '21';
           }
         }
+
+        //update progesss bar image
         var filledFiberImg = document.getElementById('filledFiberBar');
         var progressPercent = parseFloat(backFiberProgressbar) / parseFloat(frontFiberProgressbar.max) * 100 + 20;
         var clipString = 'polygon(0% 0%, ' + progressPercent + '% 0%, ' + (progressPercent - 8.5) + '% 100%, 0% 100%)';
@@ -931,6 +933,10 @@
         filledWaterImg.style['-webkit-clip-path'] = clipString;
         filledWaterImg.style['-moz-clip-path'] = clipString;
         filledWaterImg.style['clip-path'] = clipString;
+
+        //update indicator
+        document.getElementById('fiberIndicator').innerHTML = 'Fiber: ' + parseFloat(backFiberProgressbar) + ' / ' + parseFloat(frontFiberProgressbar.max) + ' g';
+        document.getElementById('waterIndicator').innerHTML = 'Water: ' + parseFloat(backWaterProgressbar) + ' / ' + parseFloat(frontWaterProgressbar.max) + ' L';
       }
 
 </script>
