@@ -147,7 +147,7 @@
 
     .progressImageContainer {
       width: 100%;
-      height: 3rem;
+      height: 9rem;
       text-align: left;
       margin-bottom: 5rem;
     }
@@ -160,20 +160,20 @@
     }
 
     #ProgressbarDiv {
-      height: 23rem;
+      height: 30rem;
     }
 
     #emptyFiberBar {
       width: 80%;
       margin-left: 2%;
-      height: auto;
+      height: inherit;
       position: absolute;
       z-index: -1;
     }
 
     #filledFiberBar {
       width: 80%;
-      height: auto;
+      height: inherit;
       margin-left: 2%;
       margin-top: 0.1%;
       position: absolute;
@@ -185,15 +185,16 @@
     #emptyWaterBar {
       width: 80%;
       margin-left: 2%;
-      height: auto;
+      height: inherit;
       position: absolute;
       z-index: -1;
     }
 
     #filledWaterBar {
       width: 80%;
-      height: auto;
+      height: inherit;
       margin-left: 2%;
+      margin-top: -0.03%;
       position: absolute;
       -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
       -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
@@ -495,7 +496,7 @@
 
           <input class="form-control" placeholder="Name" id="foodName">
 
-          <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'></input>
+          <input type="text" class="form-control" placeholder="Amount" id="amount" onfocus="this.type = 'number';">
 
           <select class="form-control" id="selectMeasurement">
             <optgroup>
@@ -745,9 +746,10 @@
     var tdDate = tr.children[2];
 
     if (type == 'water') name = 'water';
+    var measureInfo = (type == 'water') ? '' : ' of fiber';
     tdIcon.innerHTML = setIcon(name);
     tdName.innerHTML = name;
-    tdDate.innerHTML = amount + ' ' + measurement + '<br>' + tdDate['data-date'];
+    tdDate.innerHTML = amount + ' ' + measurement + measureInfo + '<br>' + tdDate['data-date'];
 
     tdName['data-type'] = type;
     tdName['data-name'] = name;
@@ -864,7 +866,7 @@
         tdName.innerHTML = name;
         tdName['data-name'] = name;
         tdName['data-type'] = type;
-        tdDate.innerHTML = amount + ' ' + units + '<br>' + date;
+        tdDate.innerHTML = amount + ' ' + units + ' of fiber' + '<br>' + date;
         tdDate['data-amount'] = amount;
         tdDate['data-units'] = units;
         tdDate['data-date'] = date;
@@ -923,6 +925,10 @@
           else if (age != undefined && age >= 50) {
             frontFiberProgressbar.max = '21';
           }
+        }
+        else {
+          frontWaterProgressbar.max = '3';
+          frontFiberProgressbar.max = '30';
         }
 
         //update progesss bar image
