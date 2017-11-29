@@ -24,9 +24,9 @@ function getFormattedDate() {
 
   var date = new Date();
   var year = date.getFullYear();
-  var month = date.getMonth();
+  var month = date.getMonth() + 1;
   var day = date.getDate();
-
+  console.log('month: ' + month);
   var currentDate = month + '/' + day + '/' + year;
   return currentDate;
 }
@@ -67,7 +67,6 @@ function setHistoryTable() {
   var historyMessage = document.getElementById('historyMessage');
 
   if (backHistoryTable.length == 0) {
-
     historyMessage.innerHTML = 'There are currently no history available';
     return 0;
   }

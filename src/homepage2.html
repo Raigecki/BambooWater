@@ -145,6 +145,69 @@
       font-size: 3rem;
     }
 
+    .progressImageContainer {
+      width: 100%;
+      height: 9rem;
+      text-align: left;
+      margin-bottom: 5rem;
+    }
+
+    #ProgressbarDiv>label {
+      display: block;
+      text-align: right;
+      font-size: 3rem;
+      margin-top: 1rem;
+    }
+
+    #ProgressbarDiv {
+      height: 30rem;
+    }
+
+    #emptyFiberBar {
+      width: 80%;
+      margin-left: 2%;
+      height: inherit;
+      position: absolute;
+      z-index: -1;
+    }
+
+    #filledFiberBar {
+      width: 80%;
+      height: inherit;
+      margin-left: 2%;
+      margin-top: 0.1%;
+      position: absolute;
+      -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+    }
+
+    #emptyWaterBar {
+      width: 80%;
+      margin-left: 2%;
+      height: inherit;
+      position: absolute;
+      z-index: -1;
+    }
+
+    #filledWaterBar {
+      width: 80%;
+      height: inherit;
+      margin-left: 2%;
+      margin-top: -0.03%;
+      position: absolute;
+      -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+    }
+
+    .tabs a span:nth-child(1){
+      text-decoration: none;
+      color: white;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
+
     .tabs a span:nth-child(1){
       text-decoration: none;
       font-size: 5rem;
@@ -374,13 +437,22 @@
 <body>
 
   <img src="images/icon.jpg">
+
   <div class="main">
     <div class="groupSeparator">Daily Progress</div>
     <div id="ProgressbarDiv">
-      <label for="fiberProgressbar">Fiber</label>
-      <progress id="fiberProgressbar" value="0.0" max="30"></progress>
-      <label for="waterProgressbar">Water</label>
-      <progress id="waterProgressbar" value="0.0" max="3"></progress>
+      <label for="fiberProgressbar" id="fiberIndicator"> Fiber</label>
+      <div class="progressImageContainer">
+        <img id="emptyFiberBar" src="./images/progressBarEmptyBrocolliResized.jpg" alt="Fiber Progress Bar">
+        <img id="filledFiberBar" src="./images/progressBarFilledBrocolliResized.jpg" alt="Fiber Progress Bar">
+      </div>
+      <label for="waterProgressbar" id="waterIndicator">Water</label>
+      <div class="progressImageContainer"> 
+        <img id="emptyWaterBar" src="./images/progressBarEmptyWaterResized.jpg" alt="Water Progress Bar">
+        <img id="filledWaterBar" src="./images/progressBarFilledWaterResized.jpg" alt="Water Progress Bar">
+      </div>
+      <progress id="fiberProgressbar" style='display:none;'></progress>
+      <progress id="waterProgressbar" style='display:none;'></progress>
     </div>
 
     <div class="groupSeparator">Today's Log</div>
@@ -424,7 +496,7 @@
 
           <input class="form-control" placeholder="Name" id="foodName">
 
-          <input type="text" class="form-control" placeholder="Amount" id="amount" onfocus="this.type='number';">
+          <input type="text" class="form-control" placeholder="Amount" id="amount" onfocus="this.type = 'number';">
 
           <select class="form-control" id="selectMeasurement">
             <optgroup>
@@ -476,31 +548,33 @@
   }
 
   function updateProgressbar(type, amount) {
-
-    var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
-    var backWaterProgressbar = localStorage.getItem('waterProgressbar');
-    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
-    var frontWaterProgressbar = document.getElementById('waterProgressbar');
-
-    amount = parseFloat(amount);
-
-    var waterAmt = parseFloat(backWaterProgressbar);
-    var fiberAmt = parseFloat(backFiberProgressbar);
-
-    if (type == 'food') {
-      var newValue = fiberAmt + amount;
-      backFiberProgressbar = newValue;
-      frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
-      localStorage.setItem('fiberProgressbar', backFiberProgressbar);
-    }
-
-    else if (type == 'water') {
-      var newValue = waterAmt + amount;
-      backWaterProgressbar = newValue;
-      frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
-      localStorage.setItem('waterProgressbar', backWaterProgressbar);
-    }
-  }
+    
+        var backFiberProgressbar = localStorage.getItem('fiberProgressbar');
+        var backWaterProgressbar = localStorage.getItem('waterProgressbar');
+        var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+        var frontWaterProgressbar = document.getElementById('waterProgressbar');
+    
+        amount = parseFloat(amount);
+    
+        var waterAmt = parseFloat(backWaterProgressbar);
+        var fiberAmt = parseFloat(backFiberProgressbar);
+    
+        if (type == 'food') {
+          var newValue = fiberAmt + amount;
+          backFiberProgressbar = newValue;
+          frontFiberProgressbar.value = parseFloat(backFiberProgressbar);
+          localStorage.setItem('fiberProgressbar', backFiberProgressbar);
+          setProgressBar();
+        }
+    
+        else if (type == 'water') {
+          var newValue = waterAmt + amount;
+          backWaterProgressbar = newValue;
+          frontWaterProgressbar.value = parseFloat(backWaterProgressbar);
+          localStorage.setItem('waterProgressbar', backWaterProgressbar);
+          setProgressBar();
+        }
+      }
 
   function addRecord() {
 
@@ -511,6 +585,7 @@
     var selectMeasurement = document.getElementById('selectMeasurement');
     var measurement = selectMeasurement[selectMeasurement.selectedIndex].value;
     var date = getFormattedTime();
+
     if (selectType.selectedIndex == 0 || selectMeasurement.selectedIndex == 0) {
       alert("You must select a type before trying to add a new entry");
       return 0;
@@ -671,9 +746,10 @@
     var tdDate = tr.children[2];
 
     if (type == 'water') name = 'water';
+    var measureInfo = (type == 'water') ? '' : ' of fiber';
     tdIcon.innerHTML = setIcon(name);
     tdName.innerHTML = name;
-    tdDate.innerHTML = amount + ' ' + measurement + '<br>' + tdDate['data-date'];
+    tdDate.innerHTML = amount + ' ' + measurement + measureInfo + '<br>' + tdDate['data-date'];
 
     tdName['data-type'] = type;
     tdName['data-name'] = name;
@@ -790,7 +866,7 @@
         tdName.innerHTML = name;
         tdName['data-name'] = name;
         tdName['data-type'] = type;
-        tdDate.innerHTML = amount + ' ' + units + '<br>' + date;
+        tdDate.innerHTML = amount + ' ' + units + ' of fiber' + '<br>' + date;
         tdDate['data-amount'] = amount;
         tdDate['data-units'] = units;
         tdDate['data-date'] = date;
@@ -820,36 +896,60 @@
   }
 
   function setProgressBar() {
+    
+        var backFiberProgressbar = parseFloat(localStorage.getItem('fiberProgressbar'));
+        var backWaterProgressbar = parseFloat(localStorage.getItem('waterProgressbar'));
+        var frontFiberProgressbar = document.getElementById('fiberProgressbar');
+        var frontWaterProgressbar = document.getElementById('waterProgressbar');
+        console.log('front_waterProgress_bar = ' + frontWaterProgressbar);
+    
+        frontFiberProgressbar.value = backFiberProgressbar;
+        frontWaterProgressbar.value = backWaterProgressbar;
+    
+        var gender = parseInt(localStorage.getItem('genderVal'));
+        var age = parseInt(localStorage.getItem('ageVal'));
+        if (gender == 1) {
+          frontWaterProgressbar.max = '3';
+          if (age != undefined && age < 50) {
+            frontFiberProgressbar.max = '38';
+          }
+          else if (age != undefined && age >= 50) {
+            frontFiberProgressbar.max = '30';
+          }
+        }
+        else if (gender == 2) {
+          frontWaterProgressbar.max = '2.2';
+          if (age != undefined && age < 50) {
+            frontFiberProgressbar.max = '25';
+          }
+          else if (age != undefined && age >= 50) {
+            frontFiberProgressbar.max = '21';
+          }
+        }
+        else {
+          frontWaterProgressbar.max = '3';
+          frontFiberProgressbar.max = '30';
+        }
 
-    var backFiberProgressbar = parseFloat(localStorage.getItem('fiberProgressbar'));
-    var backWaterProgressbar = parseFloat(localStorage.getItem('waterProgressbar'));
-    var frontFiberProgressbar = document.getElementById('fiberProgressbar');
-    var frontWaterProgressbar = document.getElementById('waterProgressbar');
+        //update progesss bar image
+        var filledFiberImg = document.getElementById('filledFiberBar');
+        var progressPercent = parseFloat(backFiberProgressbar) / parseFloat(frontFiberProgressbar.max) * 100 + 20;
+        var clipString = 'polygon(0% 0%, ' + progressPercent + '% 0%, ' + (progressPercent - 8.5) + '% 100%, 0% 100%)';
+        filledFiberImg.style['-webkit-clip-path'] = clipString;
+        filledFiberImg.style['-moz-clip-path'] = clipString;
+        filledFiberImg.style['clip-path'] = clipString;
+    
+        var filledWaterImg = document.getElementById('filledWaterBar');
+        var progressPercent = parseFloat(backWaterProgressbar) / parseFloat(frontWaterProgressbar.max) * 100 + 20;
+        var clipString = 'polygon(0% 0%, ' + progressPercent + '% 0%, ' + (progressPercent - 8.5) + '% 100%, 0% 100%)';
+        filledWaterImg.style['-webkit-clip-path'] = clipString;
+        filledWaterImg.style['-moz-clip-path'] = clipString;
+        filledWaterImg.style['clip-path'] = clipString;
 
-    frontFiberProgressbar.value = backFiberProgressbar;
-    frontWaterProgressbar.value = backWaterProgressbar;
-
-    var gender = parseInt(localStorage.getItem('genderVal'));
-    var age = parseInt(localStorage.getItem('ageVal'));
-    if (gender == 1) {
-      frontWaterProgressbar.max = '3';
-      if (age != undefined && age < 50) {
-        frontFiberProgressbar.max = '38';
+        //update indicator
+        document.getElementById('fiberIndicator').innerHTML = 'Fiber: ' + parseFloat(backFiberProgressbar) + ' / ' + parseFloat(frontFiberProgressbar.max) + ' g';
+        document.getElementById('waterIndicator').innerHTML = 'Water: ' + parseFloat(backWaterProgressbar) + ' / ' + parseFloat(frontWaterProgressbar.max) + ' L';
       }
-      else if (age != undefined && age >= 50) {
-        frontFiberProgressbar.max = '30';
-      }
-    }
-    else if (gender == 2) {
-      frontWaterProgressbar.max = '2.2';
-      if (age != undefined && age < 50) {
-        frontFiberProgressbar.max = '25';
-      }
-      else if (age != undefined && age >= 50) {
-        frontFiberProgressbar.max = '21';
-      }
-    }
-  }
 
 </script>
 <script>
