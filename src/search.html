@@ -208,8 +208,8 @@
       var tdName = document.createElement('td');
       var tdAmount = document.createElement('td');
       tdIcon.innerHTML = '<img src="../iconassets/' + fiberMap[matches[i]]['icon'] + '.svg"\>';
-      tdName.innerHTML = matches[i].charAt(0).toUpperCase() + matches[i].slice(1);
-      tdAmount.innerHTML = fiberMap[matches[i]]['value'] + 'g of fiber per ' + fiberMap[matches[i]]['amount'];
+      tdName.innerText = matches[i].charAt(0).toUpperCase() + matches[i].slice(1);
+      tdAmount.innerText = fiberMap[matches[i]]['value'] + 'g of fiber per ' + fiberMap[matches[i]]['amount'];
       tr.appendChild(tdIcon);
       tr.appendChild(tdName);
       tr.appendChild(tdAmount);
@@ -234,11 +234,11 @@
 
     if (input in fiberMap && input != 'default') {
       tdIcon.innerHTML = '<img src="../iconassets/' + fiberMap[input]['icon'] + '.svg"\>';
-      tdName.innerHTML = input.charAt(0).toUpperCase() + input.slice(1);
-      tdAmount.innerHTML = fiberMap[input]['value'] + 'g of fiber per ' + fiberMap[input]['amount'];
+      tdName.innerText = input.charAt(0).toUpperCase() + input.slice(1);
+      tdAmount.innerText = fiberMap[input]['value'] + 'g of fiber per ' + fiberMap[input]['amount'];
     }
     else {
-      tdName.innerHTML = 'We do not have information about the food: ' + input.charAt(0).toUpperCase() + input.slice(1);
+      tdName.innerText = 'We do not have information about the food: ' + input.charAt(0).toUpperCase() + input.slice(1);
     }
 
     tr.appendChild(tdIcon);
