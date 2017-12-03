@@ -511,7 +511,6 @@
           <select class="form-control" id="selectMeasurement">
             <optgroup>
               <option value="none" selected disabled>--Select Units--</option>
-              <option value="Cups">Cups</option>
               <option value="Grams">Grams</option>
               <option value="Liters">Liters</option>
           </optgroup>
@@ -911,7 +910,7 @@
         var backWaterProgressbar = parseFloat(localStorage.getItem('waterProgressbar'));
         var frontFiberProgressbar = document.getElementById('fiberProgressbar');
         var frontWaterProgressbar = document.getElementById('waterProgressbar');
-        console.log('front_waterProgress_bar = ' + frontWaterProgressbar);
+        //console.log('front_waterProgress_bar = ' + frontWaterProgressbar);
     
         frontFiberProgressbar.value = backFiberProgressbar;
         frontWaterProgressbar.value = backWaterProgressbar;
@@ -983,25 +982,22 @@
     if (type[type.selectedIndex].value == 'water') {
       amount.placeholder = 'Amount of Water';
       units.options[1].style.display = 'none';
-      units.options[2].style.display = 'none';
-      units.options[3].style.display = 'block';
-      units.options[3].selected = 'selected';
+      units.options[2].style.display = 'block';
+      units.options[2].selected = 'selected';
       name.style.display = 'none';
 
     }
     else if (type[type.selectedIndex].value == 'food') {
       amount.placeholder = 'Amount of Fiber';
-      units.options[1].style.display = 'none';
-      units.options[3].style.display = 'none';
-      units.options[2].style.display = 'block';
-      units.options[2].selected = 'selected';
+      units.options[2].style.display = 'none';
+      units.options[1].style.display = 'block';
+      units.options[1].selected = 'selected';
       name.style.display = 'block';
     }
 
     else {
-      units.options[1].style.display = 'none';
+      units.options[1].style.display = 'block';
       units.options[2].style.display = 'block';
-      units.options[3].style.display = 'block';
     }
   }
 
