@@ -77,9 +77,9 @@ function setHistoryTable() {
     var tdWater = document.createElement('td');
     var table = document.getElementById('historyTable');
 
-    tdDate.innerHTML = backHistoryTable[historyIndex].date;
-    tdFiber.innerHTML = backHistoryTable[historyIndex].fiber + ' g';
-    tdWater.innerHTML = backHistoryTable[historyIndex].water + ' L';
+    tdDate.innerHTML = backHistoryTable[index].date;
+    tdFiber.innerHTML = backHistoryTable[index].fiber + ' g';
+    tdWater.innerHTML = backHistoryTable[index].water + ' L';
 
     tr.appendChild(tdDate);
     tr.appendChild(tdFiber);
@@ -87,7 +87,7 @@ function setHistoryTable() {
 
     frontHistoryTable.appendChild(tr);
   }
-  
+
   historyMessage.innerHTML = '';
 }
 
