@@ -70,24 +70,24 @@ function setHistoryTable() {
     historyMessage.innerHTML = 'There are currently no history available';
     return 0;
   }
+  for (var index = backHistoryTable.length - 1; index >= 0; index--) {
+    var tr = document.createElement('tr');
+    var tdDate = document.createElement('td');
+    var tdFiber = document.createElement('td');
+    var tdWater = document.createElement('td');
+    var table = document.getElementById('historyTable');
 
-  var tr = document.createElement('tr');
-  var tdDate = document.createElement('td');
-  var tdFiber = document.createElement('td');
-  var tdWater = document.createElement('td');
-  var table = document.getElementById('historyTable');
+    tdDate.innerHTML = backHistoryTable[historyIndex].date;
+    tdFiber.innerHTML = backHistoryTable[historyIndex].fiber + ' g';
+    tdWater.innerHTML = backHistoryTable[historyIndex].water + ' L';
 
-  var historyIndex = backHistoryTable.length - 1;
-  var date = backHistoryTable[historyIndex].date;
-  tdDate.innerHTML = backHistoryTable[historyIndex].date;
-  tdFiber.innerHTML = backHistoryTable[historyIndex].fiber + ' g';
-  tdWater.innerHTML = backHistoryTable[historyIndex].water + ' L';
+    tr.appendChild(tdDate);
+    tr.appendChild(tdFiber);
+    tr.appendChild(tdWater);
 
-  tr.appendChild(tdDate);
-  tr.appendChild(tdFiber);
-  tr.appendChild(tdWater);
-
-  frontHistoryTable.appendChild(tr);
+    frontHistoryTable.appendChild(tr);
+  }
+  
   historyMessage.innerHTML = '';
 }
 
