@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Homepage</title>
+  <script src="../iconMap.js"></script>
+  <script src="general.js"></script>
+  <!-- Font Awesome Styles -->
+  <style>
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+      src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    }
+
+    .fa {
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: xx-large;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+    }
+
+    .fa-home:before {
+      content: "\f015";
+    }
+
+    .fa-search:before {
+      content: "\f002";
+    }
+
+    .fa-history:before {
+      content: "\f1da";
+    }
+
+    .fa-question-circle-o:before {
+      content: "\f29c";
+    }
+
+    .fa-gear:before {
+      content: "\f013";
+    }
+
+    .fa-user-circle:before {
+      content: "\f2bd";
+    }
+  </style>
+
+  <!-- Bootstraps Styles -->
+  <style>
+    .form-control {
+      display: block;
+      width: 98%;
+      height: 8rem;
+      font-size: 5rem;
+      color: rgb(80, 77, 77);
+      background-color: #fff;
+      border: 5px solid #ccc;
+      border-radius: 1rem;
+      margin-bottom: 0.5rem;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    .form-control:focus {
+      border-color: #66afe9;
+      outline: 0;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+
+    .form-control::-moz-placeholder {
+      color: #999;
+      opacity: 1;
+    }
+
+    .form-control:-ms-input-placeholder {
+      color: #999;
+    }
+  </style>
+
+  <!-- Homepage Element Styles -->
+  <style>
+    body {
+      text-align: center;
+      margin: 5% 5% 0 5%;
+    }
+
+    .main {
+      margin-bottom: 10rem;
+    }
+
+    img {
+      width: 80%;
+      height: 80%;
+      margin-left: 7%;
+    }
+
+    .groupSeparator {
+      display: flex;
+      flex-basis: 100%;
+      align-items: center;
+      color: rgba(0, 0, 0, 0.35);
+      margin: 1rem 0 2rem 0;
+      font-size: 3rem;
+    }
+
+    .groupSeparator::before,
+    .groupSeparator::after {
+      content: "";
+      flex-grow: 1;
+      background: rgba(0, 0, 0, 0.35);
+      height: 1px;
+      font-size: 0px;
+      line-height: 0px;
+      margin: 0px 8px;
+    }
+
+    progress {
+      height: 7rem;
+      width: 100%;
+      box-sizing: border-box;
+      background: green;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+      margin-bottom: 2rem;
+    }
+
+    #waterProgressbar::-webkit-progress-value {
+      background: blue;
+    }
+
+    #waterProgressbar::-moz-progress-bar {
+      background: blue;
+    }
+
+    #ProgressbarDiv label {
+      display: block;
+      text-align: left;
+      font-size: 3rem;
+    }
+
+    .progressImageContainer {
+      width: 100%;
+      height: 8rem;
+      text-align: left;
+    }
+
+    #ProgressbarDiv>label {
+      display: block;
+      text-align: right;
+      font-size: 3rem;
+    }
+
+    #emptyFiberBar {
+      width: 80%;
+      margin-left: 2%;
+      height: auto;
+      position: absolute;
+      z-index: -1;
+    }
+
+    #filledFiberBar {
+      width: 80%;
+      height: auto;
+      margin-left: 1.5%;
+      position: absolute;
+      -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+    }
+
+    #emptyWaterBar {
+      width: 80%;
+      margin-left: 2%;
+      margin-top: 0.6%;
+      height: auto;
+      position: absolute;
+      z-index: -1;
+    }
+
+    #filledWaterBar {
+      width: 80%;
+      height: auto;
+      margin-left: 1.5%;
+      position: absolute;
+      -webkit-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      -moz-clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+      clip-path: polygon(0% 0%, 20% 0%, 11.5% 100%, 0% 100%);
+    }
+
+    .tabs a span:nth-child(1){
+      text-decoration: none;
+      color: white;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
+
+    .tabs a span:nth-child(1){
+      text-decoration: none;
+      font-size: 5rem;
+      margin: 1% 1% 1% 1%;
+    }
+
+    .tabs a span:nth-child(2) {
+      text-decoration: none;
+      font-size: 3rem;
+    }
+
+    .tabs a {
+      color: white;
+      font-size: 3.5rem;
+      text-decoration: none;
+    }
+
+    .tabs {
+      background-color: rgb(45, 45, 45);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      padding-top : 1rem;
+      justify-content: space-between;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    #addButton {
+      background-color: green;
+      color: white;
+      border-radius: 50%;
+      border-color: green;
+      border-width: 0;
+      position: fixed;
+      width: 10rem;
+      line-height: 10rem;
+      vertical-align: middle;
+      font-size: 3rem;
+      text-align: center;
+      top: 60%;
+      right: 0;
+    }
+
+    .measurementAndTime {
+      float: right;
+    }
+
+    ul li {
+      overflow: hidden;
+    }
+
+    table {
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 2rem;
+      width: 100%;
+    }
+
+    td {
+      border: 1px #dddddd;
+      text-align: left;
+      padding: 1rem;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #dddddd;
+    }
+  </style>
+
+  <!-- Modal Styles -->
+  <style>
+    /* The Modal (background) */
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      line-height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #fefefe;
+      border-radius: 10px;
+      border: 1px solid #888;
+      width: 80%; 
+      margin: 10%;
+      vertical-align: middle;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      -webkit-animation-name: animatetop;
+      -webkit-animation-duration: 0.5s;
+      animation-name: animatetop;
+      animation-duration: 0.5s
+    }
+
+    .modal-header {
+      border-radius: 1rem 1rem 0px 0px;
+      background-color: #5cb85c;
+      text-align: center;
+      height: 8rem;
+      color: white;
+      font-size: 5rem;
+      line-height: 8rem;
+    }
+
+    .modal-header span:first-child{
+      margin-left: 4rem;
+    }
+
+    .modal-header span:nth-child(2){
+      margin-right: 1.5rem;
+    }
+
+    .modal-body {
+      padding: 4%;
+      text-align: center;
+    }
+
+    optgroup {
+      font-size: 1rem;
+    }
+
+    #selectType {
+      height: 8rem;
+      width: 100%
+    }
+
+    #foodName {
+      display: none;
+    }
+
+    #selectMeasurement {
+      height: 8rem;
+      width: 100%;
+    }
+
+    /* The Close Button */
+    .close {
+      color: white;
+      float: right;
+      font-size: 6rem;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confirmButton {
+      left: 0;
+      right: 0;
+      color: #fff;
+      height: 7rem;
+      width: 100%;
+      padding: 6px 12px;
+      font-size: 4rem;
+      text-align: center;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    }
+
+    #confirmAddButton {
+      /* position: absolute; */
+      bottom: 0;
+      border-color: #5cb85c;
+      background-color: #5cb85c;
+      margin-top: 2rem;
+    }
+
+    #updateButton {
+      width: 100%;
+      margin: 5% 0 5% 0;
+      border-color: #ffcc00;
+      background-color: #ffcc00;
+      display: none;
+    }
+
+    #deleteButton {
+      /* position: absolute; */
+      bottom: 0;
+      border-color: #cc0000;
+      background-color: #cc0000;
+      display: none;
+    }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0
+      }
+      to {
+        top: 0;
+        opacity: 1
+      }
+    }
+
+    @keyframes animatetop {
+      from {
+        top: -300px;
+        opacity: 0
+      }
+      to {
+        top: 0;
+        opacity: 1
+      }
+    }
+  </style>
+
+  <script src="../Libraries/Vue.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDDtIctwss4XLpPi0tBT6POKjLAPtXTjic",
+      authDomain: "cse170-7af70.firebaseapp.com",
+      databaseURL: "https://cse170-7af70.firebaseio.com",
+      projectId: "cse170-7af70",
+      storageBucket: "cse170-7af70.appspot.com",
+      messagingSenderId: "909523779247"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<body>
+    <img src="images/icon.jpg"> <!-- Logo -->
+    <div class="main">
+        <div class="groupSeparator">Daily Progress</div>
+        <div id="ProgressbarDiv">
+          <label for="fiberProgressbar" id="fiberIndicator"> Fiber</label>
+          <div class="progressImageContainer">
+            <img id="emptyFiberBar" src="./images/progressBarEmptyAvocadoResized.jpg" alt="Fiber Progress Bar">
+            <img id="filledFiberBar" src="./images/progressBarFilledAvocadoResized.jpg" alt="Fiber Progress Bar">
+          </div>
+          <label for="waterProgressbar" id="waterIndicator">Water</label>
+          <div class="progressImageContainer">
+            <img id="emptyWaterBar" src="./images/progressBarEmptyWaterResized.jpg" alt="Water Progress Bar">
+            <img id="filledWaterBar" src="./images/progressBarFilledWaterResized.jpg" alt="Water Progress Bar">
+          </div>
+          <progress id="fiberProgressbar" style='display:none;'></progress>
+          <progress id="waterProgressbar" style='display:none;'></progress>
+        </div>
+    
+        <div class="groupSeparator">Today's Log</div>
+
+        <table id="logTable">
+          <tr v-for="entry "></tr>
+        </table>
+      </div>
+      <div class="tabs">
+          <a href=""><span class="fa fa-home"></span><br><span>Home</span></a>
+          <a href="search.html"><span class="fa fa-search"></span><br><span>Search</span></a>
+          <a href="history.html"><span class="fa fa-history"></span><br><span>History</span></a>
+          <a href="../skeleton/help.html"><span class="fa fa-question-circle-o"></span><br><span>Help</span></a>
+          <a href="../skeleton/profile.html"><span class="fa fa-user-circle"></span><br><span>Profile</span></a>
+        </div>
+    
+      <button id="addButton" onclick="modalAppear()">
+        <span>ADD</span>
+      </button>
+    
+      <h3 id="result"></h3>
+    
+      <!-- The Modal -->
+      <div id="addModal" class="modal">
+        <div class="modal-content">
+    
+          <div class="modal-header">
+            <span></span>
+            <span class="close">&times;</span>
+          </div>
+    
+          <div class="modal-body">
+            <form role="form" id="modalForm">
+    
+              <input type="hidden" id="rowIndex">
+    
+              <select class="form-control" id="selectType" onChange="typeSelected()">
+                <optgroup>
+                  <option value="none" selected disabled>--Select Type--</option>
+                  <option value="food">Food</option>
+                  <option value="water">Water</option>
+              </optgroup>
+              </select>
+    
+              <input class="form-control" placeholder="Name" id="foodName">
+    
+              <input type="text" class="form-control" placeholder="Amount" id="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'></input>
+    
+              <select class="form-control" id="selectMeasurement">
+                <optgroup>
+                  <option value="none" selected disabled>--Select Units--</option>
+                  <option value="Cups">Cups</option>
+                  <option value="Grams">Grams</option>
+                  <option value="Liters">Liters</option>
+              </optgroup>
+              </select>
+    
+              <input type="button" name="confirmAddButton" value="Add" id="confirmAddButton" data-toggle="modal" data-target="#confirm-add"
+                class="confirmButton" onclick="addRecord()">
+              <input type="button" name="updateButton" value="Update" id="updateButton" data-toggle="modal" data-target="#confirm-update"
+                class="confirmButton">
+              <input type="button" name="deleteButton" value="Delete" id="deleteButton" data-toggle="modal" data-target="#confirm-delete"
+                class="confirmButton" onclick="deleteRecord()">
+            </form>
+    
+          </div>
+          <!-- modal body div -->
+    
+          <div class="modal-footer">
+          </div>
+        </div>
+        <!-- content div -->
+    
+      </div> <!-- main div -->
+
+    <div id="app">
+        {{msg}}
+    </div>
+
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data: {
+                msg:'Hello World!'
+            }
+        });
+
+        var logEntry = new Vue({
+            el: '',
+            data: {
+              image: '',
+              name: '',
+              amount: '',
+              unit: '',
+              time: ''
+            },
+            methods: {
+              loadLogTable : function() {
+                var db = firebase.firestore();
+                
+              }
+            },
+            created: function() {
+              this.loadLogTable();
+            }
+        });
+
+
+    </script>
+
+</body>
+
+</html>
