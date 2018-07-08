@@ -4,17 +4,25 @@
     );
 }
 
+function Food(name, icon, value, units, information) {
+    this.name = name;
+    this.icon = icon;
+    this.units = units;
+    this.information = information;
+    this.id = '';
+
+    return foodObj;
+}
+
 function createFood(name, icon, value, units, information ) {
 
     var uniqueID = createUniqueID();
+    var food = new Food(name, icon, value, units, information);
+    food.id = uniqueID;
+    
     var db = firebase.firestore();
     db.collection("Foods").doc(uniqueID).set({
-        name: name,
-        icon: icon,
-        value: value,
-        units: units,
-        information: information,
-        ID: uniqueID
+        food: food
     })
     .then(function () {
         console.log("Food successfully added");
@@ -26,13 +34,18 @@ function createFood(name, icon, value, units, information ) {
 }
 
 function getFoods(name) {
+
+    var foodList = [];
     db.collection("Foods").where("name", "==", name)
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+            foodList.push(doc.data());
         });
+    })
+    .then(function() {
+        console.log(foodList);
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
