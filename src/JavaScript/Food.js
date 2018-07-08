@@ -4,20 +4,20 @@
     );
 }
 
-function Food(name, icon, value, units, information) {
+function Food(name, icon, fiber, units, information) {
     this.name = name;
     this.icon = icon;
-    this.units = units;
+    this.fiber = fiber;
     this.information = information;
     this.id = '';
 
     return foodObj;
 }
 
-function createFood(name, icon, value, units, information ) {
+function createFood(name, icon, fiber, units, information ) {
 
     var uniqueID = createUniqueID();
-    var food = new Food(name, icon, value, units, information);
+    var food = new Food(name, icon, fiber, units, information);
     food.id = uniqueID;
     
     var db = firebase.firestore();
@@ -52,13 +52,13 @@ function getFoods(name) {
     });
 }
 
-function editFood(id, name, icon, amount, units, information ) {
+function editFood(id, name, icon, fiber, units, information ) {
 
     var db = firebase.firestore();
     db.collection('Foods').doc(id).set({
         name: name,
         icon: icon,
-        amount: amount,
+        fiber: fiber,
         units: units,
         information: information
     }, {merge: true})
